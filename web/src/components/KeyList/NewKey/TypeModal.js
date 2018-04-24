@@ -1,6 +1,6 @@
 import {JSONIcon, TextIcon, FileIcon} from "../../ObjIcon";
 import {selectedKey, refreshKeys} from "../KeyList";
-import {update, remove} from 'bluzelle';
+import {create, remove} from 'bluzelle';
 import {execute} from '../../../services/CommandQueueService';
 
 
@@ -26,7 +26,7 @@ export class TypeModal extends Component {
 
         execute({
             doIt: () => new Promise(resolve =>
-                update(this.props.keyField, keyData).then(() =>
+                create(this.props.keyField, keyData).then(() =>
                     refreshKeys().then(resolve))),
 
             undoIt: () => new Promise(resolve =>

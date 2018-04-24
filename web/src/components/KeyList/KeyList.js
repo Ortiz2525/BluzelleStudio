@@ -3,7 +3,7 @@ import {NewKeyField} from "./NewKey/NewKeyField";
 import {activeValue, save, remove, reload} from '../../services/CRUDService';
 import {execute, removePreviousHistory, updateHistoryMessage} from '../../services/CommandQueueService';
 
-import {update, keys as bzkeys} from 'bluzelle';
+import {create, update, keys as bzkeys} from 'bluzelle';
 
 
 export const selectedKey = observable(undefined);
@@ -90,7 +90,7 @@ const executeRemove = () => {
 
         undoIt: () => new Promise(resolve =>
 
-            update(sk, val).then(() => reload().then(() => {
+            create(sk, val).then(() => reload().then(() => {
 
                 selectedKey.set(sk);
                 resolve();
