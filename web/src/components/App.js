@@ -13,7 +13,7 @@ import DevTools from 'mobx-react-devtools';
 // configureDevtool({logEnabled: true});
 
 
-import {connect} from 'bluzelle';
+import {connect, keys} from 'bluzelle';
 
 
 @observer
@@ -32,8 +32,16 @@ export class App extends Component {
         
         connect(ws_url, uuid);
 
-        this.setState({
-            connected: true
+        keys().then(() => {
+
+            this.setState({
+                connected: true
+            });
+
+        }, () => {
+
+            alert('Could not connect to provided websocket.');
+
         });
 
     }
