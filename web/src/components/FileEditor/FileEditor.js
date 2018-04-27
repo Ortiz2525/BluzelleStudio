@@ -75,7 +75,7 @@ export class FileEditor extends Component {
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
 
-        const fileName = this.state.uploadedFilename;
+        const fileName = selectedKey.get();
 
         link.download = fileName;
         link.click();

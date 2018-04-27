@@ -48,9 +48,14 @@ export class KeyListItem extends Component {
 
                 <Icon keyname={keyname}/>
 
-                <EditableField
+
+
+          {/*      <EditableField
                     val={keyname}
                     onChange={this.rename.bind(this)}/>
+*/}
+
+                <span>{keyname}</span>
 
 
                 {

@@ -23,7 +23,7 @@ export const observableMapRecursive = obj => {
 };
 
 
-// We update the underyling object of activeValue to mirror activeObservableMap;
+// We update the underyling object of activeValue to mirror the non-obsevable version of activeObservableMap;
 // the observers on activeValue are not called.
 
 const onChange = () => {
