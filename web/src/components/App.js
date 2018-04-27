@@ -30,12 +30,10 @@ export class App extends Component {
 
     go(ws_url, uuid) {
         
-        connect(ws_url, uuid).then(() => {
+        connect(ws_url, uuid);
 
-            this.setState({
-                connected: true
-            });
-
+        this.setState({
+            connected: true
         });
 
     }
