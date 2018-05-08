@@ -1,12 +1,9 @@
 import {HashRouter, Route} from 'react-router-dom'
 import {Main} from 'components/Main'
 import {execute} from "../services/CommandQueueService";
-import DaemonSelector from 'bluzelle-client-common/components/DaemonSelector'
-
+import DaemonSelector from './DaemonSelector'
 
 import DevTools from 'mobx-react-devtools';
-
-// import {getNodes} from 'bluzelle-client-common/services/NodeService'
 
 // Debugging
 // import {configureDevtool} from 'mobx-react-devtools';
@@ -58,10 +55,6 @@ export class App extends Component {
                         <Main/> :
                         <DaemonSelector go={this.go.bind(this)}/>
                 }
-
-                {/*<HashRouter>
-                    <Route component={data.keys().length ? Main : DaemonSelector} />
-                </HashRouter>*/}
             </div>
         );
     }

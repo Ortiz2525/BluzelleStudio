@@ -2,7 +2,7 @@ import ReactDom from 'react-dom'
 import {App} from "./components/App"
 import 'react-reflex/styles.css'
 import {addHooks} from "react-functional-test";
-import './requestNodeInfo';
+
 
 const root = ReactDom.render(<App />, document.querySelector('#app-container'));
 
