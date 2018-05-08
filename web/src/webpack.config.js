@@ -85,7 +85,7 @@ module.exports = {
 
             BS: 'react-bootstrap',
 
-            Component: 'bluzelle-client-common/components/Component',
+            Component: ['react', 'Component'],
 
             LinkBtn: ['components/LinkBtn', 'default'],
             withParams: ['components/withParams', 'default'],
@@ -119,9 +119,7 @@ module.exports = {
 
             ReflexContainer: ['react-reflex', 'ReflexContainer'],
             ReflexSplitter: ['react-reflex', 'ReflexSplitter'],
-            ReflexElement: ['react-reflex', 'ReflexElement'],
-            ReflexFixed: ['bluzelle-client-common/components/ReflexFixed', 'ReflexFixed']
-
+            ReflexElement: ['react-reflex', 'ReflexElement']
         }),
         new BeepPlugin(),
         new webpack.NamedModulesPlugin()

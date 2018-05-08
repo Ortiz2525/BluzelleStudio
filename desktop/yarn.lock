@@ -1053,11 +1053,9 @@ bluebird@^3.1.1, bluebird@^3.5.0, bluebird@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
-"bluzelle-client-common@file:../../bluzelle-client-common":
-  version "1.0.0"
-
-"bluzelle@file:../../bluzelle-js":
+bluzelle@0.1.2:
   version "0.1.2"
+  resolved "https://registry.yarnpkg.com/bluzelle/-/bluzelle-0.1.2.tgz#f666c6bf1b85d0e26f98c306febc21a67bd9e98d"
   dependencies:
     base64-arraybuffer "^0.1.5"
     buffer "^5.1.0"
@@ -3778,7 +3776,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.5:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
@@ -5251,11 +5249,6 @@ react-dom@^16.0.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-
-"react-functional-test@file:../../react-functional-test":
-  version "1.0.0"
-  dependencies:
-    lodash "^4.17.5"
 
 react-layout-pane@^0.1.16:
   version "0.1.16"

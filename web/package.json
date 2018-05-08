@@ -16,9 +16,6 @@
     "coverage-text": "nyc --instrument=false yarn test"
   },
   "dependencies": {
-    "jsdom": "^11.5.1",
-    "jsdom-global": "^3.0.2",
-    "webpack": "3.10.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-decorators": "^6.24.1",
@@ -28,6 +25,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
+    "bluzelle": "^0.8.2",
     "bootstrap": "3.3.7",
     "chai": "^4.1.2",
     "chai-enzyme": "beta",
@@ -42,6 +40,8 @@
     "jiiis-jlayout": "^1.0.0",
     "jquery": "^3.2.1",
     "js-joda": "^1.6.1",
+    "jsdom": "^11.5.1",
+    "jsdom-global": "^3.0.2",
     "koa": "^2.4.1",
     "local-web-server": "^2.2.4",
     "lodash": "^4.17.4",
@@ -71,6 +71,7 @@
     "text-encoding": "^0.6.4",
     "url-loader": "^0.6.2",
     "uuid": "^3.2.1",
+    "webpack": "3.10.0",
     "webpack-beep-plugin": "^1.0.0",
     "webpack-shell-plugin": "^0.5.0",
     "websocket": "^1.0.25"

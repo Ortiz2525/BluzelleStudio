@@ -10,10 +10,10 @@ export class Main extends Component {
     render() {
         return (
             <ReflexContainer style={{height: '100%'}}>
-                <ReflexFixed>
+                <div>
                     <Header/>
                     <hr/>
-                </ReflexFixed>
+                </div>
                 <ReflexElement flex={1}>
                     <ReflexContainer orientation='vertical'>
                         <ReflexElement flex={0.4}>
