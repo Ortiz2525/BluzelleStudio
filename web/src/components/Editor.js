@@ -10,7 +10,7 @@ export class Editor extends Component {
 
     render() {
 
-        if(activeValue.get() instanceof ArrayBuffer) {
+        if(activeValue.get() instanceof Uint8Array) {
 
             return <FileEditor/>;
 

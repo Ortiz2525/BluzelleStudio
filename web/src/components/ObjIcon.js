@@ -21,6 +21,12 @@ export const ValIcon = ({val}) => {
 
 	}
 
+    if(val instanceof Uint8Array) {
+
+        return <FileIcon/>;
+
+    }
+
 
 	if(typeof val === 'object') {
 

@@ -39,7 +39,7 @@ export class FileEditor extends Component {
             ///    oldFilename = props.keyData.get('filename');
 
 
-            activeValue.set(reader.result);
+            activeValue.set(new Uint8Array(reader.result));
 
             this.setState({
                 uploaded: true,
@@ -69,9 +69,9 @@ export class FileEditor extends Component {
 
     download() {
 
-        const arrBuffer = activeValue.get();
+        const arr = activeValue.get();
 
-        const blob = new Blob([arrBuffer]);
+        const blob = new Blob([arr.buffer]);
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
 
