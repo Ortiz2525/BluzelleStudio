@@ -121,7 +121,7 @@ const helpMenu = {
 }
 
 const template = [
-    /*editMenu,*/ viewMenu, windowMenu, helpMenu]
+    editMenu, viewMenu, windowMenu, helpMenu]
 
 function addUpdateMenuItems (items, position) {
     if (process.mas) return

@@ -49,7 +49,8 @@ function createWindow () {
     win.once('ready-to-show', () => {
         splash.destroy();
         win.show();
-    });
+    }); 
+
 
     // Open the DevTools.
     options.debug && win.webContents.openDevTools();
