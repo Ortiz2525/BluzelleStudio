@@ -42,6 +42,11 @@ export class TypeModal extends Component {
 
 
     render() {
+
+
+        this.chooseText();
+
+
         return (
             <BS.Modal show={true} onHide={this.props.onHide}>
                 <BS.Modal.Header closeButton>

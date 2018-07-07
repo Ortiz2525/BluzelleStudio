@@ -19,16 +19,16 @@ export class Editor extends Component {
 
         const type = typeof activeValue.get();
 
-        if(type === 'object') {
-
-            return <JSONEditor/>;
-
-        }
-
 
         if(type === 'string') {
 
             return <PlainTextEditor/>;
+
+        }
+
+        if(type === 'object' || type === 'boolean' || type === 'number') {
+
+            return <JSONEditor/>;
 
         }
 

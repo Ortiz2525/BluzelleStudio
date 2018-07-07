@@ -20,7 +20,7 @@ function createWindow () {
     splash = new BrowserWindow({
         width: 300,
         height: 500,
-        icon: __dirname + '/bluzelle.png',
+        icon: __dirname + '/logo.png',
         transparent: true,
         frame: false,
         alwaysOnTop: true,
@@ -36,7 +36,7 @@ function createWindow () {
     win = new BrowserWindow({
         width: options.debug ? 1200 : 800,
         height: options.debug ? 800 : 600,
-        icon: __dirname + '/bluzelle.png',
+        icon: __dirname + '/logo.png',
         show: false
     });
 
