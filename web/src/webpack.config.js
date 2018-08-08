@@ -70,6 +70,7 @@ module.exports = {
         fs:    "commonjs fs",
     },
     resolve: {
+        symlinks: false,
         alias: {
             components: path.resolve('components'),
             services: path.resolve('services'),
