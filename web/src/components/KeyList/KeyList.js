@@ -2,18 +2,19 @@ import {KeyListItem} from "./KeyListItem";
 import {NewKeyField} from "./NewKey/NewKeyField";
 import {activeValue, save, remove, reload} from '../../services/CRUDService';
 import {execute, removePreviousHistory, updateHistoryMessage} from '../../services/CommandQueueService';
-
+import {observe} from 'mobx';
 import {create, update, keys as bzkeys} from 'bluzelle';
 
 
 export const selectedKey = observable(undefined);
 
+export const keys = observable([]);
 
-const keys = observable([]);
 
 export const refreshKeys = () => 
     bzkeys().then(k => keys.replace(k));
 
+export const tempKey = observable.box();
 
 
 @observer

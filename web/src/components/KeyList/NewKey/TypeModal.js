@@ -1,5 +1,5 @@
 import {JSONIcon, TextIcon, FileIcon} from "../../ObjIcon";
-import {selectedKey, refreshKeys} from "../KeyList";
+import {selectedKey, refreshKeys, keys, tempKey} from "../KeyList";
 import {create, remove} from 'bluzelle';
 import {execute} from '../../../services/CommandQueueService';
 
@@ -25,13 +25,25 @@ export class TypeModal extends Component {
 
 
         execute({
-            doIt: () => new Promise(resolve =>
-                create(this.props.keyField, keyData).then(() =>
-                    refreshKeys().then(resolve))),
+            doIt: () => new Promise(resolve => {
 
-            undoIt: () => new Promise(resolve =>
+                keys.push(this.props.keyField);
+                tempKey.set(this.props.keyField);
+
+                create(this.props.keyField, keyData).then(() => {
+                    
+                    tempKey.set();
+                    refreshKeys().then(resolve)
+
+                });
+
+            }),
+
+            undoIt: () => new Promise(resolve => {
+
                 remove(this.props.keyField).then(() =>
-                    refreshKeys().then(resolve))),
+                    refreshKeys().then(resolve));
+            }),
 
             message: <span>Added field <code key={1}>{this.props.keyField}</code>.</span>
         });
@@ -43,6 +55,10 @@ export class TypeModal extends Component {
 
     render() {
 
+
+        // This will choose text every time.
+        // Removing this re-enables the popup dialog where you
+        // can choose text/JSON/file.
 
         this.chooseText();
 

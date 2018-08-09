@@ -1,4 +1,4 @@
-import {selectedKey, refreshKeys} from '../components/KeyList';
+import {selectedKey, refreshKeys, tempKey} from '../components/KeyList';
 import {read, update, remove as removeKey} from 'bluzelle';
 import {observe} from 'mobx';
 
@@ -34,6 +34,8 @@ export const remove = () => new Promise(resolve => {
 
     const sk = selectedKey.get(); 
     selectedKey.set();
+
+    tempKey.set(sk);
 
     return removeKey(sk).then(() => {
         reload().then(resolve);

@@ -1,6 +1,6 @@
 import {ValIcon} from "../ObjIcon";
 import {EditableField} from "../EditableField";
-import {selectedKey} from "./KeyList";
+import {selectedKey, tempKey} from "./KeyList";
 import {activeValue, rename} from '../../services/CRUDService';
 
 import {execute} from '../../services/CommandQueueService';
@@ -57,6 +57,10 @@ export class KeyListItem extends Component {
 
                 <span>{keyname}</span>
 
+                {
+                    
+                }
+
 
                 {
 
@@ -86,6 +90,14 @@ const Icon = observer(({keyname}) =>
                 <ValIcon val={activeValue.get()}/>
                 
 
+        }
+
+        {
+            keyname === tempKey.get() &&
+                <BS.Glyphicon style={{ 
+                        color: 'orange'
+                    }}
+                    glyph='transfer'/>
         }
     </span>
 
