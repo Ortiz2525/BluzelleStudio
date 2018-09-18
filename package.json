@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "prod-compile": "cd src; NODE_ENV=production webpack -p",
     "dev-compile": "cd src; webpack --env.beep",
     "dev-compile-watch": "cd src; webpack --watch --env.beep",
