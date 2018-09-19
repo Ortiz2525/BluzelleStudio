@@ -13,32 +13,17 @@ const path = require('path');
 const port = process.env.PORT || 8080;
 const app = express();
 
-// app.use(express.static(__dirname + '/dist'));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/heroku/resources', bodyParser.json());
 app.use('/heroku/sso', bodyParser.urlencoded());
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/index.html'));
-});
-
-app.use('*', function addUUID(req, res, next) {
-  req.uuid = uuid.v4();
-  next();
-});
-
-//Health check
-app.get('/health', function(req, res) {
-  return res.status(200).end();
-});
-//Health check Kubernetes
-app.get('/', function(req, res) {
-  return res.status(200).end();
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 app.post('/heroku/sso', function(req,res) {
   
   if( !req.body || !req.body.id || !req.body.token || !req.body.timestamp) {
-    // failed
     return res.status(401).end();
   }
 
@@ -68,15 +53,11 @@ app.use('/heroku', function enforceAuth(req, res, next) {
   var creds = auth(req);
 
   if ( typeof creds === 'undefined' ) {
-    log.error(`${req.uuid}: Incoming request provided no auth data`);
     return res.status(401).end();
   }
 
   if ( creds.pass !== addonManifest.api.password ||
        creds.name !== addonManifest.id ) {
-    // If either the id or password don't match, reject the request
-    log.error(`${req.uuid}: Incomming request failed authentication`);
-    log.error(`${req.uuid}: ID: "${creds.name}" Password: "${creds.pass}"`);
     return res.status(401).end();
   }
 
