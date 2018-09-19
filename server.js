@@ -17,7 +17,7 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use('/heroku/resources', bodyParser.json());
 app.use('/heroku/sso', bodyParser.urlencoded());
 
-app.get('*', (_req, res) => {
+app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
