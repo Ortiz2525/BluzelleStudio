@@ -1,6 +1,8 @@
 
 'use strict'
 
+var addonManifest = require('./addon_manifest.json');
+
 const express = require('express');
 var bodyParser = require('body-parser');
 var auth = require('basic-auth');
@@ -46,6 +48,33 @@ app.post('/heroku/sso', function(req,res) {
   return res.redirect(`https://bluzelledashboard.herokuapp.com/`);
 });
 
+app.use('/heroku', function enforceAuth(req, res, next) {
+  var creds = auth(req);
 
+  if ( typeof creds === 'undefined' ) {
+    log.error(`${req.uuid}: Incoming request provided no auth data`);
+    return res.status(401).end();
+  }
+
+  if ( creds.pass !== addonManifest.api.password ||
+       creds.name !== addonManifest.id ) {
+    // If either the id or password don't match, reject the request
+    log.error(`${req.uuid}: Incomming request failed authentication`);
+    log.error(`${req.uuid}: ID: "${creds.name}" Password: "${creds.pass}"`);
+    return res.status(401).end();
+  }
+  // If we pass authentication, let the next handler take over
+  next();
+});
+
+app.post('/heroku/resources', function provisionRequest(req, res) {
+  var uuid = `${req.body.uuid}_${req.uuid.split('-').join('')}`;
+
+});
+
+
+app.put('/heroku/resources/:id', function(req, res) {
+
+});
 
 app.listen(port);
