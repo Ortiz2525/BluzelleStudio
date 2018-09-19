@@ -17,8 +17,8 @@ const app = express();
 app.use('/heroku/resources', bodyParser.json());
 app.use('/heroku/sso', bodyParser.urlencoded());
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'index.html'));
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 app.use('*', function addUUID(req, res, next) {
