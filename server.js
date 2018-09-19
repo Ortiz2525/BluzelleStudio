@@ -2,29 +2,45 @@
 'use strict'
 
 var addonManifest = require('./addon_manifest.json');
-
-const express = require('express');
+var config = require('./config');
+var uuid = require('node-uuid');
 var bodyParser = require('body-parser');
 var auth = require('basic-auth');
 var crypto = require('crypto');
+
+const express = require('express');
 const path = require('path');
 const port = process.env.PORT || 8080;
 const app = express();
 
-app.use(express.static(__dirname + '/dist'));
+//app.use(express.static(__dirname + '/dist'));
 app.use('/heroku/resources', bodyParser.json());
 app.use('/heroku/sso', bodyParser.urlencoded());
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'index.html'));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'index.html'));
+// });
+
+app.use('*', function addUUID(req, res, next) {
+  req.uuid = uuid.v4();
+  next();
+});
+
+// Health check
+app.get('/health', function(req, res) {
+  return res.status(200).end();
+});
+// Health check Kubernetes
+app.get('/', function(req, res) {
+  return res.status(200).end();
 });
 
 app.post('/heroku/sso', function(req,res) {
+  
   if( !req.body || !req.body.id || !req.body.token || !req.body.timestamp) {
     // failed
     return res.status(401).end();
   }
-
 
   //new hash
   var hash = crypto.createHash('sha1').update(`${req.body.id}:${config.heroku.sso_salt}:${req.body.timestamp}`).digest('hex');
@@ -67,6 +83,7 @@ app.use('/heroku', function enforceAuth(req, res, next) {
   // If we pass authentication, let the next handler take over
   next();
 });
+
 app.post('/heroku/resources', function provisionRequest(req, res) {
   var uuid = req.uuid;
   console.log(req.body);
@@ -77,7 +94,9 @@ app.post('/heroku/resources', function provisionRequest(req, res) {
 
 
 app.put('/heroku/resources/:id', function(req, res) {
-  return res.status(401).end();
+  return res.status(422).json({
+    'message': `No Plan Change for now!`
+  });
 });
 
 app.listen(port);
