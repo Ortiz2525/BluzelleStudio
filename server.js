@@ -2,6 +2,7 @@
 'use strict'
 
 var addonManifest = require('./addon_manifest.json');
+var routes = require("./routes.js");
 var config = require('./config');
 var uuid = require('node-uuid');
 var bodyParser = require('body-parser');
@@ -14,17 +15,14 @@ const path = require('path');
 const port = process.env.PORT || 8080;
 const app = express();
 
-userRouter.route('/').get(function (req, res) {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
-app.use('/', userRouter);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+routes(app);
+
 //app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use('/heroku/resources', bodyParser.json());
 app.use('/heroku/sso', bodyParser.urlencoded());
 
-// app.get('/', (_req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist/index.html'));
-// });
 
 app.post('/heroku/sso', function(req,res) {
   
