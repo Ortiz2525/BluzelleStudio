@@ -21,6 +21,6 @@
     "config_vars_prefix": "BLUZELLE"
   },
   "name": "Bluzelle",
-  "$base": 153733135107755,
+  "$base": 153738018463073,
   "cli_plugin_name": "bluzelle"
 }

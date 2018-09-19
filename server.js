@@ -63,18 +63,21 @@ app.use('/heroku', function enforceAuth(req, res, next) {
     log.error(`${req.uuid}: ID: "${creds.name}" Password: "${creds.pass}"`);
     return res.status(401).end();
   }
+
   // If we pass authentication, let the next handler take over
   next();
 });
-
 app.post('/heroku/resources', function provisionRequest(req, res) {
-  var uuid = `${req.body.uuid}_${req.uuid.split('-').join('')}`;
-
+  var uuid = req.uuid;
+  console.log(req.body);
+  res.json({
+    'id': uuid
+  });
 });
 
 
 app.put('/heroku/resources/:id', function(req, res) {
-
+  return res.status(401).end();
 });
 
 app.listen(port);
