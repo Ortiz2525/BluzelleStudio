@@ -13,7 +13,7 @@ const path = require('path');
 const port = process.env.PORT || 8080;
 const app = express();
 
-app.use(express.static(__dirname + '/dist'));
+// app.use(express.static(__dirname + '/dist'));
 app.use('/heroku/resources', bodyParser.json());
 app.use('/heroku/sso', bodyParser.urlencoded());
 
@@ -21,19 +21,19 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
-// app.use('*', function addUUID(req, res, next) {
-//   req.uuid = uuid.v4();
-//   next();
-// });
+app.use('*', function addUUID(req, res, next) {
+  req.uuid = uuid.v4();
+  next();
+});
 
-// Health check
-// app.get('/health', function(req, res) {
-//   return res.status(200).end();
-// });
-// Health check Kubernetes
-// app.get('/', function(req, res) {
-//   return res.status(200).end();
-// });
+//Health check
+app.get('/health', function(req, res) {
+  return res.status(200).end();
+});
+//Health check Kubernetes
+app.get('/', function(req, res) {
+  return res.status(200).end();
+});
 
 app.post('/heroku/sso', function(req,res) {
   
