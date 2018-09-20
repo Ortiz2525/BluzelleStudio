@@ -2,13 +2,10 @@
 'use strict'
 
 var addonManifest = require('./addon_manifest.json');
-var routes = require("./routes.js");
 var config = require('./config');
-var uuid = require('node-uuid');
 var bodyParser = require('body-parser');
 var auth = require('basic-auth');
 var crypto = require('crypto');
-var userRouter = express.Router();
 
 const express = require('express');
 const path = require('path');
@@ -17,12 +14,9 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-routes(app);
 
-//app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use('/heroku/resources', bodyParser.json());
 app.use('/heroku/sso', bodyParser.urlencoded());
-
 
 app.post('/heroku/sso', function(req,res) {
   
@@ -32,13 +26,10 @@ app.post('/heroku/sso', function(req,res) {
 
   //new hash
   var hash = crypto.createHash('sha1').update(`${req.body.id}:${config.heroku.sso_salt}:${req.body.timestamp}`).digest('hex');
-
   //old hash
   var legacyHash = crypto.createHash('sha1').update(`${req.body.id}:${config.heroku.legacy_salt}:${req.body.timestamp}`).digest('hex');
-
   //generate time
   var time = Math.abs(Date.now() - new Date((req.body.timestamp | 0) * 1000));
-
 
   if( (hash !== req.body.token && legacyHash !== req.body.token) || time > 100000) {
       // invalid hash
@@ -75,7 +66,6 @@ app.post('/heroku/resources', function provisionRequest(req, res) {
     'id': uuid
   });
 });
-
 
 app.put('/heroku/resources/:id', function(req, res) {
   return res.status(422).json({
