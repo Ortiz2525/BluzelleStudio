@@ -1,12 +1,6 @@
 
 'use strict'
 
-var addonManifest = require('./addon_manifest.json');
-var config = require('./config');
-var bodyParser = require('body-parser');
-var auth = require('basic-auth');
-var crypto = require('crypto');
-
 const express = require('express');
 const path = require('path');
 const port = process.env.PORT || 8080;
