@@ -9,19 +9,19 @@ var request = require('request');
 @observer
 export default class DaemonSelector extends Component {
 
-    getAddonConfigVars() {
-        var ops = {
-            uri: 'http://api.heroku.com/apps/exampleappdemo/config-vars',
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/vnd.heroku+json'
-            }
-        }
-        request(ops, function (error, response) {
-            console.log(error, response.body);
-            return;
-        });
-    }
+    // getAddonConfigVars() {
+    //     var ops = {
+    //         uri: 'http://api.heroku.com/apps/exampleappdemo/config-vars',
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/vnd.heroku+json'
+    //         }
+    //     }
+    //     request(ops, function (error, response) {
+    //         console.log(error, response.body);
+    //         return;
+    //     });
+    // }
 
     go() {
 
