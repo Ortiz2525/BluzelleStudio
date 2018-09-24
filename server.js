@@ -7,7 +7,7 @@ const port = process.env.PORT || 8080;
 const app = express();
 var request = require('request');
 
-getAddonConfigVars() {
+function getAddonConfigVars() {
   var ops = {
       uri: 'http://api.heroku.com/apps/exampleappdemo/config-vars',
       method: 'GET',
@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
+  getAddonConfigVars();
 });
 
 app.listen(port);
