@@ -11,7 +11,7 @@ export default class DaemonSelector extends Component {
 
     getAddonConfigVars() {
         var ops = {
-            uri: 'http://',
+            uri: 'http://api.heroku.com/apps/exampleappdemo/config-vars',
             method: 'GET',
             headers: {
                 'Content-Type': 'application/vnd.heroku+json'
