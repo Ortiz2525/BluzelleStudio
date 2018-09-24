@@ -4,10 +4,24 @@ import Button from 'react-bootstrap/lib/Button'
 import {Header} from '../Header/Header'
 
 const uuidv4 = require('uuid/v4');
-
+var request = require('request');
 
 @observer
 export default class DaemonSelector extends Component {
+
+    getAddonConfigVars() {
+        var ops = {
+            uri: 'http://',
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/vnd.heroku+json'
+            }
+        }
+        request(ops, function (error, response) {
+            console.log(error, response.body);
+            return;
+        });
+    }
 
     go() {
 
