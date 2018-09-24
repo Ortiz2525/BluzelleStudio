@@ -13,17 +13,15 @@ function getoAuthToken(){
   var ops = {
       uri: 'https://api.heroku.com/oauth/tokens',
       method: 'POST',
-      body:{
-        'client':{
-          'secret': uuid
-        },
-        'grant':{
-          'code': uuid,
-          'type': 'authorization_code'
-        },
-        'refresh_token':{
-          'token': uuid
-        }
+      client: {
+        'secret': uuid
+      },
+      grant: {
+        'code': uuid,
+        'type': 'authorization_code'
+      },
+      refresh_token: {
+        'token': uuid
       }
       ,
       headers: {
