@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "heroku-prebuild": "npm install",
     "start": "node server.js",
     "heroku-postbuild": "cd src; NODE_ENV=production webpack -p",
     "dev-compile": "cd src; webpack --env.beep",
