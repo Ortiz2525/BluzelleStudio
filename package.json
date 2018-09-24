@@ -8,7 +8,6 @@
     "main": "index.js",
     "scripts": {
       "start": "node server.js",
-      "heroku-postbuild": "cd src; webpack -p --config ./webpack.config.js --progress",
       "dev-compile": "cd src; webpack --env.beep",
       "dev-compile-watch": "cd src; webpack --watch --env.beep",
       "test-compile": "cd src; webpack --env.beep --config webpack-test.config.js",
