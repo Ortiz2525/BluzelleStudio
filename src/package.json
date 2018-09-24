@@ -2,6 +2,9 @@
   "name": "web",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "10.x"
+  },
   "main": "index.js",
   "scripts": {
     "prod-compile": "cd src; NODE_ENV=production webpack -p",
