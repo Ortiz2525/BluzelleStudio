@@ -16,7 +16,7 @@ function getAddonConfigVars() {
       }
   }
   request(ops, function (error, response) {
-      console.log(error, response.body);
+      console.log("this is a test " + error, response.body);
       return;
   });
 }
