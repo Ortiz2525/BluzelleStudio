@@ -12,7 +12,7 @@ function getAddonConfigVars() {
       uri: 'http://api.heroku.com/apps/exampleappdemo/config-vars',
       method: 'GET',
       headers: {
-          'Content-Type': 'application/vnd.heroku+json'
+          'Accept': 'application/vnd.heroku+json; version=3'
       }
   }
   request(ops, function (error, response) {
