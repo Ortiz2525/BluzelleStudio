@@ -1,9 +1,6 @@
 {
     "name": "web",
     "version": "1.0.0",
-    "engines": {
-      "node": "10.x"
-    },
     "description": "",
     "main": "index.js",
     "scripts": {
