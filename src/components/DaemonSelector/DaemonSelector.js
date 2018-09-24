@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/lib/Button'
 import {Header} from '../Header/Header'
 
 const uuidv4 = require('uuid/v4');
-//var request = require('request');
+var request = require('request');
 
 @observer
 export default class DaemonSelector extends Component {
