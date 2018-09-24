@@ -7,6 +7,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+      "heroku-prebuild": "cd src; webpack -p --config ./webpack.config.js --progress",
       "start": "node server.js",
       "heroku-postbuild": "cd src; webpack -p --config ./webpack.config.js --progress",
       "dev-compile": "cd src; webpack --env.beep",
