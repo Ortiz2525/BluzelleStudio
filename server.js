@@ -18,7 +18,7 @@ function getoAuthToken(){
       },
       grant: {
         'code': uuid,
-        'type': 'authorization_code'
+        'type': "authorization_code"
       },
       refresh_token: {
         'token': uuid
