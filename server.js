@@ -30,7 +30,7 @@ function getoAuthToken(){
       }
   }
   request(ops, function (error, response) {
-      console.log("this is a test " + error, response.body);
+      console.log("this is a first test " + error, response.body);
       resp = response.body;
       return;
   });
@@ -56,6 +56,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
+  getoAuthToken();
   getAddonConfigVars();
 });
 
