@@ -9,6 +9,7 @@ var request = require('request');
 var uuid = require('node-uuid');
 
 function getoAuthToken(){
+  var resp;
   var ops = {
       uri: 'https://api.heroku.com/oauth/tokens',
       method: 'POST',
@@ -32,8 +33,10 @@ function getoAuthToken(){
   }
   request(ops, function (error, response) {
       console.log("this is a test " + error, response.body);
+      resp = response.body;
       return;
   });
+  return resp;
 }
 
 function getAddonConfigVars() {
@@ -42,7 +45,7 @@ function getAddonConfigVars() {
       method: 'GET',
       headers: {
           'Accept': 'application/vnd.heroku+json; version=3',
-          'Authorization': 'Bearer <OAuth access token>'
+          'Authorization': 'Bearer ' + getoAuthToken().access_token.token
       }
   }
   request(ops, function (error, response) {
