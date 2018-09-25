@@ -42,6 +42,7 @@
     "file-loader": "^1.1.5",
     "forever-agent": "^0.6.1",
     "glob": "^7.1.2",
+    "isomorphic-fetch": "^2.2.1",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jiiis-jlayout": "^1.0.0",
     "jquery": "^3.2.1",
