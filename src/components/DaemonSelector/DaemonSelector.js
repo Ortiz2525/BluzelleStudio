@@ -2,12 +2,28 @@ import CenterMiddle from './CenterMiddle'
 import Panel from 'react-bootstrap/lib/Panel'
 import Button from 'react-bootstrap/lib/Button'
 import {Header} from '../Header/Header'
+// import fetch from 'isomorphic-fetch'
 
 const uuidv4 = require('uuid/v4');
-
+// var params = {
+                                                   
+// };
 
 @observer
 export default class DaemonSelector extends Component {
+
+    // getToken(){
+    //     return fetch('API URL', {
+    //         method: 'post',
+    //         body: JSON(stringfy(params)),
+    //         Content-Type: ''
+    //     }).then(
+    //         response => response.json(),
+    //         error => console.log("this is an error: " + error)
+    //     ).then(
+    //         res => console.log(res)
+    //     )
+    // }
 
     go() {
 
