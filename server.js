@@ -31,6 +31,7 @@ function getoAuthToken(){
       }
   }
   request(ops, function (error, response) {
+      console.log(ops);
       console.log("this is a first test " + error, response.body);
       resp = response.body;
       return;
