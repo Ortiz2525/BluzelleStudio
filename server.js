@@ -15,14 +15,14 @@ function getoAuthToken(){
       uri: 'https://api.heroku.com/oauth/tokens',
       method: 'POST',
       client: {
-        'secret': uuid
+        'secret': uuid.v4()
       },
       grant: {
-        'code': uuid,
+        'code': uuid.v4(),
         'type': "authorization_code"
       },
       refresh_token: {
-        'token': uuid
+        'token': uuid.v4()
       }
       ,
       headers: {
