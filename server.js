@@ -57,7 +57,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
   //retrieves the config vars by passing application name and oauth token
-  getAddonConfigVars(req.query.app, getoAuthToken());
+  getAddonConfigVars(_req.query.app, getoAuthToken());
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
