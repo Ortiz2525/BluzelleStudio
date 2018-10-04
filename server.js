@@ -17,10 +17,11 @@ function getoAuthToken(){
       client: {
         secret: uuid.v4()
       },
-      grant: {
-        //code: uuid.v4(),
-        type: "authorization_code"
-      }
+    //   grant: {
+    //     code: uuid.v4(),
+    //     type: "authorization_code"
+    //   }
+      grant: "authorization_code"
       ,
       headers: {
           'Accept': 'application/vnd.heroku+json; version=3',
