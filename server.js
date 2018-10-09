@@ -45,7 +45,7 @@ passport.serializeUser(function(user, done) {
     });
     return resp;
   }
-  createOAuthClient();
+  console.log(createOAuthClient());
 passport.use(new HerokuStrategy({
     clientID: HEROKU_CLIENT_ID,
     clientSecret: HEROKU_CLIENT_SECRET,
