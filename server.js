@@ -35,17 +35,17 @@ passport.serializeUser(function(user, done) {
     return resp;
   }
   console.log(createOAuthClient());
-passport.use(new HerokuStrategy({
-    clientID: HEROKU_CLIENT_ID,
-    clientSecret: HEROKU_CLIENT_SECRET,
-    callbackURL: "https://bluzelledashboard.herokuapp.com/auth/heroku/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    process.nextTick(function () {
-      return done(null, profile);
-    });
-  }
-));
+// passport.use(new HerokuStrategy({
+//     clientID: HEROKU_CLIENT_ID,
+//     clientSecret: HEROKU_CLIENT_SECRET,
+//     callbackURL: "https://bluzelledashboard.herokuapp.com/auth/heroku/callback"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     process.nextTick(function () {
+//       return done(null, profile);
+//     });
+//   }
+// ));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -54,24 +54,24 @@ app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.get('/auth/heroku',
-  passport.authenticate('heroku'),
-  function(req, res){
-    // The request will be redirected to Heroku for authentication, so this
-    // function will not be called.
-  });
+// app.get('/auth/heroku',
+//   passport.authenticate('heroku'),
+//   function(req, res){
+//     // The request will be redirected to Heroku for authentication, so this
+//     // function will not be called.
+//   });
 
-  app.get('/auth/heroku/callback', 
-        passport.authenticate('heroku', { failureRedirect: '/auth/heroku' }),
-        function(req, res) {
-           res.sendFile(path.join(__dirname, 'dist/index.html'));
-          //res.redirect('/');
-    });
+//   app.get('/auth/heroku/callback', 
+//         passport.authenticate('heroku', { failureRedirect: '/auth/heroku' }),
+//         function(req, res) {
+//            res.sendFile(path.join(__dirname, 'dist/index.html'));
+//           //res.redirect('/');
+//     });
 
     
 app.listen(port);
 
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-    res.redirect('/auth/heroku')
-  }
+// function ensureAuthenticated(req, res, next) {
+//     if (req.isAuthenticated()) { return next(); }
+//     res.redirect('/auth/heroku')
+// }
