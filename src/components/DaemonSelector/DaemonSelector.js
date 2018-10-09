@@ -24,14 +24,15 @@ export default class DaemonSelector extends Component {
         ).then(
             res => console.log(res)
         )
+        
     }
-getToken();
     go() {
 
         const ws_url = 'ws://' + this.address.value + ':' + this.port.value;
         const uuid = this.uuid.value;
 
         this.props.go(ws_url, uuid);
+        this.props.getToken();
     }
 
     checkEnterKey(ev) {
