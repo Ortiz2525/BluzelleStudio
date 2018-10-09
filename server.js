@@ -28,10 +28,10 @@ passport.serializeUser(function(user, done) {
     var ops = {
         uri: 'https://api.heroku.com/oauth/clients',
         method: 'POST',
-        body: {
-            'name': 'BluzelleDashboard',
-            'redirect_uri': 'https://example.com/auth/heroku/callback'
-        },
+
+        name: 'BluzelleDashboard',
+        redirect_uri: 'https://example.com/auth/heroku/callback',
+
         headers: {
             'Accept': 'application/vnd.heroku+json; version=3',
             'Content-Type': 'application/json'
