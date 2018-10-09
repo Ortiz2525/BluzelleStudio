@@ -25,23 +25,12 @@ passport.serializeUser(function(user, done) {
   console.log("-------------------------------------");
   function createOAuthClient(){
     var resp;
-    var ops = {
-        uri: 'https://api.heroku.com/oauth/clients',
-        method: 'POST',
-
-        name: 'BluzelleDashboard',
-        redirect_uri: 'https://example.com/auth/heroku/callback',
-
-        headers: {
-            'Accept': 'application/vnd.heroku+json; version=3',
-            'Content-Type': 'application/json'
+    request.post({url:'https://api.heroku.com/oauth/clients', name: 'BluzelleDashboard', redirect_uri: 'https://example.com/auth/heroku/callback'}, function optionalCallback(error, response, body) {
+        if (error) {
+            return console.error('upload failed:', error);
         }
-    }
-    request(ops, function (error, response) {
-        console.log(ops);
-        console.log("Test oauth client creation:  " + response.body);
-        resp = response.body;
-        return;
+        console.log('Server responded with:', body);
+        resp = body;
     });
     return resp;
   }
