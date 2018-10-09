@@ -23,6 +23,28 @@ passport.serializeUser(function(user, done) {
     done(null, obj);
   });
 
+  function createOAuthClient(){
+    var resp;
+    var ops = {
+        uri: 'https://api.heroku.com/oauth/clients',
+        method: 'POST',
+        body: {
+            'name': 'BluzelleDashboard',
+            'redirect_uri': 'https://example.com/auth/heroku/callback'
+        },
+        headers: {
+            'Accept': 'application/vnd.heroku+json; version=3',
+            'Content-Type': 'application/json'
+        }
+    }
+    request(ops, function (error, response) {
+        console.log(ops);
+        console.log("Test oauth client creation:  " + response.body);
+        resp = response.body;
+        return;
+    });
+    return resp;
+  }
 
 passport.use(new HerokuStrategy({
     clientID: HEROKU_CLIENT_ID,
