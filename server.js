@@ -22,7 +22,7 @@ passport.serializeUser(function(user, done) {
   passport.deserializeUser(function(obj, done) {
     done(null, obj);
   });
-
+  console.log("-------------------------------------");
   function createOAuthClient(){
     var resp;
     var ops = {
