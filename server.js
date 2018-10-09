@@ -12,8 +12,8 @@ const app = express();
 var request = require('request');
 var uuid = require('node-uuid');
 
-var HEROKU_CLIENT_ID = process.env.HEROKU_CLIENT_ID;
-var HEROKU_CLIENT_SECRET = process.env.HEROKU_CLIENT_SECRET;
+var HEROKU_CLIENT_ID = process.env.HEROKU_OAUTH_ID;
+var HEROKU_CLIENT_SECRET = process.env.HEROKU_OAUTH_SECRET;
 
 passport.serializeUser(function(user, done) {
     done(null, user);
