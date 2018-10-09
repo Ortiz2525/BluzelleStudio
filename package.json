@@ -58,6 +58,8 @@
     "mocha": "^4.1.0",
     "node-uuid": "^1.4.8",
     "nyc": "^11.2.1",
+    "passport": "^0.4.0",
+    "passport-heroku": "^1.0.0",
     "path": "0.12.7",
     "pkg-config": "^1.1.1",
     "promise-waitfor": "^2.0.0",
