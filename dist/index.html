@@ -10,5 +10,15 @@
     </div>
 </div>
 <script src="generated/js/index.js"></script>
+<script>
+function getAppName(){
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var appName = url.searchParams.get("app");
+    console.log(appName);
+}
+
+getAppName();
+</script>
 </body>
 </html>
