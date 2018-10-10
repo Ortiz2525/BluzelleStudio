@@ -34,12 +34,12 @@ export default class DaemonSelector extends Component {
     componentDidMount() {
         this.address.focus();
 
-        // fetch('/cfgvars')
-        // .then((response) => response.json())
+        fetch('/cfgvars')
+        .then((response) => response.json())
         // .then((app) => this.setState({
         //     app: app
         // }))
-        // .then(console.log(app));
+        .then(console.log(response));
     }
 
 
