@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
-  console.log(_req.originalUrl);
+  console.log(_req.toString());
   //var appName = _req.params.app;
   //getToken(appName);
 });
