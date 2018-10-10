@@ -27,13 +27,13 @@ function getToken(appName){
 }
 
 app.use(express.static(path.join(__dirname, 'dist')));
-// app.use(function (req, res, next) {
-//   res.sendFile(path.join(__dirname, 'dist/index.html'));
-//   next();
-// });
+app.use(function (req, res, next) {
+  console.log(_req.query.app);
+  next();
+});
 
 app.get('*', (_req, res) => {
-  console.log(_req.query.app);
+  //console.log(_req.query.app);
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
