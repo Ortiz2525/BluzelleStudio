@@ -9,11 +9,7 @@ const uuidv4 = require('uuid/v4');
                                                    
 // };
 
-@observer
-export default class DaemonSelector extends Component {
-
-    getToken(){
-        var appName = this.props.location.query.app;
+var appName = this.props.location.query.app;
         return fetch('https://api.heroku.com/apps/' + appName + '/config-vars', {
             method: 'GET',
             accept: 'application/vnd.heroku+json; version=3',
@@ -24,15 +20,30 @@ export default class DaemonSelector extends Component {
         ).then(
             res => console.log(res)
         )
+
+@observer
+export default class DaemonSelector extends Component {
+
+    // getToken(){
+    //     var appName = this.props.location.query.app;
+    //     return fetch('https://api.heroku.com/apps/' + appName + '/config-vars', {
+    //         method: 'GET',
+    //         accept: 'application/vnd.heroku+json; version=3',
+    //         authorization: 'Bearer 440fc53d-e177-4e3c-962a-570be65ab3f2'
+    //     }).then(
+    //         response => response.json(),
+    //         error => console.log("this is an error: " + error)
+    //     ).then(
+    //         res => console.log(res)
+    //     )
         
-    }
+    // }
     go() {
 
         const ws_url = 'ws://' + this.address.value + ':' + this.port.value;
         const uuid = this.uuid.value;
 
         this.props.go(ws_url, uuid);
-        this.props.getToken();
     }
 
     checkEnterKey(ev) {
