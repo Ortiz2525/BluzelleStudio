@@ -32,8 +32,8 @@ app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.get('/', (_req, res) => {
-  var appName = _req.query.app;
+app.get('/:app', (_req, res) => {
+  var appName = _req.params.app;
   getToken(appName);
 });  
     
