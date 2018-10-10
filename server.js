@@ -27,14 +27,14 @@ function getToken(appName){
 }
 
 app.use(express.static(path.join(__dirname, 'dist')));
-
+app.use(function (req, res, next) {
+  res.send("test: " + req.query.app);
+  next();
+});
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.get('/?app=examplechatbluzelle', (_req, res) => {
-  res.send("test: " + _req.query.app);
-});
     
 app.listen(port);
 
