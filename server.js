@@ -34,7 +34,6 @@ app.use(function (req, res, next) {
 
 app.get('*', (_req, res) => {
   console.log(_req.query.app);
-  res.send("test: " + _req.query.app);
 });
 
     
