@@ -37,6 +37,7 @@ export default class DaemonSelector extends Component {
         return (
             <CenterMiddle>
                 <Header/>
+                {this.getToken()}
                 <div onKeyUp={this.checkEnterKey.bind(this)}>
                     <Panel style={{marginTop: 20}} header={<h3>Choose a Bluzelle node</h3>}>
                         <div style={{width: 400, padding: 20}}>
