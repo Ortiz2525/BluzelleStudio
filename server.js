@@ -28,7 +28,7 @@ function getToken(appName){
 
 //app.use(express.static(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
-  console.log(_req.query.app);
+  console.log(req.query.app);
   next();
 });
 
