@@ -3,6 +3,7 @@
 
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -26,10 +27,12 @@ function getToken(appName){
 
 }
 
+app.use('*', bodyParser.json());
+app.use('*', bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
-  console.log("test 1 " + _req.body.toString());
+  console.log("test 1 " + _req.body);
   res.sendFile(path.join(__dirname, 'dist/index.html'));
   //var appName = _req.params.app;
   //getToken(appName);
