@@ -10,14 +10,13 @@ var request = require('request');
 var uuid = require('node-uuid');
 var fetchUrl = require("fetch").fetchUrl;
 
-function getToken(appName){
+function getVars(appName){
   var ops = {
     method: 'GET',
     headers: {
       "Authorization": "Bearer 440fc53d-e177-4e3c-962a-570be65ab3f2",
       "Accept": "application/vnd.heroku+json; version=3"
-    }
-    
+    } 
   };
 
   return fetchUrl('https://api.heroku.com/apps/' + appName + '/config-vars', ops, function(error, meta, body){
@@ -31,10 +30,10 @@ app.use('*', function (req, res, next) {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-// app.get('*', (_req, res) => {
-//   //console.log(_req.query.app);
-//   res.sendFile(path.join(__dirname, 'dist/index.html'));
-// });
+app.get('/cfgvars', (_req, res) => {
+  //getVars(_req.app);
+  res.send(getVars(_req.app));
+});
 
     
 app.listen(port);

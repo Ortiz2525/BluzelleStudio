@@ -10,15 +10,19 @@
     </div>
 </div>
 <script src="generated/js/index.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script>
 function getAppName(){
     var url_string = window.location.href;
     var url = new URL(url_string);
     var appName = url.searchParams.get("app");
-    console.log(appName);
+    
+    
 }
 
-getAppName();
+$.post( "/cfgvars", { app: getAppName() } );
+
 </script>
 </body>
 </html>

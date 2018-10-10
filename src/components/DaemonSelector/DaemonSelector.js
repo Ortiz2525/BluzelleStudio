@@ -12,6 +12,13 @@ const uuidv4 = require('uuid/v4');
 @observer
 export default class DaemonSelector extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+          app: ''
+        };
+    }
+
     go() {
 
         const ws_url = 'ws://' + this.address.value + ':' + this.port.value;
@@ -26,6 +33,13 @@ export default class DaemonSelector extends Component {
 
     componentDidMount() {
         this.address.focus();
+
+        fetch('/cfgvars')
+        .then((response) => response.json())
+        .then((app) => this.setState({
+            app: app
+        }))
+        .then(console.log(app));
     }
 
 
