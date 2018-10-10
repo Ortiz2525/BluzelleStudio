@@ -12,16 +12,15 @@ var fetchUrl = require("fetch").fetchUrl;
 
 function getToken(req){
   var appName = req.query.app;
-  return fetchUrl('https://api.heroku.com/apps/' + appName + '/config-vars', {
-      method: 'GET',
-      accept: 'application/vnd.heroku+json; version=3',
-      authorization: 'Bearer 440fc53d-e177-4e3c-962a-570be65ab3f2'
-  }).then(
-      response => response.json(),
-      error => console.log("this is an error: " + error)
-  ).then(
-      res => console.log(res)
-  )
+  var ops = {
+    method: 'GET',
+    accept: 'application/vnd.heroku+json; version=3',
+    authorization: 'Bearer 440fc53d-e177-4e3c-962a-570be65ab3f2'
+  };
+
+  return fetchUrl('https://api.heroku.com/apps/' + appName + '/config-vars', ops, function(error, meta, body){
+    console.log(body.toString());
+  }); 
   
 }
 
