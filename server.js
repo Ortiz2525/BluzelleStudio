@@ -10,8 +10,7 @@ var request = require('request');
 var uuid = require('node-uuid');
 var fetchUrl = require("fetch").fetchUrl;
 
-function getToken(req){
-  var appName = req.query.app;
+function getToken(appName){
   var ops = {
     method: 'GET',
     headers: {
@@ -31,9 +30,12 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
-  getToken(_req);
 });
 
+app.get('/', (_req, res) => {
+  var appName = _req.query.app;
+  getToken(appName);
+});  
     
 app.listen(port);
 
