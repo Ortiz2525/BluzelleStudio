@@ -12,10 +12,6 @@ const uuidv4 = require('uuid/v4');
 @observer
 export default class DaemonSelector extends Component {
 
-    getToken(){
-        this.props.getToken();
-    }
-
     go() {
 
         const ws_url = 'ws://' + this.address.value + ':' + this.port.value;
@@ -37,7 +33,6 @@ export default class DaemonSelector extends Component {
         return (
             <CenterMiddle>
                 <Header/>
-                {this.getToken()}
                 <div onKeyUp={this.checkEnterKey.bind(this)}>
                     <Panel style={{marginTop: 20}} header={<h3>Choose a Bluzelle node</h3>}>
                         <div style={{width: 400, padding: 20}}>
