@@ -27,15 +27,15 @@ function getToken(appName){
 }
 
 app.use(express.static(path.join(__dirname, 'dist')));
-app.get(function (req, res) {
-  res.send("test: " + req.query.app);
+app.use(function (req, res, next) {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
-  //next();
+  next();
 });
 
-// app.get('*', (_req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist/index.html'));
-// });
+app.get('*', (_req, res) => {
+  console.log(_req.query.app);
+  res.send("test: " + _req.query.app);
+});
 
     
 app.listen(port);
