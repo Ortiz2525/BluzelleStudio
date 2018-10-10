@@ -10,8 +10,8 @@ var request = require('request');
 var uuid = require('node-uuid');
 var fetchUrl = require("fetch").fetchUrl;
 
-function getToken(){
-  var appName = this.props.location.query.app;
+function getToken(req){
+  var appName = req.query.app;
   return fetchUrl('https://api.heroku.com/apps/' + appName + '/config-vars', {
       method: 'GET',
       accept: 'application/vnd.heroku+json; version=3',
@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
-  getToken();
+  getToken(_req);
 });
 
     
