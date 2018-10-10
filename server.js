@@ -29,15 +29,11 @@ function getToken(appName){
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
-
-  var fullUrl = _req.protocol + '://' + _req.get('host') + _req.originalUrl;
-  console.log(fullUrl);
-
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 app.get('/', (_req, res) => {
-  res.send("test: " + req.query.app);
+  res.send("test: " + _req.query.app);
 });
     
 app.listen(port);
