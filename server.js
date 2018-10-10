@@ -29,7 +29,8 @@ function getToken(appName){
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (_req, res) => {
-  if(fullUrl.includes("?")){
+
+  if (fullUrl.substring(0, 1) == "?") {
     var fullUrl = _req.protocol + '://' + _req.get('host') + _req.originalUrl;
     console.log(fullUrl);
   }
