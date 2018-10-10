@@ -28,6 +28,7 @@ function getToken(appName){
 
 //app.use(express.static(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
+  express.static(path.join(__dirname, 'dist'));
   res.sendFile(path.join(__dirname, 'dist/index.html'));
   next();
 });
