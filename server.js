@@ -27,7 +27,7 @@ function getToken(appName){
 }
 
 app.use(express.static("dist"));
-app.get(function (req, res) {
+app.use('*', function (req, res, next) {
   console.log(req.query.app);
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
