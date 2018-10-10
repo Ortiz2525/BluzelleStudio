@@ -32,6 +32,8 @@ app.use('*', function (req, res, next) {
 
 app.get('/cfgvars', (_req, res) => {
   //getVars(_req.app);
+  console.log(_req.app);
+  console.log(getVars(_req.app));
   res.send(getVars(_req.app));
 });
 
