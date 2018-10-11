@@ -41,9 +41,9 @@ export default class DaemonSelector extends Component {
         })
         .then(function(responseJson){
             console.log(responseJson);
-            this.portConfig.value = responseJson.BLUZELLE_PORT || '8100';
-            this.addressConfig.value = responseJson.BLUZELLE_ADDRESS || '127.0.0.1';
-            this.uuidConfig.value = responseJson.BLUZELLE_UUID || uuidv4();
+            this.port.value = responseJson.BLUZELLE_PORT || '8100';
+            this.address.value = responseJson.BLUZELLE_ADDRESS || '127.0.0.1';
+            this.uuid.value = responseJson.BLUZELLE_UUID || uuidv4();
             return responseJson;
         });
 
@@ -60,15 +60,15 @@ export default class DaemonSelector extends Component {
                         <div style={{width: 400, padding: 20}}>
                             <div style={{float: 'right', width: '15%'}}>
                                 <label style={{display: 'block'}}>Port:</label>
-                                <input type="text" tabIndex="2" ref={r => this.port = r} style={{width: '100%'}} defaultValue={r => this.portConfig = r} />
+                                <input type="text" tabIndex="2" ref={r => this.port = r} style={{width: '100%'}} defaultValue={r => this.port = r} />
                             </div>
                             <div style={{width: '80%'}}>
                                 <label style={{display: 'block'}}>Address:</label>
-                                <input type="text" tabIndex="1" ref={r => this.address = r} style={{width: '80%'}} placeholder="address" defaultValue={r => this.addressConfig = r}/>
+                                <input type="text" tabIndex="1" ref={r => this.address = r} style={{width: '80%'}} placeholder="address" defaultValue={r => this.address = r}/>
                             </div>
                             <div style={{width: '100%'}}>
                                 <label style={{display: 'block'}}>UUID:</label>
-                                <input type="text" tabIndex="1" ref={r => this.uuid = r} style={{width: '100%'}} placeholder="uuid" defaultValue={r => this.uuidConfig = r}/>
+                                <input type="text" tabIndex="1" ref={r => this.uuid = r} style={{width: '100%'}} placeholder="uuid" defaultValue={r => this.uuid = r}/>
                             </div>
                             <div style={{marginTop: 10}}>
                                     <Button onClick={this.go.bind(this)} tabIndex="3">Go</Button>
