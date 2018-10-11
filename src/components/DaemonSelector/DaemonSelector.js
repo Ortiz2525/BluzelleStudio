@@ -4,8 +4,6 @@ import Button from 'react-bootstrap/lib/Button'
 import {Header} from '../Header/Header'
 //new module addition
 import fetch from 'isomorphic-fetch'
-//new module addition
-import Router from 'next/router'
 
 const uuidv4 = require('uuid/v4');
 
@@ -41,7 +39,7 @@ export default class DaemonSelector extends Component {
         // // }))
         // .then(console.log(response));
 
-        console.log(Router.query);
+        console.log(window.location.href);
     }
 
 
