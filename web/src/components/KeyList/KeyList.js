@@ -64,7 +64,7 @@ export class KeyList extends Component {
                             activeValue.get() !== undefined &&
 
                             <BS.Button onClick={executeRemove} style={{color: 'red'}}>
-                                <BS.Glyphicon glyph='remove'/>
+                                <i className="fas fa-times"></i>
                             </BS.Button>
 
                         }
@@ -123,7 +123,7 @@ const executeReload = () => {
 const AddButton = ({onClick}) => 
 
     <BS.Button onClick={onClick} style={{color: 'green'}}>
-        <BS.Glyphicon glyph='plus'/>
+        <i className="fas fa-plus"></i>
     </BS.Button>;
 
 
@@ -131,16 +131,16 @@ const SaveReloadRemove = observer(({keyname}) =>
 
         <BS.ButtonGroup>
            <BS.Button onClick={executeReload} style={{color: 'DarkBlue'}}>
-                <BS.Glyphicon glyph='refresh'/>
-            </BS.Button>
+                <i className="fas fa-sync"></i>
+           </BS.Button>
 
             {
 
                 activeValue.get() !== undefined &&
                 
                 <BS.Button onClick={save} style={{color: 'DarkGreen'}}>
-                    <BS.Glyphicon glyph='floppy-save'/>
-                </BS.Button>
+                    <i className="fas fa-save"></i>
+               </BS.Button>
 
             }
 

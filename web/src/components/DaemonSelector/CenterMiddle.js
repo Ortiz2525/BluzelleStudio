@@ -6,7 +6,8 @@ const CenterMiddle = ({children}) => (
     </div>
 );
 
-export default CenterMiddle
+export default CenterMiddle;
+
 const wrapperStyle = {
     height: '100%',
     width: '100%',

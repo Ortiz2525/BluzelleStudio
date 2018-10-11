@@ -75,9 +75,8 @@ export class KeyListItem extends Component {
 
                     keyname === selectedKey.get() &&
 
-                        <BS.Glyphicon
-                            style={{float: 'right'}}
-                            glyph='chevron-right'/>
+                        <i style={{float: 'right'}}
+                            className="fas fa-chevron-right"></i>
 
                 }
 
@@ -103,10 +102,10 @@ const Icon = observer(({keyname}) =>
 
         {
             keyname === tempKey.get() &&
-                <BS.Glyphicon style={{ 
-                        color: 'orange'
-                    }}
-                    glyph='transfer'/>
+                <i 
+                    style={{color: 'orange'}}
+                    className="fas fa-exchange"></i>
+
         }
     </span>
 

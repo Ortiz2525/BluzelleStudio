@@ -47,9 +47,9 @@ export class PlainTextEditor extends Component {
 
             <div style={{height: '100%'}}>
                 <BS.Form style={{height: '100%'}}>
-                    <BS.FormControl
+                    <BS.Input
                         style={{height: '100%', resize: 'none'}}
-                        componentClass="textarea"
+                        type="textarea"
 
                         value={this.state.value}
 

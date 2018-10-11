@@ -1,6 +1,4 @@
 import CenterMiddle from './CenterMiddle'
-import Panel from 'react-bootstrap/lib/Panel'
-import Button from 'react-bootstrap/lib/Button'
 import {Header} from '../Header/Header'
 
 const uuidv4 = require('uuid/v4');
@@ -27,11 +25,12 @@ export default class DaemonSelector extends Component {
 
 
     render() {
+
         return (
             <CenterMiddle>
                 <Header/>
                 <div onKeyUp={this.checkEnterKey.bind(this)}>
-                    <Panel style={{marginTop: 20}} header={<h3>Choose a Bluzelle node</h3>}>
+                    <BS.Card style={{marginTop: 20}} header={<h3>Choose a Bluzelle node</h3>}>
                         <div style={{width: 400, padding: 20}}>
                             <div style={{float: 'right', width: '15%'}}>
                                 <label style={{display: 'block'}}>Port:</label>
@@ -46,10 +45,10 @@ export default class DaemonSelector extends Component {
                                 <input type="text" tabIndex="1" ref={r => this.uuid = r} style={{width: '100%'}} placeholder="uuid" defaultValue={uuidv4()}/>
                             </div>
                             <div style={{marginTop: 10}}>
-                                    <Button onClick={this.go.bind(this)} tabIndex="3">Go</Button>
+                                    <BS.Button onClick={this.go.bind(this)} tabIndex="3">Go</BS.Button>
                             </div>
                         </div>
-                    </Panel>
+                    </BS.Card>
                 </div>
             </CenterMiddle>
         );
