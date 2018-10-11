@@ -20,7 +20,7 @@ export default class DaemonSelector extends Component {
     }
 
     componentDidMount() {
-        this.address.focus();
+        // this.address.focus();
     }
 
 
@@ -32,7 +32,43 @@ export default class DaemonSelector extends Component {
                 <div onKeyUp={this.checkEnterKey.bind(this)}>
                     <BS.Card style={{marginTop: 20}} header={<h3>Choose a Bluzelle node</h3>}>
                         <div style={{width: 400, padding: 20}}>
-                            <div style={{float: 'right', width: '15%'}}>
+
+                            <BS.Form>
+
+                                <BS.FormGroup row>
+                                    <BS.Label sm={3} for="address">Address:</BS.Label>
+                                    <BS.Col sm={9}>
+                                        <BS.Input type="text" name="address" placeholder="testnet.bluzelle.com" innerRef={e => {this.address = e;}}/>
+                                    </BS.Col>
+                                </BS.FormGroup>
+
+                                <BS.FormGroup row>
+                                    <BS.Label sm={3} for="port">Port:</BS.Label>
+                                    <BS.Col sm={9}>
+                                        <BS.Input type="text" name="port" placeholder="51010" innerRef={e => {this.port = e;}}/>
+                                    </BS.Col>
+                                </BS.FormGroup>
+
+                                <BS.FormGroup row>
+                                    <BS.Label sm={3} for="uuid">UUID:</BS.Label>
+                                    <BS.Col sm={9}>
+                                        <BS.Input type="text" name="uuid" placeholder={uuidv4()} innerRef={e => {this.uuid = e;}}/>
+                                    </BS.Col>
+                                </BS.FormGroup>
+
+                                <hr/>
+
+                                <div style={{marginTop: 10}}>
+                                    <BS.Button 
+                                        color="primary"
+                                        style={{width: '100%'}}
+                                        onClick={this.go.bind(this)}>Go</BS.Button>
+                                </div>
+
+
+                            </BS.Form>
+
+                            {/*<div style={{float: 'right', width: '15%'}}>
                                 <label style={{display: 'block'}}>Port:</label>
                                 <input type="text" tabIndex="2" ref={r => this.port = r} style={{width: '100%'}} defaultValue="8100" />
                             </div>
@@ -46,7 +82,7 @@ export default class DaemonSelector extends Component {
                             </div>
                             <div style={{marginTop: 10}}>
                                     <BS.Button onClick={this.go.bind(this)} tabIndex="3">Go</BS.Button>
-                            </div>
+                            </div>*/}
                         </div>
                     </BS.Card>
                 </div>
