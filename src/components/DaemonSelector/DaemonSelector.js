@@ -5,19 +5,22 @@ import {Header} from '../Header/Header'
 //new module addition
 import fetch from 'isomorphic-fetch'
 
-const uuidv4 = require('uuid/v4');
-
 @observer
 export default class DaemonSelector extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-          app: ''
-        };
+    go() {
+
+        const ws_url = 'ws://' + this.address.value + ':' + this.port.value;
+        const uuid = this.uuid.value;
+
+        this.props.go(ws_url, uuid);
     }
 
-    go() {
+    checkEnterKey(ev) {
+        ev.keyCode === 13 && this.go();
+    }
+
+    componentDidMount() {
 
         const appName = decodeURIComponent(window.location.search
             .replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent("app")
@@ -34,28 +37,16 @@ export default class DaemonSelector extends Component {
 
         fetch('https://api.heroku.com/apps/' + appName + '/config-vars', requestObject)
         .then(function(response){
-            console.log(response);
             return response.json();
         })
         .then(function(responseJson){
             console.log(responseJson);
+            this.portConfig.value = responseJson.BLUZELLE_PORT || '8100';
+            this.addressConfig.value = responseJson.BLUZELLE_ADDRESS || '127.0.0.1';
+            this.uuidConfig.value = responseJson.BLUZELLE_UUID || uuidv4();
             return responseJson;
         });
-          
-        // Would write the value of the QueryString-variable called name to the console  
-        //console.log(appName); 
 
-        const ws_url = 'ws://' + this.address.value + ':' + this.port.value;
-        const uuid = this.uuid.value;
-
-        this.props.go(ws_url, uuid);
-    }
-
-    checkEnterKey(ev) {
-        ev.keyCode === 13 && this.go();
-    }
-
-    componentDidMount() {
         this.address.focus();
     }
 
@@ -69,15 +60,15 @@ export default class DaemonSelector extends Component {
                         <div style={{width: 400, padding: 20}}>
                             <div style={{float: 'right', width: '15%'}}>
                                 <label style={{display: 'block'}}>Port:</label>
-                                <input type="text" tabIndex="2" ref={r => this.port = r} style={{width: '100%'}} defaultValue="8100" />
+                                <input type="text" tabIndex="2" ref={r => this.port = r} style={{width: '100%'}} defaultValue={r => this.portConfig = r} />
                             </div>
                             <div style={{width: '80%'}}>
                                 <label style={{display: 'block'}}>Address:</label>
-                                <input type="text" tabIndex="1" ref={r => this.address = r} style={{width: '80%'}} placeholder="address" defaultValue="127.0.0.1"/>
+                                <input type="text" tabIndex="1" ref={r => this.address = r} style={{width: '80%'}} placeholder="address" defaultValue={r => this.addressConfig = r}/>
                             </div>
                             <div style={{width: '100%'}}>
                                 <label style={{display: 'block'}}>UUID:</label>
-                                <input type="text" tabIndex="1" ref={r => this.uuid = r} style={{width: '100%'}} placeholder="uuid" defaultValue={uuidv4()}/>
+                                <input type="text" tabIndex="1" ref={r => this.uuid = r} style={{width: '100%'}} placeholder="uuid" defaultValue={r => this.uuidConfig = r}/>
                             </div>
                             <div style={{marginTop: 10}}>
                                     <Button onClick={this.go.bind(this)} tabIndex="3">Go</Button>
