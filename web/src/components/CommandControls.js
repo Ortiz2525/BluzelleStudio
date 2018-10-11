@@ -11,15 +11,22 @@ export class CommandControls extends Component {
     render() {
 
         const undoButton =
-            <BS.Button onClick={undo}
-                       disabled={!canUndo()}>
+            <BS.Button 
+                outline
+                color="primary"
+                onClick={undo}
+               disabled={!canUndo()}>
 
                 <i className="fas fa-chevron-left"></i>
             </BS.Button>;
 
         const redoButton =
-            <BS.Button onClick={redo}
-                       disabled={!canRedo()}>
+            <BS.Button 
+                outline
+                color="primary"
+                onClick={redo}
+                disabled={!canRedo()}>
+               
                 <i className="fas fa-chevron-right"></i>
             </BS.Button>;
 
@@ -30,13 +37,18 @@ export class CommandControls extends Component {
             </BS.ButtonGroup>;
 
         const historyButton =
-            <BS.Button style={{marginRight: 10}}
-                       onClick={() => this.setState({show: true})}>
+            <BS.Button 
+                color="info"
+                style={{marginRight: 10}}
+                onClick={() => this.setState({show: true})}>
                 <i className="fas fa-history"></i>
             </BS.Button>;
 
         const closeButton =
-            <BS.Button style={{float: 'right'}}
+            <BS.Button 
+                outline
+                color="secondary"
+                style={{float: 'right'}}
                        onClick={() => this.setState({show: false})}>
                 <i className="fas fa-times"></i>
             </BS.Button>;

@@ -4,7 +4,7 @@ import {activeValue, save, remove, reload} from '../../services/CRUDService';
 import {execute, removePreviousHistory, updateHistoryMessage} from '../../services/CommandQueueService';
 import {observe} from 'mobx';
 import {create, update, keys as bzkeys} from 'bluzelle';
-
+import {Fragment} from 'react';
 
 export const selectedKey = observable(undefined);
 
@@ -43,37 +43,52 @@ export class KeyList extends Component {
             <KeyListItem key={keyname} keyname={keyname}/>);
 
         return (
+            <Fragment>
             <div style={{padding: 10}}>
+
                 <BS.ListGroup>
 
                     {keyList}
+
+                    {keyList.length === 0 &&
+                     !this.state.showNewKey &&
+
+                        <h5 style={{
+                            fontStyle: 'italic',
+                            color: "#999999"
+                        }}>Empty...</h5>}
 
                     { this.state.showNewKey &&
                         <NewKeyField onChange={() => this.setState({showNewKey: false})}/> }
                 
                 </BS.ListGroup>
-
+            </div>
+            <hr/>
+            <div style={{padding: 10}}>
 
                 <BS.ButtonToolbar>
                     <BS.ButtonGroup>
-
                         <AddButton onClick={() => this.setState({showNewKey: true})}/>
                         
                         {
 
                             activeValue.get() !== undefined &&
 
-                            <BS.Button onClick={executeRemove} style={{color: 'red'}}>
+                            <BS.Button 
+                                outline
+                                color="danger"
+                                onClick={executeRemove}>
+
                                 <i className="fas fa-times"></i>
                             </BS.Button>
 
                         }
 
+                        <SaveReloadRemove/>
                     </BS.ButtonGroup>
-
-                    <SaveReloadRemove/>
                 </BS.ButtonToolbar>
             </div>
+            </Fragment>
         );
     }
 }
@@ -122,15 +137,23 @@ const executeReload = () => {
 
 const AddButton = ({onClick}) => 
 
-    <BS.Button onClick={onClick} style={{color: 'green'}}>
+    <BS.Button 
+        outline
+        color="success"
+        onClick={onClick}>
+
         <i className="fas fa-plus"></i>
     </BS.Button>;
 
 
 const SaveReloadRemove = observer(({keyname}) =>
 
-        <BS.ButtonGroup>
-           <BS.Button onClick={executeReload} style={{color: 'DarkBlue'}}>
+        <Fragment>
+           <BS.Button 
+            outline
+            color="info"
+            onClick={executeReload}>
+
                 <i className="fas fa-sync"></i>
            </BS.Button>
 
@@ -138,10 +161,13 @@ const SaveReloadRemove = observer(({keyname}) =>
 
                 activeValue.get() !== undefined &&
                 
-                <BS.Button onClick={save} style={{color: 'DarkGreen'}}>
+                <BS.Button 
+                    color="success"
+                    onClick={save}>
+                    
                     <i className="fas fa-save"></i>
                </BS.Button>
 
             }
 
-        </BS.ButtonGroup>);
+        </Fragment>);

@@ -58,15 +58,13 @@ export class EditableField extends Component {
                   <BS.Form inline
                         style={{display: 'inline'}}
                         onSubmit={this.handleSubmit.bind(this)}>
-                      <BS.FormGroup
-                          valid={validateJSON ? this.validationState() : null}>
-                          <SelectedInput
-                              type='text'
-                              value={this.state.formValue}
-                              onChange={this.handleChange.bind(this)}
-                              onBlur={this.handleSubmit.bind(this)}
-                          />
-                      </BS.FormGroup>
+                     
+                        <SelectedInput
+                            type='text'
+                            value={this.state.formValue}
+                            onChange={this.handleChange.bind(this)}
+                            onBlur={this.handleSubmit.bind(this)}
+                        />
                   </BS.Form>
                   : <span style={{
                       textDecoration: this.state.hovering ? 'underline' : 'none',

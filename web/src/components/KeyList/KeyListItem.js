@@ -75,7 +75,10 @@ export class KeyListItem extends Component {
 
                     keyname === selectedKey.get() &&
 
-                        <i style={{float: 'right'}}
+                        <i style={{
+                                float: 'right',
+                                lineHeight: '24px'
+                            }}
                             className="fas fa-chevron-right"></i>
 
                 }
