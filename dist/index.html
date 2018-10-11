@@ -15,17 +15,17 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-var socket = io();
+// var socket = io();
 
-socket.on('appName', getAppName)
+// socket.on('appName', getAppName)
 
-function getAppName(){
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var appName = url.searchParams.get("app");
+// function getAppName(){
+//     var url_string = window.location.href;
+//     var url = new URL(url_string);
+//     var appName = url.searchParams.get("app");
 
-    $.post( "/cfgvars", { app: getAppName() } );
-}
+//     $.post( "/cfgvars", { app: getAppName() } );
+// }
 
 
 
