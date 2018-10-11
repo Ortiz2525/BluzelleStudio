@@ -39,7 +39,14 @@ export default class DaemonSelector extends Component {
         // // }))
         // .then(console.log(response));
 
-        console.log(window.location.href);
+ 
+        var appName = decodeURIComponent(window.location.search
+            .replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent("app")
+            .replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+
+          
+          // Would write the value of the QueryString-variable called name to the console  
+          console.log(appName); 
     }
 
 
