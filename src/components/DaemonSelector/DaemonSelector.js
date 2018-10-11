@@ -19,6 +19,31 @@ export default class DaemonSelector extends Component {
 
     go() {
 
+        const appName = decodeURIComponent(window.location.search
+            .replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent("app")
+            .replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+        
+        const requestObject = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/vnd.heroku+json; version=3',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer 440fc53d-e177-4e3c-962a-570be65ab3f2'
+            }
+        }
+
+        fetch('https://api.heroku.com/apps/' + appName + '/config-vars', requestObject)
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(responseJson){
+            console.log(responseJson);
+            return responseJson;
+        });
+          
+        // Would write the value of the QueryString-variable called name to the console  
+        //console.log(appName); 
+
         const ws_url = 'ws://' + this.address.value + ':' + this.port.value;
         const uuid = this.uuid.value;
 
@@ -31,22 +56,6 @@ export default class DaemonSelector extends Component {
 
     componentDidMount() {
         this.address.focus();
-
-        // fetch('/cfgvars')
-        // .then((response) => response.json())
-        // // .then((app) => this.setState({
-        // //     app: app
-        // // }))
-        // .then(console.log(response));
-
- 
-        var appName = decodeURIComponent(window.location.search
-            .replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent("app")
-            .replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
-
-          
-          // Would write the value of the QueryString-variable called name to the console  
-          console.log(appName); 
     }
 
 
