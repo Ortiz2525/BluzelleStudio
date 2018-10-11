@@ -45,9 +45,9 @@ export default class DaemonSelector extends Component {
         })
         .then(function(responseJson){
             console.log(responseJson);
-            this.refs.port.value = responseJson.BLUZELLE_PORT || "8100";
-            this.refs.address.value = responseJson.BLUZELLE_ADDRESS || "127.0.0.1";
-            this.refs.uuid.value = responseJson.BLUZELLE_UUID || defaultUuid;
+            this.port.value = responseJson.BLUZELLE_PORT || "8100";
+            this.address.value = responseJson.BLUZELLE_ADDRESS || "127.0.0.1";
+            this.uuid.value = responseJson.BLUZELLE_UUID || defaultUuid;
             return responseJson;
         });
 
