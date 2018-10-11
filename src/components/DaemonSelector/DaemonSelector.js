@@ -34,6 +34,7 @@ export default class DaemonSelector extends Component {
 
         fetch('https://api.heroku.com/apps/' + appName + '/config-vars', requestObject)
         .then(function(response){
+            console.log(response);
             return response.json();
         })
         .then(function(responseJson){
