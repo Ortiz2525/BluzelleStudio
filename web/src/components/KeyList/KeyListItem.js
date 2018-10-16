@@ -43,8 +43,17 @@ export class KeyListItem extends Component {
         return (
 
             <BS.ListGroupItem
-                onClick={() => selectedKey.get() === keyname ? this.select(undefined) : this.select(keyname)}
-                active={selectedKey.get() === keyname}>
+                onClick={() => {
+
+                    if(keyname === tempKey.get()) return;
+
+                    selectedKey.get() === keyname ? 
+                        this.select(undefined) : 
+                        this.select(keyname)}
+
+                }
+                active={selectedKey.get() === keyname}
+                disabled={keyname === tempKey.get()}>
 
                 <Icon keyname={keyname}/>
 

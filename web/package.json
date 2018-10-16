@@ -58,7 +58,7 @@
     "react-data-grid": "2.0.73-am-fix-defaultprops-warnings3202",
     "react-dom": "^16.4.2",
     "react-layout-pane": "^0.1.16",
-    "react-reflex": "^2.2.8",
+    "react-reflex": "^2.2.9",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-test-renderer": "^16.4.2",

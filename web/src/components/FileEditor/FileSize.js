@@ -17,7 +17,7 @@ export class FileSize extends Component {
         }
 
         if(numBytes < 1e12) {
-            return <span>{Math.floor(numBytes / 1e9)} GB</span>;y
+            return <span>{Math.floor(numBytes / 1e9)} GB</span>;
         }
     }
 
