@@ -20,7 +20,7 @@ export default class DaemonSelector extends Component {
     }
 
     componentDidMount() {
-        // this.address.focus();
+        this.address.focus();
     }
 
 
