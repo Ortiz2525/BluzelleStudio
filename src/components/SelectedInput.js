@@ -4,11 +4,12 @@ export class SelectedInput extends Component {
     }
 
     render() {
+
         return (
-            <BS.FormControl
+            <BS.Input
                 type='text'
                 {...this.props}
-                inputRef={c => this.input = c}/>
+                innerRef={c => this.input = c}/>
         );
     }
 }

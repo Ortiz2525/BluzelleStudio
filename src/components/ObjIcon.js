@@ -1,8 +1,12 @@
 export const TextIcon = () => 
-	<BS.Glyphicon glyph='font'/>;
+    <span></span>;
+
+// <BS.Glyphicon glyph='font'/>;
 
 export const FileIcon = () => 
-	<BS.Glyphicon glyph='file'/>;
+    TextIcon();
+
+//<BS.Glyphicon glyph='file'/>;
 
 export const JSONIcon = () =>
     <span style={{
@@ -34,6 +38,6 @@ export const ValIcon = ({val}) => {
 
 	}
 
-	return <BS.Glyphicon glyph='question-sign'/>;
+	return <FileIcon/>; // <BS.Glyphicon glyph='question-sign'/>;
 
 };

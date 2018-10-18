@@ -84,7 +84,7 @@ module.exports = {
             React: 'react',
             Fragment: ['react', 'Fragment'],
 
-            BS: 'react-bootstrap',
+            BS: 'reactstrap',
 
             Component: ['react', 'Component'],
 

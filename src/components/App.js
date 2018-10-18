@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+
 import {HashRouter, Route} from 'react-router-dom'
 import {Main} from 'components/Main'
 import {execute} from "../services/CommandQueueService";
@@ -29,6 +31,7 @@ export class App extends Component {
         
         connect(ws_url, uuid);
 
+
         keys().then(() => {
 
             this.setState({
@@ -42,6 +45,7 @@ export class App extends Component {
         });
 
     }
+
 
     render() {
 

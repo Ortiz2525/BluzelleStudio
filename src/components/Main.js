@@ -20,6 +20,7 @@ export class Main extends Component {
 
                             <CommandControls/>
                             <hr/>
+
                             <KeyList/>
 
                         </ReflexElement>

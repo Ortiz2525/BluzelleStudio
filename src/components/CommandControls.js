@@ -11,16 +11,23 @@ export class CommandControls extends Component {
     render() {
 
         const undoButton =
-            <BS.Button onClick={undo}
-                       disabled={!canUndo()}>
+            <BS.Button 
+                outline
+                color="primary"
+                onClick={undo}
+               disabled={!canUndo()}>
 
-                <BS.Glyphicon glyph='chevron-left'/>
+                <i className="fas fa-chevron-left"></i>
             </BS.Button>;
 
         const redoButton =
-            <BS.Button onClick={redo}
-                       disabled={!canRedo()}>
-                <BS.Glyphicon glyph='chevron-right'/>
+            <BS.Button 
+                outline
+                color="primary"
+                onClick={redo}
+                disabled={!canRedo()}>
+               
+                <i className="fas fa-chevron-right"></i>
             </BS.Button>;
 
         const undoRedo =
@@ -30,19 +37,20 @@ export class CommandControls extends Component {
             </BS.ButtonGroup>;
 
         const historyButton =
-            <BS.OverlayTrigger placement="bottom" overlay={
-                <BS.Tooltip id="list-tooltip">History</BS.Tooltip>
-            }>
-                <BS.Button style={{marginRight: 10}}
-                           onClick={() => this.setState({show: true})}>
-                    <BS.Glyphicon glyph='list'/>
-                </BS.Button>
-            </BS.OverlayTrigger>;
+            <BS.Button 
+                color="info"
+                style={{marginRight: 10}}
+                onClick={() => this.setState({show: true})}>
+                <i className="fas fa-history"></i>
+            </BS.Button>;
 
         const closeButton =
-            <BS.Button style={{float: 'right'}}
+            <BS.Button 
+                outline
+                color="secondary"
+                style={{float: 'right'}}
                        onClick={() => this.setState({show: false})}>
-                <BS.Glyphicon glyph='remove'/>
+                <i className="fas fa-times"></i>
             </BS.Button>;
 
 
@@ -56,14 +64,14 @@ export class CommandControls extends Component {
                     {message}
                 </BS.ListGroupItem>);
 
-
         return (
             <div style={{padding: 10}}>
 
                 {undoRedo}
                 {historyButton}
 
-                <BS.Modal show={this.state.show}
+                <BS.Modal isOpen={this.state.show}
+                          toggle={() => this.setState({show: !this.state.show})}
                           onHide={() => this.setState({show: false})}>
                     <div style={{padding: 10}}>
                         {undoRedo}

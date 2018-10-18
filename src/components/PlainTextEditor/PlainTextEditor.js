@@ -47,10 +47,16 @@ export class PlainTextEditor extends Component {
 
             <div style={{height: '100%'}}>
                 <BS.Form style={{height: '100%'}}>
-                    <BS.FormControl
-                        style={{height: '100%', resize: 'none'}}
-                        componentClass="textarea"
-
+                    <BS.Input
+                        style={{
+                            height: '100%', 
+                            resize: 'none',
+                            border: 'none',
+                            borderRadius: 0,
+                            borderLeft: '2px solid #007bff'
+                        }}
+                        type="textarea"
+                        placeholder="Enter value here"
                         value={this.state.value}
 
                         onChange={this.onChange.bind(this)}

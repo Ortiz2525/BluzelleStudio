@@ -1,4 +1,3 @@
-import {Form, FormGroup} from 'react-bootstrap';
 import {SelectedInput} from "./SelectedInput";
 
 export class EditableField extends Component {
@@ -56,20 +55,17 @@ export class EditableField extends Component {
                 this.setState({ formActive: true, hovering: false })
             }}>
               {this.state.formActive ?
-                  <Form inline
+                  <BS.Form inline
                         style={{display: 'inline'}}
                         onSubmit={this.handleSubmit.bind(this)}>
-                      <FormGroup
-                          controlId='JSONForm'
-                          validationState={validateJSON ? this.validationState() : null}>
-                          <SelectedInput
-                              type='text'
-                              value={this.state.formValue}
-                              onChange={this.handleChange.bind(this)}
-                              onBlur={this.handleSubmit.bind(this)}
-                          />
-                      </FormGroup>
-                  </Form>
+                     
+                        <SelectedInput
+                            type='text'
+                            value={this.state.formValue}
+                            onChange={this.handleChange.bind(this)}
+                            onBlur={this.handleSubmit.bind(this)}
+                        />
+                  </BS.Form>
                   : <span style={{
                       textDecoration: this.state.hovering ? 'underline' : 'none',
                       cursor: 'pointer'

@@ -43,32 +43,32 @@ export class KeyListItem extends Component {
         return (
 
             <BS.ListGroupItem
-                onClick={() => selectedKey.get() === keyname ? this.select(undefined) : this.select(keyname)}
-                active={selectedKey.get() === keyname}>
+                onClick={() => {
+
+                    if(keyname === tempKey.get()) return;
+
+                    selectedKey.get() === keyname ? 
+                        this.select(undefined) : 
+                        this.select(keyname)}
+
+                }
+                active={selectedKey.get() === keyname}
+                color={keyname === tempKey.get() && 'warning'}>
 
                 <Icon keyname={keyname}/>
 
 
-
-          {/*      <EditableField
-                    val={keyname}
-                    onChange={this.rename.bind(this)}/>
-*/}
-
                 <span>{keyname}</span>
-
-                {
-                    
-                }
-
 
                 {
 
                     keyname === selectedKey.get() &&
 
-                        <BS.Glyphicon
-                            style={{float: 'right'}}
-                            glyph='chevron-right'/>
+                        <i style={{
+                                float: 'right',
+                                lineHeight: '24px'
+                            }}
+                            className="fas fa-chevron-right"></i>
 
                 }
 
@@ -94,10 +94,10 @@ const Icon = observer(({keyname}) =>
 
         {
             keyname === tempKey.get() &&
-                <BS.Glyphicon style={{ 
-                        color: 'orange'
-                    }}
-                    glyph='transfer'/>
+                <i 
+                    style={{color: 'orange'}}
+                    className="fas fa-exchange"></i>
+
         }
     </span>
 

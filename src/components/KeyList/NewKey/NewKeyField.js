@@ -38,7 +38,7 @@ export class NewKeyField extends Component {
                 <BS.ListGroupItem>
                 
                     <span style={{display: 'inline-block', width: 25}}>
-                        <BS.Glyphicon glyph='asterisk'/>
+                        {/* <BS.Glyphicon glyph='asterisk'/> */}
                     </span>
 
                     <EditableField
