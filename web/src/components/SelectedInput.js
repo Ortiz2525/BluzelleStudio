@@ -9,7 +9,8 @@ export class SelectedInput extends Component {
             <BS.Input
                 type='text'
                 {...this.props}
-                innerRef={c => this.input = c}/>
+                innerRef={c => this.input = c}
+                style={{width: '100%'}}/>
         );
     }
 }

@@ -1,5 +1,6 @@
 import {Editor} from "./Editor";
 import {KeyList} from "./KeyList";
+import {Log} from "./Log";
 import {Header} from "./Header/Header";
 import 'bootstrap/dist/css/bootstrap.css';
 import {CommandControls} from "./CommandControls";
@@ -16,15 +17,17 @@ export class Main extends Component {
                 </div>
                 <ReflexElement flex={1}>
                     <ReflexContainer orientation='vertical'>
-                        <ReflexElement flex={0.4}>
+                        <ReflexElement flex={0.5}>
 
                             <CommandControls/>
                             <hr/>
                             <KeyList/>
+                            <br/>
+                            <Log/>
 
                         </ReflexElement>
                         <ReflexSplitter/>
-                        <ReflexElement>
+                        <ReflexElement flex={0.5}>
 
                             <Editor/>
 

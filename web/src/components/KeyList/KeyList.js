@@ -3,7 +3,7 @@ import {NewKeyField} from "./NewKey/NewKeyField";
 import {activeValue, save, remove, reload} from '../../services/CRUDService';
 import {execute, removePreviousHistory, updateHistoryMessage} from '../../services/CommandQueueService';
 import {observe} from 'mobx';
-import {create, update, keys as bzkeys} from 'bluzelle';
+import {getClient} from '../../services/BluzelleService'
 import {Fragment} from 'react';
 
 export const selectedKey = observable(undefined);
@@ -12,7 +12,7 @@ export const keys = observable([]);
 
 
 export const refreshKeys = () => 
-    bzkeys().then(k => keys.replace(k));
+    getClient().keys().then(k => keys.replace(k)).catch(() => alert('Failed to fetch keys due to bluzelle network error.'));
 
 export const tempKey = observable.box();
 
@@ -88,12 +88,6 @@ export class KeyList extends Component {
                     </BS.ButtonGroup>
                 </BS.ButtonToolbar>
             </div>
-
-            <hr/>
-
-            <div style={{padding: 10}}>
-                
-            </div>
             </Fragment>
         );
     }
@@ -110,14 +104,16 @@ const executeRemove = () => {
 
         doIt: () => remove(),
 
-        undoIt: () => new Promise(resolve =>
+        undoIt: () => new Promise(resolve => {
 
-            create(sk, val).then(() => reload().then(() => {
+            return getClient().create(sk, val).then(() => reload().then(() => {
 
                 selectedKey.set(sk);
                 resolve();
 
-            }))),
+            })).catch(() => alert('Undo failed due to bluzelle network error.'));
+
+        }),
 
         message: <span>Removed key <code key={1}>{sk}</code>.</span>
 

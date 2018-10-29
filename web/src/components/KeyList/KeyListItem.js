@@ -53,23 +53,12 @@ export class KeyListItem extends Component {
 
                 }
                 active={selectedKey.get() === keyname}
-                disabled={keyname === tempKey.get()}>
+                color={keyname === tempKey.get() ? 'warning' : ''}>
 
                 <Icon keyname={keyname}/>
 
 
-
-          {/*      <EditableField
-                    val={keyname}
-                    onChange={this.rename.bind(this)}/>
-*/}
-
                 <span>{keyname}</span>
-
-                {
-                    
-                }
-
 
                 {
 

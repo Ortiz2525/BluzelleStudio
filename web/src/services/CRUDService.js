@@ -1,12 +1,9 @@
 import {selectedKey, refreshKeys, tempKey} from '../components/KeyList';
-import {read, update, remove as removeKey} from 'bluzelle';
+import {getClient} from './BluzelleService'
 import {observe} from 'mobx';
 
 export const activeValue = observable(undefined);
 
-
-// Worry about undoing later
-// But this is where we'd do it.
 
 observe(selectedKey, ({newValue, oldValue}) => {
 
@@ -17,9 +14,10 @@ observe(selectedKey, ({newValue, oldValue}) => {
 
 		// We can say that if the value is an object, 
 		// wrap in an OMR. See: JSONEditor.js.
-
-		read(newValue).then(value =>
-			activeValue.set(value));
+        
+		getClient().read(newValue).then(value =>
+			activeValue.set(value))
+        .catch(() => alert('Failed to read value due to bluzelle network error.'));
 
 	}
 
@@ -27,7 +25,8 @@ observe(selectedKey, ({newValue, oldValue}) => {
 
 
 export const save = () => 
-    update(selectedKey.get(), activeValue.get());
+    getClient().update(selectedKey.get(), activeValue.get())
+    .catch(() => alert('Failed to save due to bluzelle network error.'));
 
 
 export const remove = () => new Promise(resolve => {
@@ -37,20 +36,21 @@ export const remove = () => new Promise(resolve => {
 
     tempKey.set(sk);
 
-    return removeKey(sk).then(() => {
+    return getClient().remove(sk).then(() => {
         reload().then(resolve);
-    });
+    })
+    .catch(() => alert('Failed to remove due to bluzelle network error.'));
 
 });
 
 
 export const rename = (oldKey, newKey) => new Promise(resolve => {
 
-    read(oldKey).then(v => {
+    getClient().read(oldKey).then(v => {
 
-        removeKey(oldKey).then(() => {
+        getClient().remove(oldKey).then(() => {
 
-            update(newKey, v).then(() => {
+            getClient().update(newKey, v).then(() => {
 
             	const s = selectedKey;
 
@@ -62,11 +62,11 @@ export const rename = (oldKey, newKey) => new Promise(resolve => {
 
                 reload().then(resolve);
 
-            });
+            }).catch(() => alert('Bluzelle network error.'));
 
-        });
+        }).catch(() => alert('Bluzelle network error.'));
 
-    }); 
+    }).catch(() => alert('Bluzelle network error.'));
 
 });
     
