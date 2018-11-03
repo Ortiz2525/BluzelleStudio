@@ -8,11 +8,14 @@ import DaemonSelector from './DaemonSelector'
 import DevTools from 'mobx-react-devtools';
 
 // Debugging
-// import {configureDevtool} from 'mobx-react-devtools';
-// configureDevtool({logEnabled: true});
+import {configureDevtool} from 'mobx-react-devtools';
+
+const url_params = window && new URLSearchParams(window.location.search);
+
+configureDevtool({logEnabled: url_params.has('log')});
 
 
-import {connect, keys} from 'bluzelle';
+import {createClient} from '../services/BluzelleService'
 
 
 @observer
@@ -28,19 +31,23 @@ export class App extends Component {
 
 
     go(ws_url, uuid) {
+
+        const client = createClient(ws_url, uuid);
+
         
-        connect(ws_url, uuid);
-
-
-        keys().then(() => {
+        client.connect()
+        .then(() => client.keys())
+        .then(keys => {
 
             this.setState({
                 connected: true
             });
 
-        }, () => {
+        }).catch(e => {
 
             alert('Could not connect to provided websocket.');
+
+            throw e;
 
         });
 

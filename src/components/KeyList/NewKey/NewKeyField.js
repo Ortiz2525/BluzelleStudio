@@ -36,10 +36,6 @@ export class NewKeyField extends Component {
 
             <React.Fragment>
                 <BS.ListGroupItem>
-                
-                    <span style={{display: 'inline-block', width: 25}}>
-                        {/* <BS.Glyphicon glyph='asterisk'/> */}
-                    </span>
 
                     <EditableField
                         val={this.state.keyField}

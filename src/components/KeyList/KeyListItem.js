@@ -53,7 +53,7 @@ export class KeyListItem extends Component {
 
                 }
                 active={selectedKey.get() === keyname}
-                color={keyname === tempKey.get() && 'warning'}>
+                color={keyname === tempKey.get() ? 'warning' : ''}>
 
                 <Icon keyname={keyname}/>
 

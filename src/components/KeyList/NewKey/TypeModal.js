@@ -1,6 +1,6 @@
 import {JSONIcon, TextIcon, FileIcon} from "../../ObjIcon";
 import {selectedKey, refreshKeys, keys, tempKey} from "../KeyList";
-import {create, remove} from 'bluzelle';
+import {getClient} from '../../../services/BluzelleService';
 import {execute} from '../../../services/CommandQueueService';
 
 
@@ -30,19 +30,20 @@ export class TypeModal extends Component {
                 keys.push(this.props.keyField);
                 tempKey.set(this.props.keyField);
 
-                create(this.props.keyField, keyData).then(() => {
+                getClient().create(this.props.keyField, keyData).then(() => {
                     
                     tempKey.set();
                     refreshKeys().then(resolve)
 
-                });
+                }).catch(() => alert('Failed to create key due to bluzelle network error.'));
 
             }),
 
             undoIt: () => new Promise(resolve => {
 
-                remove(this.props.keyField).then(() =>
-                    refreshKeys().then(resolve));
+                getClient().remove(this.props.keyField).then(() =>
+                    refreshKeys().then(resolve))
+                    .catch(() => alert('Failed to undo due to bluzelle network error.'));
             }),
 
             message: <span>Added field <code key={1}>{this.props.keyField}</code>.</span>
