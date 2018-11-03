@@ -11,7 +11,13 @@ app.use(express.static("dist"));
 app.use(express.static(__dirname + '/dist'));
 
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  if(req.protocol === "https"){
+    res.sendFile(path.join(__dirname, 'dist/errorredirect.html'));
+  }
+  else{
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+  }
+  
 });
 
 
