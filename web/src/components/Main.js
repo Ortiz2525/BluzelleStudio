@@ -21,9 +21,11 @@ export class Main extends Component {
                     <ReflexContainer orientation='vertical'>
                         <ReflexElement flex={0.5} style={{padding: 10}}>
 
+                            {/* Disabling these for now. Too many variables to have a reliable undo/redo.
+
                             <CommandControls/>
 
-                            <hr style={{border: 'none'}}/>
+                            <hr style={{border: 'none'}}/>*/}
 
                             <Permissioning/>
 

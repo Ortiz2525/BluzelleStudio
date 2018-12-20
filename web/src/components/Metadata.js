@@ -7,12 +7,6 @@ import {version} from 'bluzelle';
 export const status = observable();
 
 
-autorun(() => {
-    console.log(status.get());
-});
-
-
-
 @observer
 export class Metadata extends Component {
 
