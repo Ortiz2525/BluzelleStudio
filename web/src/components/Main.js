@@ -6,6 +6,7 @@ import {Permissioning} from './Permissioning';
 import {Header} from "./Header/Header";
 import 'bootstrap/dist/css/bootstrap.css';
 import {CommandControls} from "./CommandControls";
+import {CollapsibleCard} from './CollapsibleCard';
 
 
 @observer
@@ -27,32 +28,29 @@ export class Main extends Component {
 
                             <hr style={{border: 'none'}}/>*/}
 
-                            <Permissioning/>
-
-                            <hr style={{border: 'none'}}/>
-
-                            <BS.Card>
-                            <BS.CardBody>
-                              <BS.CardTitle>Database Fields</BS.CardTitle>
-                               <hr style={{border: 'none'}}/>
+                            <CollapsibleCard title="Database Fields">
                                 <KeyList/>
-                            </BS.CardBody>
-                            </BS.Card>
+                            </CollapsibleCard>
 
-                            <hr style={{border: 'none'}}/>
+                            <div style={{height: 20}}></div>
 
-                            <Metadata/>
+                            <CollapsibleCard title="Permissioning">
+                                <Permissioning/>
+                            </CollapsibleCard>
 
-                            <hr style={{border: 'none'}}/>
+                            <div style={{height: 20}}></div>
+
+                            <CollapsibleCard collapsed={true} title="Metadata">
+                                <Metadata/>
+                            </CollapsibleCard>
+
+                            <div style={{height: 20}}></div>
                             
-                            <BS.Card>
-                            <BS.CardBody>
-                              <BS.CardTitle>Log</BS.CardTitle>
-                               <hr style={{border: 'none'}}/>
+                            <CollapsibleCard collapsed={true} title="Log">
                                 <Log/>
-                            </BS.CardBody>
-                            </BS.Card>
+                            </CollapsibleCard>
                             
+                            <div style={{height: 20}}></div>
 
                         </ReflexElement>
                         <ReflexSplitter/>

@@ -62,20 +62,14 @@ export class Log extends Component {
                                 <i 
                                 style={{
                                     color: ({
-                                        'Sending': 'orange',
-                                        'Receiving': 'purple',
-                                        'Connection open': 'green',
-                                        'Connection error': 'red',
-                                        'Redirecting': 'hotpink'
+                                        'Outgoing database_msg\n': 'hotpink',
+                                        'Incoming database_response\n': 'purple',
                                     })[msg.type]
                                 }}
                                 className={
                                     ({
-                                        'Sending': "fas fa-sign-out-alt",
-                                        'Receiving': 'fas fa-sign-in-alt fa-flip-horizontal',
-                                        'Connection open': "fas fa-plug",
-                                        'Connection error': 'fas fa-exclamation-triangle',
-                                        'Redirecting': 'fas fa-directions'
+                                        'Outgoing database_msg\n': "fas fa-sign-out-alt",
+                                        'Incoming database_response\n': 'fas fa-sign-in-alt fa-flip-horizontal'
                                     })[msg.type]
                                 }></i>
                             </span>
@@ -87,9 +81,10 @@ export class Log extends Component {
                         <BS.ListGroupItemText style={{
                             fontFamily: 'monospace',
                             color: '#888888',
-                            fontStyle: 'italic'
+                            fontStyle: 'italic',
+                            whiteSpace: 'pre-wrap',
                         }}>
-                            {JSON.stringify(msg.json)}
+                            {JSON.stringify(msg.json, null, 4)}
                         </BS.ListGroupItemText>
                         
 

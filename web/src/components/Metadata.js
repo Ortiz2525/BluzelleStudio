@@ -3,6 +3,8 @@ import {getClient} from '../services/BluzelleService';
 
 import {version} from 'bluzelle';
 
+import {Fragment} from 'react';
+
 
 export const status = observable();
 
@@ -13,11 +15,7 @@ export class Metadata extends Component {
     render() {
 
         return (
-            <BS.Card>
-            <BS.CardBody>
-              <BS.CardTitle>Metadata</BS.CardTitle>
-               <hr style={{border: 'none'}}/>
-
+            <Fragment>
                <BS.Table>
                 <thead>
                   <tr>
@@ -38,14 +36,20 @@ export class Metadata extends Component {
                     Object.entries(status.get()).map(([key, value]) => 
                         <tr key={key}>
                             <th scope="row">{key}</th>
-                            <td><code>{value.toString()}</code></td>
+                            <td><code style={{whiteSpace: 'pre-wrap'}}>{
+
+                                // Add a special JSON styling to moduleStatusJson
+                                key === 'moduleStatusJson' ?
+
+                                    JSON.stringify(JSON.parse(value), null, 4)
+
+                                    : value.toString()
+                            }</code></td>
                         </tr>)
                   }
                 </tbody>
               </BS.Table>
-
-            </BS.CardBody>
-            </BS.Card>
+            </Fragment>
         );  
 
     }

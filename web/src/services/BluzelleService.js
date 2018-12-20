@@ -13,7 +13,24 @@ module.exports = {
 
     createClient: config => {
 
-        bz = bluzelle(config);
+        bz = bluzelle({
+            ...config,
+
+            log: (...args) => {
+
+                // Print log to console
+
+                if(url_params.has('log')) {
+                    console.log(...args);
+                }
+
+                
+                // Used by the logging component
+
+                log.set(args);
+
+            }
+        });
 
         return bz;
 

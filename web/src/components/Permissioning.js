@@ -1,6 +1,6 @@
 import {autorun} from 'mobx';
 import {getClient, hasClient} from '../services/BluzelleService';
-
+import {Fragment} from 'react';
 
 export const writers = observable();
 
@@ -101,105 +101,100 @@ export class Permissioning extends Component {
     render() {
 
         return (
-            <BS.Card>
-                <BS.CardBody>
-                  <BS.CardTitle>Permissioning</BS.CardTitle>
-                     <hr style={{border: 'none'}}/>
+            <Fragment>
 
-                    {
+                {
 
-                    is_writer.get() === 'owner' ?
+                is_writer.get() === 'owner' ?
 
-                        <BS.Alert color="success">
-                            You are the database owner.
+                    <BS.Alert color="success">
+                        You are the database owner.
+                    </BS.Alert>
+
+                    :
+
+                    is_writer.get() === 'writer' ?
+
+                        <BS.Alert color="primary">
+                            You can write to this database.
                         </BS.Alert>
 
                         :
 
-                        is_writer.get() === 'writer' ?
+                        <BS.Alert color="dark">
+                            You cannot write to this database.
+                        </BS.Alert>
+                }
 
-                            <BS.Alert color="primary">
-                                You can write to this database.
-                            </BS.Alert>
+                <hr/>
 
-                            :
-
-                            <BS.Alert color="dark">
-                                You cannot write to this database.
-                            </BS.Alert>
-                    }
-
-                    <hr/>
-
-                    <code style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(writers.get(), null, 4)}</code>
+                <code style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(writers.get(), null, 4)}</code>
 
 
-                    <hr/>
+                <hr/>
 
-                     <BS.ButtonToolbar>
-                        <BS.ButtonGroup>
-                        
-                            {
-
-                                is_writer.get() === 'owner' &&
-
-                            <BS.Button 
-                                    outline
-                                    color="success"
-                                    onClick={() => this.addWriter()}>
-                                    <i className="fas fa-user-plus"></i>
-                                </BS.Button>
-
-                            }
-
-
-                            {
-
-                                is_writer.get() === 'owner' &&
-
-                            <BS.Button 
-                                    outline
-                                    color="danger"
-                                    onClick={() => this.toggle()}>
-
-                                    <i className="fas fa-user-minus"></i>
-                                </BS.Button>
-
-                            }
-
-                            <BS.Button 
-                                    outline
-                                    color="info"
-                                    onClick={() => this.refresh()}>
-
-                                        <i className="fas fa-sync"></i>
-                                   </BS.Button>
-
-                        </BS.ButtonGroup>
-                    </BS.ButtonToolbar>
-
-                    <BS.Modal isOpen={this.state.modal} toggle={() => this.toggle()}>
-                      <BS.ModalHeader toggle={() => this.toggle()}>Delete Writers</BS.ModalHeader>
-                      <BS.ModalBody>
-                        <BS.ListGroup>
+                 <BS.ButtonToolbar>
+                    <BS.ButtonGroup>
+                    
                         {
-                            writers.get().writers.map(w => 
-                                <BS.ListGroupItem 
-                                    key={w}
-                                    tag="button" 
-                                    action 
-                                    style={{wordWrap: 'break-word'}}
-                                    onClick={() => this.deleteWriter(w)}>
 
-                                    {w}
-                                </BS.ListGroupItem>)
+                            is_writer.get() === 'owner' &&
+
+                        <BS.Button 
+                                outline
+                                color="success"
+                                onClick={() => this.addWriter()}>
+                                <i className="fas fa-user-plus"></i>
+                            </BS.Button>
+
                         }
-                        </BS.ListGroup>
-                      </BS.ModalBody>
-                    </BS.Modal>
 
-                </BS.CardBody>
-            </BS.Card>
+
+                        {
+
+                            is_writer.get() === 'owner' &&
+
+                        <BS.Button 
+                                outline
+                                color="danger"
+                                onClick={() => this.toggle()}>
+
+                                <i className="fas fa-user-minus"></i>
+                            </BS.Button>
+
+                        }
+
+                        <BS.Button 
+                                outline
+                                color="info"
+                                onClick={() => this.refresh()}>
+
+                                    <i className="fas fa-sync"></i>
+                               </BS.Button>
+
+                    </BS.ButtonGroup>
+                </BS.ButtonToolbar>
+
+                <BS.Modal isOpen={this.state.modal} toggle={() => this.toggle()}>
+                  <BS.ModalHeader toggle={() => this.toggle()}>Delete Writers</BS.ModalHeader>
+                  <BS.ModalBody>
+                    <BS.ListGroup>
+                    {
+                        writers.get().writers.map(w => 
+                            <BS.ListGroupItem 
+                                key={w}
+                                tag="button" 
+                                action 
+                                style={{wordWrap: 'break-word'}}
+                                onClick={() => this.deleteWriter(w)}>
+
+                                {w}
+                            </BS.ListGroupItem>)
+                    }
+                    </BS.ListGroup>
+                  </BS.ModalBody>
+                </BS.Modal>
+            </Fragment>
         );
 
     }
