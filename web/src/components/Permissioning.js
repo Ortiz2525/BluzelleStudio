@@ -102,7 +102,7 @@ export class Permissioning extends Component {
 
         const render_pubkey = pubkey => 
             <td>
-                <code style={{whiteSpace: 'pre-wrap'}}>{pubkey + ' '}</code>
+                <code style={{whiteSpace: 'pre-wrap'}}>{(pubkey === undefined ? '' : pubkey + ' ')}</code>
                 {pubkey === getClient().publicKey() && <BS.Badge color="primary">Me</BS.Badge>}
             </td>;
 
