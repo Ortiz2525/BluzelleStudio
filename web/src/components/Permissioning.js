@@ -126,10 +126,31 @@ export class Permissioning extends Component {
                         </BS.Alert>
                 }
 
-                <hr/>
-
-                <code style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(writers.get(), null, 4)}</code>
-
+                <BS.Table>
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">owner</th>
+                    <td><code style={{whiteSpace: 'pre-wrap'}}>{writers.get().owner}</code></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">writers</th>
+                    <td><code style={{whiteSpace: 'pre-wrap'}}>{writers.get().writers[0]}</code></td>
+                  </tr>
+                  {
+                    writers.get().writers.slice(1).map(w => 
+                        <tr key={w}>
+                            <th scope="row"></th>
+                            <td><code style={{whiteSpace: 'pre-wrap'}}>{w}</code></td>
+                        </tr>)
+                  }
+                </tbody>
+                </BS.Table>
 
                 <hr/>
 
