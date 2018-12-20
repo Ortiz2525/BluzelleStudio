@@ -210,9 +210,21 @@ export default class DaemonSelector extends Component {
 
 
                             <BS.Modal isOpen={this.state.modal} toggle={() => this.toggle()}>
-                              <BS.ModalHeader toggle={() => this.toggle()}>Generating an ECDSA Key Pair</BS.ModalHeader>
+                              <BS.ModalHeader toggle={() => this.toggle()}>Generating an ECDSA Private Key</BS.ModalHeader>
                               <BS.ModalBody>
-                                Bluzelle blah blah balh
+                                <p>Cryptography secures the database content from bad actors. Your identity is a <em>private key</em>. BluzelleStudio uses your private key to sign off database operations. The key is only used locally within this webpage; it is never uploaded anywhere.</p>
+
+                                <hr/>
+
+                                <p>Bluzelle uses the elliptic curve digital signature algorithm (<strong>ECDSA</strong>) on the curve <strong>secp256k1</strong> with an <strong>SHA-512</strong> hash.</p>
+
+                                <hr/>
+
+                                <p>With OpenSSL installed, run <code>openssl ecparam -name secp256k1 -genkey -noout -out my_private_key.pem</code>. This will write the private key to a file called <code>my_private_key.pem</code>. Upload that file to BluzelleStudio. To emulate different users, use different keys. The file should looks like this:</p>
+
+                                <div style={{overflow: 'scroll'}}>
+                                <code style={{whiteSpace: 'pre'}}>{'-----BEGIN EC PRIVATE KEY-----\nMHQCAQEEIFNmJHEiGpgITlRwao/CDki4OS7BYeI7nyz+CM8NW3xToAcGBSuBBAAK\noUQDQgAEndHOcS6bE1P9xjS/U+SM2a1GbQpPuH9sWNWtNYxZr0JcF+sCS2zsD+xl\nCcbrRXDZtfeDmgD9tHdWhcZKIy8ejQ==\n-----END EC PRIVATE KEY-----'}</code>
+                                </div>
                               </BS.ModalBody>
                               <BS.ModalFooter>
                               </BS.ModalFooter>
