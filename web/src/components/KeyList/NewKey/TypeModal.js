@@ -41,7 +41,7 @@ export class TypeModal extends Component {
 
             undoIt: () => new Promise(resolve => {
 
-                getClient().remove(this.props.keyField).then(() =>
+                getClient().delete(this.props.keyField).then(() =>
                     refreshKeys().then(resolve))
                     .catch(() => alert('Failed to undo due to bluzelle network error.'));
             }),

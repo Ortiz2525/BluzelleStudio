@@ -13,7 +13,10 @@ export default class DaemonSelector extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {showConfigLoader: false};
+        this.state = {
+            showConfigLoader: false,
+            modal: false
+        };
     }
 
     go() {
@@ -132,6 +135,12 @@ export default class DaemonSelector extends Component {
         document.execCommand("copy");
     }
 
+    toggle() {
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+
     render() {
 
         return (
@@ -182,7 +191,7 @@ export default class DaemonSelector extends Component {
 
                                         <BS.Input disabled type="text" name="file" innerRef={e => {this.file = e;}} />
                                         <BS.InputGroupAddon addonType="append">
-                                            <BS.Button outline color="secondary" type="button" onClick={() => {}}><i className="far fa-question-circle"></i></BS.Button>
+                                            <BS.Button outline color="secondary" type="button" onClick={() => this.toggle()}><i className="far fa-question-circle"></i></BS.Button>
                                         </BS.InputGroupAddon>
                                       </BS.InputGroup>
                                     </BS.Col>
@@ -198,6 +207,16 @@ export default class DaemonSelector extends Component {
                                 </div>
 
                             </BS.Form>
+
+
+                            <BS.Modal isOpen={this.state.modal} toggle={() => this.toggle()}>
+                              <BS.ModalHeader toggle={() => this.toggle()}>Generating an ECDSA Key Pair</BS.ModalHeader>
+                              <BS.ModalBody>
+                                Bluzelle blah blah balh
+                              </BS.ModalBody>
+                              <BS.ModalFooter>
+                              </BS.ModalFooter>
+                            </BS.Modal>
 
                         </div>
                     </BS.Card>

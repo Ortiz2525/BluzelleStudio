@@ -1,4 +1,4 @@
-import {BluzelleClient} from 'bluzelle';
+import {bluzelle} from 'bluzelle';
 import {observable} from 'mobx';
 
 
@@ -11,20 +11,16 @@ let bz;
 
 module.exports = {
 
-    createClient: (a1, a2) => {
+    createClient: config => {
 
-        bz = new BluzelleClient(a1, a2, (...args) => {
-
-            if(url_params.has('log')) {
-                console.log(...args);
-            }
-
-            log.set(args);
-
-        });
+        bz = bluzelle(config);
 
         return bz;
 
+    },
+
+    hasClient: () => {
+        return !!bz;
     },
 
     getClient: () => {
