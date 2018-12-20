@@ -39,7 +39,14 @@ export const remove = () => new Promise(resolve => {
     return getClient().delete(sk).then(() => {
         reload().then(resolve);
     })
-    .catch(() => alert('Failed to remove due to bluzelle network error.'));
+    .catch(() => {
+
+        tempKey.set();
+        selectedKey.set(sk);
+        
+        alert('Failed to remove due to bluzelle network error.');
+
+    });
 
 });
 

@@ -35,7 +35,14 @@ export class TypeModal extends Component {
                     tempKey.set();
                     refreshKeys().then(resolve)
 
-                }).catch(() => alert('Failed to create key due to bluzelle network error.'));
+                }).catch(() => {
+
+                    tempKey.set();
+                    keys.splice(keys.indexOf(this.props.keyField), 1);
+                    
+                    alert('Failed to create key due to bluzelle network error.'); 
+
+                });
 
             }),
 

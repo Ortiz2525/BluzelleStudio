@@ -100,6 +100,12 @@ export class Permissioning extends Component {
 
     render() {
 
+        const render_pubkey = pubkey => 
+            <td>
+                <code style={{whiteSpace: 'pre-wrap'}}>{pubkey + ' '}</code>
+                {pubkey === getClient().publicKey() && <BS.Badge color="primary">Me</BS.Badge>}
+            </td>;
+
         return (
             <Fragment>
 
@@ -136,17 +142,17 @@ export class Permissioning extends Component {
                 <tbody>
                   <tr>
                     <th scope="row">owner</th>
-                    <td><code style={{whiteSpace: 'pre-wrap'}}>{writers.get().owner}</code></td>
+                    {render_pubkey(writers.get().owner)}
                   </tr>
                   <tr>
                     <th scope="row">writers</th>
-                    <td><code style={{whiteSpace: 'pre-wrap'}}>{writers.get().writers[0]}</code></td>
+                    {render_pubkey(writers.get().writers[0])}
                   </tr>
                   {
                     writers.get().writers.slice(1).map(w => 
                         <tr key={w}>
                             <th scope="row"></th>
-                            <td><code style={{whiteSpace: 'pre-wrap'}}>{w}</code></td>
+                            {render_pubkey(w)}
                         </tr>)
                   }
                 </tbody>
