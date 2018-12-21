@@ -1,6 +1,3 @@
-![CRUD App Screenshot](screenshot.png)
-
-
 This app is used to make changes to the [Bluzelle](https://bluzelle.com/) database.
 
 
