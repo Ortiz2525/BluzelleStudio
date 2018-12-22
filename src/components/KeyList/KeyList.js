@@ -5,6 +5,7 @@ import {execute, removePreviousHistory, updateHistoryMessage} from '../../servic
 import {observe} from 'mobx';
 import {getClient} from '../../services/BluzelleService'
 import {Fragment} from 'react';
+import {is_writer} from '../Permissioning';
 
 export const selectedKey = observable(undefined);
 
@@ -68,11 +69,15 @@ export class KeyList extends Component {
 
                 <BS.ButtonToolbar>
                     <BS.ButtonGroup>
-                        <AddButton onClick={() => this.setState({showNewKey: true})}/>
-                        
+                        {
+                            is_writer.get() !== 'read-only' &&
+                            <AddButton onClick={() => this.setState({showNewKey: true})}/>
+                        }
+
                         {
 
-                            activeValue.get() !== undefined &&
+                            activeValue.get() !== undefined && 
+                            is_writer.get() !== 'read-only' &&
 
                             <BS.Button 
                                 outline
@@ -162,6 +167,7 @@ const SaveReloadRemove = observer(({keyname}) =>
             {
 
                 activeValue.get() !== undefined &&
+                is_writer.get() !== 'read-only' &&
                 
                 <BS.Button 
                     color="success"

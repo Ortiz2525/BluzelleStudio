@@ -5,6 +5,10 @@ import {Main} from 'components/Main'
 import {execute} from "../services/CommandQueueService";
 import DaemonSelector from './DaemonSelector'
 
+import {status} from './Metadata';
+import {writers} from './Permissioning';
+
+
 import DevTools from 'mobx-react-devtools';
 
 // Debugging
@@ -30,14 +34,35 @@ export class App extends Component {
     }
 
 
-    go(ws_url, uuid) {
+    go(ws_url, uuid, pem) {
 
-        const client = createClient(ws_url, uuid);
+        const client = createClient({
+            entry: ws_url, 
+            uuid,
+            private_pem: pem,
+        });
 
         
-        client.connect()
-        .then(() => client.keys())
-        .then(keys => {
+        client.hasDB()
+        .then(has => {
+
+            if(!has) {
+                return client.createDB();
+            }
+
+        }).then(() => client.status())
+
+        .then(s => {
+
+            status.set(s);
+
+            return client.getWriters();
+
+        }).then(w => {
+
+            writers.set(w);
+
+        }).then(() => {
 
             this.setState({
                 connected: true

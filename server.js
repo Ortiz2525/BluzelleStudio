@@ -1,4 +1,7 @@
 
+// The sole purpose for this server is to host an instance on Heroku
+
+
 'use strict'
 
 const express = require('express');
@@ -11,13 +14,7 @@ app.use(express.static("dist"));
 app.use(express.static(__dirname + '/dist'));
 
 app.get('*', function (req, res) {
-  if(req.protocol === "https"){
-    res.sendFile(path.join(__dirname, 'dist/errorredirect.html'));
-  }
-  else{
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
-  }
-  
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 

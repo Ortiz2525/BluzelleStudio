@@ -1,4 +1,5 @@
 import {activeValue} from '../../services/CRUDService';
+import {is_writer} from '../Permissioning';
 
 
 @observer
@@ -49,6 +50,7 @@ export class PlainTextEditor extends Component {
                 <BS.Form style={{height: '100%'}}>
                     <BS.Input
                         style={{
+                            background: 'white',
                             height: '100%', 
                             resize: 'none',
                             border: 'none',
@@ -56,7 +58,13 @@ export class PlainTextEditor extends Component {
                             borderLeft: '2px solid #007bff'
                         }}
                         type="textarea"
-                        placeholder="Enter value here"
+                        disabled={is_writer.get() === 'read-only'}
+
+                        placeholder={
+                            is_writer.get() === 'read-only' ?
+                                "No value" :
+                                "Enter value here"}
+
                         value={this.state.value}
 
                         onChange={this.onChange.bind(this)}

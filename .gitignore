@@ -1,2 +1,5 @@
 node_modules
-Archive
+yarn.lock
+.DS_Store
+.idea
+yarn-error.log

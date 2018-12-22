@@ -36,10 +36,17 @@ export const remove = () => new Promise(resolve => {
 
     tempKey.set(sk);
 
-    return getClient().remove(sk).then(() => {
+    return getClient().delete(sk).then(() => {
         reload().then(resolve);
     })
-    .catch(() => alert('Failed to remove due to bluzelle network error.'));
+    .catch(() => {
+
+        tempKey.set();
+        selectedKey.set(sk);
+        
+        alert('Failed to remove due to bluzelle network error.');
+
+    });
 
 });
 
@@ -48,7 +55,7 @@ export const rename = (oldKey, newKey) => new Promise(resolve => {
 
     getClient().read(oldKey).then(v => {
 
-        getClient().remove(oldKey).then(() => {
+        getClient().delete(oldKey).then(() => {
 
             getClient().update(newKey, v).then(() => {
 

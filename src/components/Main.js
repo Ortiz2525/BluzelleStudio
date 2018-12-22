@@ -1,9 +1,12 @@
 import {Editor} from "./Editor";
 import {KeyList} from "./KeyList";
 import {Log} from "./Log";
+import {Metadata} from './Metadata';
+import {Permissioning} from './Permissioning';
 import {Header} from "./Header/Header";
 import 'bootstrap/dist/css/bootstrap.css';
 import {CommandControls} from "./CommandControls";
+import {CollapsibleCard} from './CollapsibleCard';
 
 
 @observer
@@ -17,13 +20,37 @@ export class Main extends Component {
                 </div>
                 <ReflexElement flex={1}>
                     <ReflexContainer orientation='vertical'>
-                        <ReflexElement flex={0.5}>
+                        <ReflexElement flex={0.5} style={{padding: 10}}>
+
+                            {/* Disabling these for now. Too many variables to have a reliable undo/redo.
 
                             <CommandControls/>
-                            <hr/>
-                            <KeyList/>
-                            <br/>
-                            <Log/>
+
+                            <hr style={{border: 'none'}}/>*/}
+
+                            <CollapsibleCard title="Database Fields">
+                                <KeyList/>
+                            </CollapsibleCard>
+
+                            <div style={{height: 20}}></div>
+
+                            <CollapsibleCard title="Permissioning">
+                                <Permissioning/>
+                            </CollapsibleCard>
+
+                            <div style={{height: 20}}></div>
+
+                            <CollapsibleCard collapsed={true} title="Metadata">
+                                <Metadata/>
+                            </CollapsibleCard>
+
+                            <div style={{height: 20}}></div>
+                            
+                            <CollapsibleCard collapsed={true} title="Log">
+                                <Log/>
+                            </CollapsibleCard>
+                            
+                            <div style={{height: 20}}></div>
 
                         </ReflexElement>
                         <ReflexSplitter/>
