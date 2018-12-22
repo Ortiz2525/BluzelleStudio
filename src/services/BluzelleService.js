@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import {BluzelleClient} from 'bluzelle';
-=======
 import {bluzelle} from 'bluzelle';
->>>>>>> c6a2d9c7e7846b4f142c97e1c2b31e48cef9b826
 import {observable} from 'mobx';
 
 
