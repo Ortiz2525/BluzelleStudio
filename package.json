@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node server.js",
     "heroku-postbuild": "cd src; NODE_ENV=production webpack -p",
-    "prod-compile": "cd src; NODE_ENV=production webpack -p",
     "dev-compile": "cd src; webpack --env.beep",
     "dev-compile-watch": "cd src; webpack --watch --env.beep",
     "test-compile": "cd src; webpack --env.beep --config webpack-test.config.js",
