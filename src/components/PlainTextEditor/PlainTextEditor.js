@@ -50,13 +50,14 @@ export class PlainTextEditor extends Component {
                 <BS.Form style={{height: '100%'}}>
                     <BS.Input
                         style={{
-                            background: 'white',
+                            fontFamily: 'monospace',
                             height: '100%', 
                             resize: 'none',
                             border: 'none',
                             borderRadius: 0,
                             borderLeft: '2px solid #007bff'
                         }}
+                        spellcheck="false"
                         type="textarea"
                         disabled={is_writer.get() === 'read-only'}
 

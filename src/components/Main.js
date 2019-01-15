@@ -4,7 +4,10 @@ import {Log} from "./Log";
 import {Metadata} from './Metadata';
 import {Permissioning} from './Permissioning';
 import {Header} from "./Header/Header";
-import 'bootstrap/dist/css/bootstrap.css';
+
+// import 'bootstrap/dist/css/bootstrap.css';
+// import './solar.css';
+
 import {CommandControls} from "./CommandControls";
 import {CollapsibleCard} from './CollapsibleCard';
 

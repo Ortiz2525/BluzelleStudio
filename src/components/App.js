@@ -4,6 +4,7 @@ import {HashRouter, Route} from 'react-router-dom'
 import {Main} from 'components/Main'
 import {execute} from "../services/CommandQueueService";
 import DaemonSelector from './DaemonSelector'
+import {ColorSelector} from './ColorSelector';
 
 import {status} from './Metadata';
 import {writers} from './Permissioning';
@@ -83,6 +84,9 @@ export class App extends Component {
 
         return (
             <div style={{height: '100%'}}>
+
+                <ColorSelector/>
+                
                 {/dev-tools/.test(window.location.href) && <DevTools/>}
 
                 {
