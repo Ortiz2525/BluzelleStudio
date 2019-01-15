@@ -6,13 +6,18 @@ const log = observable();
 
 const url_params = window && new URLSearchParams(window.location.search);
 
+const configObservable = observable();
+
 
 let bz;
 
 module.exports = {
 
+    config: configObservable,
 
     createClient: config => {
+
+        configObservable.set(config);
 
         bz = bluzelle({
             ...config,

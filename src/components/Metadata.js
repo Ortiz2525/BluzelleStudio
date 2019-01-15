@@ -1,5 +1,5 @@
 import {autorun} from 'mobx';
-import {getClient} from '../services/BluzelleService';
+import {getClient, config} from '../services/BluzelleService';
 
 import {version} from 'bluzelle';
 
@@ -32,6 +32,15 @@ export class Metadata extends Component {
                     <th scope="row">bluzelle-js version</th>
                     <td><code>{version}</code></td>
                   </tr>
+                  <tr>
+                    <th scope="row">uuid</th>
+                    <td><code>{config.get().uuid}</code></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">entry</th>
+                    <td><code>{config.get().entry}</code></td>
+                  </tr>
+
                   {
                     Object.entries(status.get()).map(([key, value]) => 
                         <tr key={key}>
