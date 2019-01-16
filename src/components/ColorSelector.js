@@ -21,7 +21,7 @@ export class ColorSelector extends Component {
             <div style={{
                 position: 'absolute',
                 top: 15,
-                left: 15,
+                right: 15,
                 zIndex: 100
                 }}>
                 
