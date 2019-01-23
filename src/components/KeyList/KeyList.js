@@ -3,7 +3,7 @@ import {NewKeyField} from "./NewKey/NewKeyField";
 import {activeValue, save, remove, reload} from '../../services/CRUDService';
 import {execute, removePreviousHistory, updateHistoryMessage} from '../../services/CommandQueueService';
 import {observe} from 'mobx';
-import {getClient} from '../../services/BluzelleService'
+import {getClient, config} from '../../services/BluzelleService'
 import {Fragment} from 'react';
 import {is_writer} from '../Permissioning';
 
@@ -45,6 +45,14 @@ export class KeyList extends Component {
 
         return (
             <Fragment>
+            <BS.Table>
+                <tbody>
+                  <tr>
+                    <th scope="row">uuid</th>
+                    <td><code>{config.get().uuid}</code></td>
+                  </tr>
+                </tbody>
+            </BS.Table>
             <div style={{padding: 10}}>
 
                 <BS.ListGroup>
@@ -57,7 +65,7 @@ export class KeyList extends Component {
                         <h5 style={{
                             fontStyle: 'italic',
                             color: "#999999"
-                        }}>Empty...</h5>}
+                        }}>No fields...</h5>}
 
                     { this.state.showNewKey &&
                         <NewKeyField onChange={() => this.setState({showNewKey: false})}/> }
