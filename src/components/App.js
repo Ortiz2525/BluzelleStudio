@@ -44,32 +44,36 @@ export class App extends Component {
         });
 
         
-        client.hasDB()
+        client.useFastestConnection()
+        .then(() => client.hasDB())
         .then(has => {
 
             if(!has) {
                 return client.createDB();
             }
 
-        }).then(() => client.status())
-
+        })
+        .then(() => client.status())
         .then(s => {
 
             status.set(s);
 
             return client.getWriters();
 
-        }).then(w => {
+        })
+        .then(w => {
 
             writers.set(w);
 
-        }).then(() => {
+        })
+        .then(() => {
 
             this.setState({
                 connected: true
             });
 
-        }).catch(e => {
+        })
+        .catch(e => {
 
             alert('Could not connect to provided websocket.');
 

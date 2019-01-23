@@ -57,7 +57,7 @@ export class PlainTextEditor extends Component {
                             borderRadius: 0,
                             borderLeft: '2px solid #007bff'
                         }}
-                        spellcheck="false"
+                        spellCheck="false"
                         type="textarea"
                         disabled={is_writer.get() === 'read-only'}
 

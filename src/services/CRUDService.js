@@ -14,6 +14,10 @@ observe(selectedKey, ({newValue, oldValue}) => {
 
 		// We can say that if the value is an object, 
 		// wrap in an OMR. See: JSONEditor.js.
+
+        getClient().quickread(newValue).then(value =>
+            activeValue.set(value))
+        .catch(() => alert('Failed to read value due to bluzelle network error.'));
         
 		getClient().read(newValue).then(value =>
 			activeValue.set(value))

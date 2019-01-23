@@ -30,7 +30,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "bluzelle": "^0.4.415",
+    "bluzelle": "^0.4.505",
     "bootstrap": "^4.1.3",
     "chai": "^4.1.2",
     "chai-enzyme": "beta",
