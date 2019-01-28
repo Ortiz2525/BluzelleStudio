@@ -1,5 +1,7 @@
 import {TypeModal} from "./TypeModal";
 import {EditableField} from "../../EditableField";
+import {create} from '../../../services/CRUDService';
+
 
 export class NewKeyField extends Component {
 
@@ -7,7 +9,6 @@ export class NewKeyField extends Component {
         super(props);
 
         this.state = {
-            showModal: false,
             keyField: ''
         };
     }
@@ -15,15 +16,16 @@ export class NewKeyField extends Component {
     onChange(key) {
 
         this.setState({ keyField: key });
-        isEmpty() ? this.exit() : this.showModal();
 
-        function isEmpty() {
-            return key === '';
+        if(key !== '') {
+
+            this.exit();
+
+            create(key, '');
+
         }
-    }
 
-    showModal() {
-        this.setState({ showModal: true });
+ 
     }
 
     exit() {
@@ -43,12 +45,6 @@ export class NewKeyField extends Component {
                         onChange={this.onChange.bind(this)}/>
 
                 </BS.ListGroupItem>
-
-                {this.state.showModal &&
-
-                    <TypeModal
-                        onHide={this.exit.bind(this)}
-                        keyField={this.state.keyField}/>}
 
             </React.Fragment>
 

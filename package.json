@@ -59,6 +59,7 @@
     "mocha": "^4.1.0",
     "npm": "^6.4.1",
     "nyc": "^11.2.1",
+    "papaparse": "^4.6.3",
     "path": "^0.12.7",
     "pkg-config": "^1.1.1",
     "promise-waitfor": "^2.0.0",

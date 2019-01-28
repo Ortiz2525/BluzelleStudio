@@ -20,19 +20,12 @@ const url_params = window && new URLSearchParams(window.location.search);
 configureDevtool({logEnabled: url_params.has('log')});
 
 
-import {createClient} from '../services/BluzelleService'
+import {createClient} from '../services/BluzelleService';
 
+export const connected = observable(false);
 
 @observer
 export class App extends Component {
-
-    componentWillMount() {
-
-        this.setState({
-            connected: false
-        });
-
-    }
 
 
     go(ws_url, uuid, pem) {
@@ -68,9 +61,7 @@ export class App extends Component {
         })
         .then(() => {
 
-            this.setState({
-                connected: true
-            });
+            connected.set(true);
 
         })
         .catch(e => {
@@ -94,7 +85,7 @@ export class App extends Component {
                 {/dev-tools/.test(window.location.href) && <DevTools/>}
 
                 {
-                    this.state.connected ?
+                    connected.get() ?
                         <Main/> :
                         <DaemonSelector go={this.go.bind(this)}/>
                 }

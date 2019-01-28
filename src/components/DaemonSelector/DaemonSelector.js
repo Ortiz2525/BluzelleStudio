@@ -5,6 +5,8 @@ import fetch from 'isomorphic-fetch';
 const uuidv4 = require('uuid/v4');
 
 
+const connecting = observable(false);
+
 
 const url_params = window && new URLSearchParams(window.location.search);
 
@@ -42,6 +44,8 @@ export default class DaemonSelector extends Component {
         const ws_url = this.address.value + ':' + this.port.value;
         const uuid = this.uuid.value;
         const pem = this.pem;
+
+        connecting.set(true);
 
         this.props.go(ws_url, uuid, pem);
     }
@@ -199,11 +203,18 @@ export default class DaemonSelector extends Component {
 
                                 <hr/>
 
-                                <div style={{marginTop: 10}}>
-                                    <BS.Button 
-                                        color="primary"
-                                        style={{width: '100%'}}
-                                        onClick={this.go.bind(this)}>Go</BS.Button>
+                                <style>{".lds-ellipsis {\r\n  display: inline-block;\r\n  position: relative;\r\n  width: 64px;\r\n  height: 7px;\r\n}\r\n.lds-ellipsis div {\r\n  position: absolute;\r\n  top: 0px;\r\n  width: 5px;\r\n  height: 5px;\r\n  border-radius: 50%;\r\n  animation-timing-function: cubic-bezier(0, 1, 1, 0);\r\n}\r\n.lds-ellipsis div:nth-child(1) {\r\n  left: 6px;\r\n  animation: lds-ellipsis1 0.6s infinite;\r\n}\r\n.lds-ellipsis div:nth-child(2) {\r\n  left: 6px;\r\n  animation: lds-ellipsis2 0.6s infinite;\r\n}\r\n.lds-ellipsis div:nth-child(3) {\r\n  left: 26px;\r\n  animation: lds-ellipsis2 0.6s infinite;\r\n}\r\n.lds-ellipsis div:nth-child(4) {\r\n  left: 45px;\r\n  animation: lds-ellipsis3 0.6s infinite;\r\n}\r\n@keyframes lds-ellipsis1 {\r\n  0% {\r\n    transform: scale(0);\r\n  }\r\n  100% {\r\n    transform: scale(1);\r\n  }\r\n}\r\n@keyframes lds-ellipsis3 {\r\n  0% {\r\n    transform: scale(1);\r\n  }\r\n  100% {\r\n    transform: scale(0);\r\n  }\r\n}\r\n@keyframes lds-ellipsis2 {\r\n  0% {\r\n    transform: translate(0, 0);\r\n  }\r\n  100% {\r\n    transform: translate(19px, 0);\r\n  }\r\n}"}</style>
+
+                                <div style={{marginTop: 10, textAlign: 'center'}}>
+
+                                    { connecting.get() === false ?
+                                        <BS.Button 
+                                            color="primary"
+                                            style={{width: '100%'}}
+                                            onClick={this.go.bind(this)}>Go</BS.Button>
+                                        :
+                                        <div className="lds-ellipsis" style={{marginTop: 15}}><div className='badge-primary'></div><div className='badge-primary'></div><div className='badge-primary'></div><div className='badge-primary'></div></div>
+                                    }
                                 </div>
 
                             </BS.Form>

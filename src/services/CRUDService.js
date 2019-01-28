@@ -1,6 +1,7 @@
-import {selectedKey, refreshKeys, tempKey} from '../components/KeyList';
+import {selectedKey, refreshKeys, tempKeys, keys} from '../components/KeyList';
 import {getClient} from './BluzelleService'
 import {observe} from 'mobx';
+
 
 export const activeValue = observable(undefined);
 
@@ -38,14 +39,15 @@ export const remove = () => new Promise(resolve => {
     const sk = selectedKey.get(); 
     selectedKey.set();
 
-    tempKey.set(sk);
+    tempKeys.push(sk);
 
     return getClient().delete(sk).then(() => {
         reload().then(resolve);
     })
     .catch(() => {
 
-        tempKey.set();
+        tempKeys.splice(tempKeys.indexOf(sk), 1);
+
         selectedKey.set(sk);
         
         alert('Failed to remove due to bluzelle network error.');
@@ -53,6 +55,35 @@ export const remove = () => new Promise(resolve => {
     });
 
 });
+
+
+export const create = (key, value) => {
+
+
+    keys.push(key);
+    tempKeys.push(key);
+
+    getClient().create(key, value).then(() => {
+        
+        while(tempKeys.includes(key)) {
+            tempKeys.splice(tempKeys.indexOf(key), 1);
+        }
+
+        refreshKeys();
+
+    }).catch(e => {
+
+        while(tempKeys.includes(key)) {
+            tempKeys.splice(tempKeys.indexOf(key), 1);
+        }
+        
+        keys.splice(keys.indexOf(key), 1);
+        
+        alert('Failed to create key due to bluzelle network error.'); 
+
+    });
+
+};
 
 
 export const rename = (oldKey, newKey) => new Promise(resolve => {

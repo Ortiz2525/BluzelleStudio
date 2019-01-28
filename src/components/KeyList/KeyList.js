@@ -6,6 +6,8 @@ import {observe} from 'mobx';
 import {getClient, config} from '../../services/BluzelleService'
 import {Fragment} from 'react';
 import {is_writer} from '../Permissioning';
+import {importCSV} from './importCSV';
+
 
 export const selectedKey = observable(undefined);
 
@@ -15,7 +17,7 @@ export const keys = observable([]);
 export const refreshKeys = () => 
     getClient().keys().then(k => keys.replace(k)).catch(() => alert('Failed to fetch keys due to bluzelle network error.'));
 
-export const tempKey = observable.box();
+export const tempKeys = observable([]);
 
 
 @observer
@@ -98,6 +100,21 @@ export class KeyList extends Component {
                         }
 
                         <SaveReloadRemove/>
+                    </BS.ButtonGroup>
+
+                    <BS.ButtonGroup style={{ paddingLeft: 10 }}>
+                        <BS.Button
+                            outline
+                            id="importButton"
+                            color="primary"
+                            onClick={importCSV}>
+
+                            <i className="fas fa-file-import"></i>
+                        </BS.Button>
+
+                        <BS.UncontrolledTooltip placement="right" target="importButton">
+                            Import CSV file
+                        </BS.UncontrolledTooltip>
                     </BS.ButtonGroup>
                 </BS.ButtonToolbar>
             </div>
