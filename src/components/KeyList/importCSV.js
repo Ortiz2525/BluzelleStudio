@@ -1,7 +1,7 @@
 import {getClient} from '../../services/BluzelleService'
 import Papa from 'papaparse';
 import {create} from '../../services/CRUDService';
-
+import {isLoading, keys as k} from './KeyList';
 
 export const importCSV = () => {
 
@@ -60,11 +60,13 @@ export const importCSV = () => {
 
 const createFields = async fields => {
 
-    // We want a modal thing
+    isLoading.set(true);
 
     const keys = await getClient().keys();
 
-    // And then remove it
+    k.replace(keys);
+    isLoading.set(false);
+    
 
     const promises = fields.map(({key, value}) => {
         if(!keys.includes(key)) {

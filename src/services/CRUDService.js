@@ -5,6 +5,8 @@ import {observe} from 'mobx';
 
 export const activeValue = observable(undefined);
 
+export const loadingValue = observable(false);
+
 
 observe(selectedKey, ({newValue, oldValue}) => {
 
@@ -16,13 +18,23 @@ observe(selectedKey, ({newValue, oldValue}) => {
 		// We can say that if the value is an object, 
 		// wrap in an OMR. See: JSONEditor.js.
 
-        getClient().quickread(newValue).then(value =>
-            activeValue.set(value))
-        .catch(() => alert('Failed to read value due to bluzelle network error.'));
+        loadingValue.set(true);
+
+        getClient().quickread(newValue).then(value => {
+            activeValue.set(value);
+            loadingValue.set(false);
+        }).catch(() => {
+            alert('Failed to read value due to bluzelle network error.');
+            loadingValue.set(false);
+        });
         
-		getClient().read(newValue).then(value =>
-			activeValue.set(value))
-        .catch(() => alert('Failed to read value due to bluzelle network error.'));
+		getClient().read(newValue).then(value => {
+			activeValue.set(value);
+            loadingValue.set(false);
+        }).catch(() => {
+            alert('Failed to read value due to bluzelle network error.');
+            loadingValue.set(false);
+        });
 
 	}
 
@@ -68,8 +80,6 @@ export const create = (key, value) => {
         while(tempKeys.includes(key)) {
             tempKeys.splice(tempKeys.indexOf(key), 1);
         }
-
-        refreshKeys();
 
     }).catch(e => {
 

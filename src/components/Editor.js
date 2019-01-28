@@ -1,8 +1,8 @@
 import {JSONEditor} from "./JSONEditor";
 import {PlainTextEditor} from './PlainTextEditor';
 import {FileEditor} from "./FileEditor/FileEditor";
-
-import {activeValue} from '../services/CRUDService';
+import {loadingBar} from './loadingBar';
+import {activeValue, loadingValue} from '../services/CRUDService';
 
 
 @observer
@@ -32,6 +32,10 @@ export class Editor extends Component {
 
         }
 
+
+        if(loadingValue.get()) {
+            return <div style={{textAlign: 'center', padding: 15}}>{loadingBar}</div>;
+        }
 
         return <div></div>;
 

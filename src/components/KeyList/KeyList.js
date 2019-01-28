@@ -7,15 +7,32 @@ import {getClient, config} from '../../services/BluzelleService'
 import {Fragment} from 'react';
 import {is_writer} from '../Permissioning';
 import {importCSV} from './importCSV';
-
+import {loadingBar} from '../loadingBar';
 
 export const selectedKey = observable(undefined);
+
+
+export const isLoading = observable(false);
 
 export const keys = observable([]);
 
 
-export const refreshKeys = () => 
-    getClient().keys().then(k => keys.replace(k)).catch(() => alert('Failed to fetch keys due to bluzelle network error.'));
+export const refreshKeys = () => {
+
+    isLoading.set(true);
+
+    getClient().keys().then(k => {
+
+        keys.replace(k);
+        isLoading.set(false);
+
+    }).catch(() => {
+
+        isLoading.set(false);
+        alert('Failed to fetch keys due to bluzelle network error.');
+
+    });
+};
 
 export const tempKeys = observable([]);
 
@@ -45,6 +62,25 @@ export class KeyList extends Component {
         const keyList = keys.sort().map(keyname =>
             <KeyListItem key={keyname} keyname={keyname}/>);
 
+        const actualKeysList = (
+            <BS.ListGroup>
+
+                {keyList}
+
+                {keyList.length === 0 &&
+                 !this.state.showNewKey &&
+
+                    <h5 style={{
+                        fontStyle: 'italic',
+                        color: "#999999"
+                    }}>No fields...</h5>}
+
+                { this.state.showNewKey &&
+                    <NewKeyField onChange={() => this.setState({showNewKey: false})}/> }
+            
+            </BS.ListGroup>
+        );
+
         return (
             <Fragment>
             <BS.Table>
@@ -57,22 +93,10 @@ export class KeyList extends Component {
             </BS.Table>
             <div style={{padding: 10}}>
 
-                <BS.ListGroup>
+                {
+                    isLoading.get() ? loadingBar : actualKeysList
+                }
 
-                    {keyList}
-
-                    {keyList.length === 0 &&
-                     !this.state.showNewKey &&
-
-                        <h5 style={{
-                            fontStyle: 'italic',
-                            color: "#999999"
-                        }}>No fields...</h5>}
-
-                    { this.state.showNewKey &&
-                        <NewKeyField onChange={() => this.setState({showNewKey: false})}/> }
-                
-                </BS.ListGroup>
             </div>
             <hr/>
             <div style={{padding: 10}}>
