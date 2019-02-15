@@ -90,7 +90,7 @@ export default class DaemonSelector extends Component {
                     const text = Buffer.from(res).toString();
 
        
-                    const base_64 = text.split('\n').filter(s => !s.startsWith('-')).join('');
+                    const base_64 = text.split(/\n|\r/).filter(s => !s.startsWith('-')).join('');
 
                     if(base_64.match(/^[A-Za-z0-9+/=]*$/)) {  
 
