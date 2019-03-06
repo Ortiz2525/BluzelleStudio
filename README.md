@@ -9,21 +9,20 @@ Be sure to have `NodeJS` and `npm` installed on your machine. You must first bui
 ### Building the app
 
 ```
-1. cd web
-2. npm install
-3. npm run dev-compile
+1. npm install
+2. npm run dev-compile
 ```
 
-The static output will be placed in the `web/dist/` folder.
+The static output will be placed in the `dist/` folder.
 
 
 ### Running the app in-browser
 
-You need to serve the `web/dist/` on a server. We will show how to do this with a simple JavaScript tool.
+You need to serve the `dist/` on a server. We will show how to do this with a simple JavaScript tool.
 
 ```
 1. npm install http-server -g
-2. cd web/dist
+2. cd dist
 3. http-server
 
 Starting up http-server, serving ./
