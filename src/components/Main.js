@@ -47,11 +47,11 @@ export class Main extends Component {
                                 <Metadata/>
                             </CollapsibleCard>
 
-                            <div style={{height: 20}}></div>
+                            {/*<div style={{height: 20}}></div>
                             
                             <CollapsibleCard collapsed={true} title="Log">
                                 <Log/>
-                            </CollapsibleCard>
+                            </CollapsibleCard>*/}
                             
                             <div style={{height: 20}}></div>
 

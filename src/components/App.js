@@ -37,8 +37,7 @@ export class App extends Component {
         });
 
         
-        client.useFastestConnection()
-        .then(() => client.hasDB())
+        client.hasDB()
         .then(has => {
 
             if(!has) {

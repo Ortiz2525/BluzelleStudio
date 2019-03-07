@@ -32,8 +32,9 @@ module.exports = {
 
                 
                 // Used by the logging component
-
-                log.set(args);
+                // Broken in latest update
+                
+                // log.set(args);
 
             }
         });
