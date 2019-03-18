@@ -165,7 +165,7 @@ export default class DaemonSelector extends Component {
                                 <BS.FormGroup row>
                                     <BS.Label sm={3} for="address">Address:</BS.Label>
                                     <BS.Col sm={9}>
-                                        <BS.Input type="text" name="address" placeholder="ws://bernoulli.bluzelle.com" innerRef={e => {this.address = e;}}/>
+                                        <BS.Input type="text" name="address" placeholder="ws://testnet.bluzelle.com" innerRef={e => {this.address = e;}}/>
                                     </BS.Col>
                                 </BS.FormGroup>
 
