@@ -15,11 +15,11 @@ module.exports = {
 
     config: configObservable,
 
-    createClient: config => {
+    createClient: async config => {
 
         configObservable.set(config);
 
-        bz = bluzelle({
+        bz = await bluzelle({
             ...config,
 
             log: (...args) => {
@@ -29,12 +29,6 @@ module.exports = {
                 if(url_params.has('log')) {
                     console.log(...args);
                 }
-
-                
-                // Used by the logging component
-                // Broken in latest update
-                
-                // log.set(args);
 
             }
         });
