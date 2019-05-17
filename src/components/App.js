@@ -28,29 +28,81 @@ export const connected = observable(false);
 export class App extends Component {
 
 
-    go(ws_url, uuid, pem) {
+    async go(address, contract, uuid, private_pem, public_pem) {
 
-        const client = createClient({
-            entry: ws_url, 
-            uuid,
-            private_pem: pem,
-        });
+        let client; 
+
+
+        // try to open a client normally
+
+        try {
+            client = await createClient({
+                ethereum_rpc: address, 
+                contract_address: contract,
+                uuid,
+                private_pem,
+                public_pem
+            });
+        } catch(e) {
+
+
+            // try to create the db
+
+            try {
+
+                const apis = await createClient({
+                    ethereum_rpc: address, 
+                    contract_address: contract,
+                    uuid,
+                    private_pem,
+                    public_pem,
+                    _connect_to_all: true
+                });
+
+
+                // random swarm
+                await apis[Math.floor(Math.random() * apis.length)].createDB();
+
+                apis.forEach(api => api.close());
+
+
+                client = await createClient({
+                    ethereum_rpc: address, 
+                    contract_address: contract,
+                    uuid,
+                    private_pem,
+                    public_pem
+                });
+
+
+            } catch(e2) {
+
+                if(e2.message.includes('ACCESS_DENIED')) {
+
+                    alert(e.message);
+
+                    throw e;
+
+                } else {
+
+                    alert(e2.message);
+
+                    throw e2;
+
+                }    
+
+            }  
+
+        }
 
         
-        client.hasDB()
-        .then(has => {
-
-            if(!has) {
-                return client.createDB();
-            }
-
-        })
+        Promise.resolve()
         .then(() => client.status())
         .then(s => {
 
             status.set(s);
 
-            return client.getWriters();
+            return client._getWriters();
 
         })
         .then(w => {
@@ -65,7 +117,7 @@ export class App extends Component {
         })
         .catch(e => {
 
-            alert('Could not connect to provided websocket.');
+            alert('Error initializing database connection: ' + e.message);
 
             throw e;
 

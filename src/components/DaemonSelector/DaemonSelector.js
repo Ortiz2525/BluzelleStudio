@@ -25,17 +25,17 @@ export default class DaemonSelector extends Component {
 
     go() {
 
-        if(!this.pem) {
+        if(!this.private_pem) {
             alert('Please upload Bluzelle private key.');
         }
 
         this.address.value = this.address.value || this.address.placeholder;
-        this.port.value = this.port.value || this.port.placeholder;
+        this.contract.value = this.contract.value || this.contract.placeholder;
         this.uuid.value = this.uuid.value || this.uuid.placeholder;
 
 
         url_params.set('address', this.address.value);
-        url_params.set('port', this.port.value);
+        url_params.set('contract', this.contract.value);
         url_params.set('uuid', this.uuid.value);
 
         const new_url_params = location.pathname + '?' + url_params.toString();
@@ -43,13 +43,17 @@ export default class DaemonSelector extends Component {
         window.history.pushState('', '', new_url_params);
 
 
-        const ws_url = this.address.value + ':' + this.port.value;
+        const address = this.address.value;
+        const contract = this.contract.value;
         const uuid = this.uuid.value;
-        const pem = this.pem;
+        const private_pem = this.private_pem;
+        const public_pem = this.public_pem;
 
         connecting.set(true);
 
-        this.props.go(ws_url, uuid, pem);
+        this.props.go(address, contract, uuid, private_pem, public_pem).catch(e => {
+            connecting.set(false);
+        });
     }
 
     checkEnterKey(ev) {
@@ -57,7 +61,7 @@ export default class DaemonSelector extends Component {
     }
 
 
-    selectFile() {
+    selectFile(callback, filename_callback) {
 
         const input = document.createElement('input');
 
@@ -75,8 +79,8 @@ export default class DaemonSelector extends Component {
                 return;
             }
 
-            this.file.value = input.files[0].name;
 
+            filename_callback(input.files[0].name);
 
             const URL = window.URL || window.webkitURL;
 
@@ -94,7 +98,7 @@ export default class DaemonSelector extends Component {
 
                     if(base_64.match(/^[A-Za-z0-9+/=]*$/)) {  
 
-                        this.pem = base_64;
+                        callback(base_64);
 
                     } else {
 
@@ -118,7 +122,7 @@ export default class DaemonSelector extends Component {
         if(url_params) {
 
             url_params.get('address') && (this.address.value = url_params.get('address'));
-            url_params.get('port') && (this.port.value = url_params.get('port'));
+            url_params.get('contract') && (this.contract.value = url_params.get('contract'));
             url_params.get('uuid') && (this.uuid.value = url_params.get('uuid'));
 
 
@@ -154,7 +158,7 @@ export default class DaemonSelector extends Component {
                 <Header/>
                 <div onKeyUp={this.checkEnterKey.bind(this)}>
                     <BS.Card style={{marginTop: 20}} header={<h3>Choose a Bluzelle node</h3>}>
-                        <div style={{width: 500, padding: 20}}>
+                        <div style={{width: 700, padding: 20}}>
 
                             { this.state.showConfigLoader &&
                                 <BS.Alert color="primary">Loading config parameters from Heroku...</BS.Alert>
@@ -163,16 +167,16 @@ export default class DaemonSelector extends Component {
                             <BS.Form>
 
                                 <BS.FormGroup row>
-                                    <BS.Label sm={3} for="address">Address:</BS.Label>
+                                    <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
                                     <BS.Col sm={9}>
-                                        <BS.Input type="text" name="address" placeholder="ws://testnet.bluzelle.com" innerRef={e => {this.address = e;}}/>
+                                        <BS.Input type="text" name="address" placeholder="ropsten.infura.io/v3/1c197bf729ee454a8ab7f4e80a1ea628" innerRef={e => {this.address = e;}}/>
                                     </BS.Col>
                                 </BS.FormGroup>
 
                                 <BS.FormGroup row>
-                                    <BS.Label sm={3} for="port">Port:</BS.Label>
+                                    <BS.Label sm={3} for="port">Contract Address:</BS.Label>
                                     <BS.Col sm={9}>
-                                        <BS.Input type="text" name="port" placeholder="51010" innerRef={e => {this.port = e;}}/>
+                                        <BS.Input type="text" name="contract" placeholder="0x7FDbE549D8b47b8285ff106E060Eb9C43Fd879e5" innerRef={e => {this.contract = e;}}/>
                                     </BS.Col>
                                 </BS.FormGroup>
 
@@ -187,18 +191,32 @@ export default class DaemonSelector extends Component {
                                 </BS.FormGroup>
 
                                 <BS.FormGroup row>
-                                    <BS.Label sm={3} for="file">Private Key:</BS.Label>
+                                    <BS.Label sm={3} for="priv_file">Private Key:</BS.Label>
                                     <BS.Col sm={9}>
 
                                      <BS.InputGroup>
                                         <BS.InputGroupAddon addonType="prepend">
-                                            <BS.Button outline color="primary" type="button" onClick={() => this.selectFile()}><i className="far fa-hdd"></i></BS.Button>
+                                            <BS.Button outline color="primary" type="button" onClick={() => this.selectFile(base64 => {this.private_pem = base64;}, fname => {this.priv_file.value = fname;})}><i className="far fa-hdd"></i></BS.Button>
                                         </BS.InputGroupAddon>
 
-                                        <BS.Input disabled type="text" name="file" innerRef={e => {this.file = e;}} />
+                                        <BS.Input disabled type="text" name="priv_file" innerRef={e => {this.priv_file = e;}} />
                                         <BS.InputGroupAddon addonType="append">
                                             <BS.Button outline color="secondary" type="button" onClick={() => this.toggle()}><i className="far fa-question-circle"></i></BS.Button>
                                         </BS.InputGroupAddon>
+                                      </BS.InputGroup>
+                                    </BS.Col>
+                                </BS.FormGroup>
+
+                                <BS.FormGroup row>
+                                    <BS.Label sm={3} for="pub_file">Public Key (Optional):</BS.Label>
+                                    <BS.Col sm={9}>
+
+                                     <BS.InputGroup>
+                                        <BS.InputGroupAddon addonType="prepend">
+                                            <BS.Button outline color="primary" type="button" onClick={() => this.selectFile(base64 => {this.public_pem = base64;}, fname => {this.pub_file.value = fname;})}><i className="far fa-hdd"></i></BS.Button>
+                                        </BS.InputGroupAddon>
+
+                                        <BS.Input disabled type="text" name="pub_file" innerRef={e => {this.pub_file = e;}} />
                                       </BS.InputGroup>
                                     </BS.Col>
                                 </BS.FormGroup>
@@ -221,9 +239,9 @@ export default class DaemonSelector extends Component {
 
 
                             <BS.Modal isOpen={this.state.modal} toggle={() => this.toggle()}>
-                              <BS.ModalHeader toggle={() => this.toggle()}>Generating an ECDSA Private Key</BS.ModalHeader>
+                              <BS.ModalHeader toggle={() => this.toggle()}>ECDSA Keys</BS.ModalHeader>
                               <BS.ModalBody>
-                                <p>Cryptography secures the database content from bad actors. Your identity is a <em>private key</em>. BluzelleStudio uses your private key to sign off database operations. The key is only used locally within this webpage; it is never uploaded anywhere.</p>
+                                <p>Cryptography secures the database content from bad actors. Your identity is a <em>private/public key pair</em>. BluzelleStudio uses your key pair to sign off database operations. The key is only used locally within this webpage; it is never uploaded anywhere.</p>
 
                                 <hr/>
 
@@ -231,11 +249,15 @@ export default class DaemonSelector extends Component {
 
                                 <hr/>
 
-                                <p>With OpenSSL installed, run <code>openssl ecparam -name secp256k1 -genkey -noout -out my_private_key.pem</code>. This will write the private key to a file called <code>my_private_key.pem</code>. Upload that file to BluzelleStudio. To emulate different users, use different keys. The file should looks like this:</p>
+                                <p>Please <a href="https://gitter.im/bluzelle/Lobby">contact us</a> to set up your Bluzelle database.</p>
 
-                                <div style={{overflow: 'scroll'}}>
-                                <code style={{whiteSpace: 'pre'}}>{'-----BEGIN EC PRIVATE KEY-----\nMHQCAQEEIFNmJHEiGpgITlRwao/CDki4OS7BYeI7nyz+CM8NW3xToAcGBSuBBAAK\noUQDQgAEndHOcS6bE1P9xjS/U+SM2a1GbQpPuH9sWNWtNYxZr0JcF+sCS2zsD+xl\nCcbrRXDZtfeDmgD9tHdWhcZKIy8ejQ==\n-----END EC PRIVATE KEY-----'}</code>
-                                </div>
+                                {/*// <hr/>
+
+                                // <p>With OpenSSL installed, run <code>openssl ecparam -name secp256k1 -genkey -noout -out my_private_key.pem</code>. This will write the private key to a file called <code>my_private_key.pem</code>. Upload that file to BluzelleStudio. To emulate different users, use different keys. The file should looks like this:</p>
+
+                                // <div style={{overflow: 'scroll'}}>
+                                // <code style={{whiteSpace: 'pre'}}>{'-----BEGIN EC PRIVATE KEY-----\nMHQCAQEEIFNmJHEiGpgITlRwao/CDki4OS7BYeI7nyz+CM8NW3xToAcGBSuBBAAK\noUQDQgAEndHOcS6bE1P9xjS/U+SM2a1GbQpPuH9sWNWtNYxZr0JcF+sCS2zsD+xl\nCcbrRXDZtfeDmgD9tHdWhcZKIy8ejQ==\n-----END EC PRIVATE KEY-----'}</code>
+                                // </div>*/}
                               </BS.ModalBody>
                               <BS.ModalFooter>
                               </BS.ModalFooter>

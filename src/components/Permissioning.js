@@ -51,7 +51,7 @@ export class Permissioning extends Component {
 
         loading.set(true);
 
-        getClient().getWriters().then(
+        getClient()._getWriters().then(
             w => {
                 loading.set(false);
                 writers.set(w)
@@ -72,7 +72,7 @@ export class Permissioning extends Component {
 
         if(pub.length) {
 
-            getClient().addWriters(pub).then(
+            getClient()._addWriters(pub).then(
                 () => this.refresh(),
                 e => {
                     alert('Failed to add writer.');
@@ -87,7 +87,7 @@ export class Permissioning extends Component {
 
     deleteWriter(writer) {
 
-        getClient().deleteWriters(writer).then(
+        getClient()._deleteWriters(writer).then(
             () => this.refresh(),
             e => {
                 alert('Failed to delete writer.');
