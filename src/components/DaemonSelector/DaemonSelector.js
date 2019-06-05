@@ -167,20 +167,6 @@ export default class DaemonSelector extends Component {
                             <BS.Form>
 
                                 <BS.FormGroup row>
-                                    <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
-                                    <BS.Col sm={9}>
-                                        <BS.Input type="text" name="address" placeholder="ropsten.infura.io/v3/1c197bf729ee454a8ab7f4e80a1ea628" innerRef={e => {this.address = e;}}/>
-                                    </BS.Col>
-                                </BS.FormGroup>
-
-                                <BS.FormGroup row>
-                                    <BS.Label sm={3} for="port">Contract Address:</BS.Label>
-                                    <BS.Col sm={9}>
-                                        <BS.Input type="text" name="contract" placeholder="0x7FDbE549D8b47b8285ff106E060Eb9C43Fd879e5" innerRef={e => {this.contract = e;}}/>
-                                    </BS.Col>
-                                </BS.FormGroup>
-
-                                <BS.FormGroup row>
                                     <BS.Label sm={3} for="uuid">UUID:</BS.Label>
                                     <BS.Col sm={9}>
                                      <BS.InputGroup>
@@ -220,6 +206,62 @@ export default class DaemonSelector extends Component {
                                       </BS.InputGroup>
                                     </BS.Col>
                                 </BS.FormGroup>
+
+                                <hr/>
+                                
+                                <div style={{marginTop: 10, textAlign: 'center'}}>
+                        
+                                    <BS.Button 
+                                        outline={true}
+                                        color="secondary"
+                                        style={{width: '100%'}}
+                                        onClick={this.go.bind(this)}>Show Ethereum Config</BS.Button>
+                                      
+                                </div>
+
+                                <hr/>
+
+                                <BS.FormGroup row>
+                                    <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
+                                    <BS.Col sm={9}>
+                                        <BS.Input type="text" name="address" placeholder="ropsten.infura.io/v3/1c197bf729ee454a8ab7f4e80a1ea628" innerRef={e => {this.address = e;}}/>
+                                    </BS.Col>
+                                </BS.FormGroup>
+
+                                <BS.FormGroup row>
+                                    <BS.Label sm={3} for="port">Contract Address:</BS.Label>
+                                    <BS.Col sm={9}>
+                                        <BS.Input type="text" name="contract" placeholder="0x7FDbE549D8b47b8285ff106E060Eb9C43Fd879e5" innerRef={e => {this.contract = e;}}/>
+                                    </BS.Col>
+                                </BS.FormGroup>
+
+                                <div style={{marginTop: 10, textAlign: 'center'}}>
+
+                                    <BS.ButtonGroup style={{width: '100%'}}>
+
+                                        <BS.Button
+                                            style={{flex:1}}
+                                            outline={true}
+                                            color="primary"
+                                            onClick={this.go.bind(this)}>Ropsten Mainnet</BS.Button>
+
+                                        <BS.Button
+                                            style={{flex:1}}
+                                            outline={true}
+                                            color="secondary"
+                                            onClick={this.go.bind(this)}>Ropsten Testnet</BS.Button>
+
+
+                                        <BS.Button
+                                            style={{flex:1}}
+                                            outline={true}
+                                            color="info"
+                                            onClick={this.go.bind(this)}>Localhost</BS.Button>
+
+
+                                    </BS.ButtonGroup>
+                              
+                                </div>
 
                                 <hr/>
 
