@@ -1,6 +1,7 @@
 import CenterMiddle from './CenterMiddle'
 import {Header} from '../Header/Header'
 import {loadingBar} from '../loadingBar';
+import {EthereumConfig, EthereumRPC, ContractAddress} from './EthereumConfig';
 
 import fetch from 'isomorphic-fetch';
 
@@ -25,17 +26,16 @@ export default class DaemonSelector extends Component {
 
     go() {
 
-        if(!this.private_pem) {
-            alert('Please upload Bluzelle private key.');
+        if(!this.private_pem || !this.public_pem) {
+            alert('Please upload Bluzelle key pair.');
+            return;
         }
 
-        this.address.value = this.address.value || this.address.placeholder;
-        this.contract.value = this.contract.value || this.contract.placeholder;
         this.uuid.value = this.uuid.value || this.uuid.placeholder;
 
 
-        url_params.set('address', this.address.value);
-        url_params.set('contract', this.contract.value);
+        // url_params.set('address', EthereumRPC.get());
+        // url_params.set('contract', ContractAddress.get());
         url_params.set('uuid', this.uuid.value);
 
         const new_url_params = location.pathname + '?' + url_params.toString();
@@ -43,8 +43,8 @@ export default class DaemonSelector extends Component {
         window.history.pushState('', '', new_url_params);
 
 
-        const address = this.address.value;
-        const contract = this.contract.value;
+        const address = EthereumRPC.get();
+        const contract = ContractAddress.get();
         const uuid = this.uuid.value;
         const private_pem = this.private_pem;
         const public_pem = this.public_pem;
@@ -116,13 +116,11 @@ export default class DaemonSelector extends Component {
     }
 
     componentDidMount() {
-        this.address.focus();
-
 
         if(url_params) {
 
-            url_params.get('address') && (this.address.value = url_params.get('address'));
-            url_params.get('contract') && (this.contract.value = url_params.get('contract'));
+            // url_params.get('address') && (EthereumRPC.set(url_params.get('address')));
+            // url_params.get('contract') && (ContractAddress.set(url_params.get('contract')));
             url_params.get('uuid') && (this.uuid.value = url_params.get('uuid'));
 
 
@@ -157,7 +155,7 @@ export default class DaemonSelector extends Component {
             <CenterMiddle>
                 <Header/>
                 <div onKeyUp={this.checkEnterKey.bind(this)}>
-                    <BS.Card style={{marginTop: 20}} header={<h3>Choose a Bluzelle node</h3>}>
+                    <BS.Card style={{marginTop: 20}}>
                         <div style={{width: 700, padding: 20}}>
 
                             { this.state.showConfigLoader &&
@@ -194,7 +192,7 @@ export default class DaemonSelector extends Component {
                                 </BS.FormGroup>
 
                                 <BS.FormGroup row>
-                                    <BS.Label sm={3} for="pub_file">Public Key (Optional):</BS.Label>
+                                    <BS.Label sm={3} for="pub_file">Public Key:</BS.Label>
                                     <BS.Col sm={9}>
 
                                      <BS.InputGroup>
@@ -209,59 +207,7 @@ export default class DaemonSelector extends Component {
 
                                 <hr/>
                                 
-                                <div style={{marginTop: 10, textAlign: 'center'}}>
-                        
-                                    <BS.Button 
-                                        outline={true}
-                                        color="secondary"
-                                        style={{width: '100%'}}
-                                        onClick={this.go.bind(this)}>Show Ethereum Config</BS.Button>
-                                      
-                                </div>
-
-                                <hr/>
-
-                                <BS.FormGroup row>
-                                    <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
-                                    <BS.Col sm={9}>
-                                        <BS.Input type="text" name="address" placeholder="ropsten.infura.io/v3/1c197bf729ee454a8ab7f4e80a1ea628" innerRef={e => {this.address = e;}}/>
-                                    </BS.Col>
-                                </BS.FormGroup>
-
-                                <BS.FormGroup row>
-                                    <BS.Label sm={3} for="port">Contract Address:</BS.Label>
-                                    <BS.Col sm={9}>
-                                        <BS.Input type="text" name="contract" placeholder="0x7FDbE549D8b47b8285ff106E060Eb9C43Fd879e5" innerRef={e => {this.contract = e;}}/>
-                                    </BS.Col>
-                                </BS.FormGroup>
-
-                                <div style={{marginTop: 10, textAlign: 'center'}}>
-
-                                    <BS.ButtonGroup style={{width: '100%'}}>
-
-                                        <BS.Button
-                                            style={{flex:1}}
-                                            outline={true}
-                                            color="primary"
-                                            onClick={this.go.bind(this)}>Ropsten Mainnet</BS.Button>
-
-                                        <BS.Button
-                                            style={{flex:1}}
-                                            outline={true}
-                                            color="secondary"
-                                            onClick={this.go.bind(this)}>Ropsten Testnet</BS.Button>
-
-
-                                        <BS.Button
-                                            style={{flex:1}}
-                                            outline={true}
-                                            color="info"
-                                            onClick={this.go.bind(this)}>Localhost</BS.Button>
-
-
-                                    </BS.ButtonGroup>
-                              
-                                </div>
+                                <EthereumConfig/>
 
                                 <hr/>
 

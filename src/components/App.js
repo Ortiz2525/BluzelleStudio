@@ -81,11 +81,15 @@ export class App extends Component {
 
                     alert(e.message);
 
+                    console.error(e);
+
                     throw e;
 
                 } else {
 
                     alert(e2.message);
+
+                    console.error(e2);
 
                     throw e2;
 
