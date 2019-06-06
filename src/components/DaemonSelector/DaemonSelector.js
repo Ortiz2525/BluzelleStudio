@@ -121,6 +121,7 @@ export default class DaemonSelector extends Component {
 
             // url_params.get('address') && (EthereumRPC.set(url_params.get('address')));
             // url_params.get('contract') && (ContractAddress.set(url_params.get('contract')));
+
             url_params.get('uuid') && (this.uuid.value = url_params.get('uuid'));
 
 
@@ -156,6 +157,7 @@ export default class DaemonSelector extends Component {
                 <Header/>
                 <div onKeyUp={this.checkEnterKey.bind(this)}>
                     <BS.Card style={{marginTop: 20}}>
+
                         <div style={{width: 700, padding: 20}}>
 
                             { this.state.showConfigLoader &&
@@ -165,6 +167,7 @@ export default class DaemonSelector extends Component {
                             <BS.Form>
 
                                 <BS.FormGroup row>
+
                                     <BS.Label sm={3} for="uuid">UUID:</BS.Label>
                                     <BS.Col sm={9}>
                                      <BS.InputGroup>
@@ -193,6 +196,7 @@ export default class DaemonSelector extends Component {
 
                                 <BS.FormGroup row>
                                     <BS.Label sm={3} for="pub_file">Public Key:</BS.Label>
+
                                     <BS.Col sm={9}>
 
                                      <BS.InputGroup>
