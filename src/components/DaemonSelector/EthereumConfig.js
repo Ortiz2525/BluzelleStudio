@@ -65,14 +65,14 @@ export class EthereumConfig extends Component {
             <BS.FormGroup row>
                 <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
                 <BS.Col sm={9}>
-                    <BS.Input type="text" name="address" onChange={e => EthereumRPC.set(e.target.value)} placeholder={EthereumRPC.get()}/>
+                    <BS.Input type="text" name="address" onChange={e => EthereumRPC.set(e.target.value)} placeholder={EthereumRPC.get()} ref={e => {this.address = e;}}/>
                 </BS.Col>
             </BS.FormGroup>
 
             <BS.FormGroup row>
                 <BS.Label sm={3} for="port">Contract Address:</BS.Label>
                 <BS.Col sm={9}>
-                    <BS.Input type="text" name="contract" onChange={e => ContractAddress.set(e.target.value)} placeholder={ContractAddress.get()}/>
+                    <BS.Input type="text" name="contract" onChange={e => ContractAddress.set(e.target.value)} placeholder={ContractAddress.get()} ref={e => {this.contract = e;}}/>
                 </BS.Col>
             </BS.FormGroup>
 
@@ -100,6 +100,9 @@ export class EthereumConfig extends Component {
 
                                     EthereumRPC.set(ethereum_rpc);
                                     ContractAddress.set(contract_address);
+
+                                    this.address && (this.address.value = '');
+                                    this.contract && (this.contract.value = '');
 
                                 }}>
 

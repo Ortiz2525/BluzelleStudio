@@ -8,6 +8,68 @@ export const activeValue = observable(undefined);
 export const loadingValue = observable(false);
 
 
+export const activeTTL = observable(undefined);
+
+export const loadingTTL = observable(false);
+
+
+
+
+// ttl countdown/reload
+
+let countdown;
+    
+
+// when activeTTL was last set, not including countdown updates
+let time; 
+let value;
+
+let update_time = true;
+
+
+observe(activeTTL, ({newValue, oldValue}) => {
+
+
+    if(update_time) {
+        time = new Date().getTime();
+        value = newValue;
+    }
+
+    update_time = true;
+
+
+
+    clearTimeout(countdown);
+
+
+    const countdown_f = () => {
+
+        const v = value - Math.round((new Date().getTime() - time) / 1000);
+
+        
+        if(v - 1 <= 0) {
+            reload();
+        }
+        
+        update_time = false;
+        activeTTL.set(v);
+
+    };
+
+
+    if(newValue > 0) {
+
+        countdown = setTimeout(countdown_f, 1000);
+
+    }
+
+
+});
+
+
+
+
+// key selection
 observe(selectedKey, ({newValue, oldValue}) => {
 
 	activeValue.set(undefined);
@@ -23,18 +85,37 @@ observe(selectedKey, ({newValue, oldValue}) => {
         getClient().quickread(newValue).then(value => {
             activeValue.set(value);
             loadingValue.set(false);
-        }).catch(() => {
-            alert('Failed to read value due to bluzelle network error.');
+        }).catch((e) => {
+
+            if(e.message.includes('DELETE_PENDING')) {
+                reload();
+            } else {
+                alert('Failed to quickread value due to bluzelle network error.');
+            }
+
             loadingValue.set(false);
+            console.error(e);
+
         });
         
 		getClient().read(newValue).then(value => {
 			activeValue.set(value);
             loadingValue.set(false);
-        }).catch(() => {
-            alert('Failed to read value due to bluzelle network error.');
+        }).catch((e) => {
+
+            if(e.message.includes('DELETE_PENDING')) {
+                reload();
+            } else {
+                alert('Failed to quickread value due to bluzelle network error.');
+            }
+
             loadingValue.set(false);
+            console.error(e);
+
         });
+
+
+        reloadTTL();
 
 	}
 
@@ -123,21 +204,57 @@ export const rename = (oldKey, newKey) => new Promise(resolve => {
 });
     
 
+
 export const reload = () => new Promise(resolve => {
 
-    refreshKeys().then(keys => {
+    refreshKeys().then(() => {
 
-        const sk = selectedKey.get(); 
-        selectedKey.set();
-
-        if(keys.includes(sk)) {
-
-            selectedKey.set(sk);
-
-        }
+        reloadKey();
 
         resolve();
 
     });
 
 });
+
+
+export const reloadKey = () => {
+
+    const sk = selectedKey.get(); 
+    selectedKey.set();
+
+    if(keys.includes(sk)) {
+
+        selectedKey.set(sk);
+
+    }
+
+};
+
+
+export const reloadTTL = () => {
+
+    loadingTTL.set(true);
+
+    getClient().ttl(selectedKey.get()).then(value => {
+        activeTTL.set(value);
+        loadingTTL.set(false);
+    }).catch((e) => {
+
+        if(e.message === 'TTL_RECORD_NOT_FOUND') {
+
+            activeTTL.set(0);
+            loadingTTL.set(false);
+
+        } else {
+
+            alert('Failed to read time-to-live due to bluzelle network error.');
+            loadingTTL.set(false);
+            console.error(e);
+
+        }
+        
+    });
+
+};
+

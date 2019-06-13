@@ -39,7 +39,6 @@ export default class DaemonSelector extends Component {
         const contract = ContractAddress.get();
         const uuid_ = uuid.get() || this.public_pem;
 
-        console.log(uuid_);
 
         const private_pem = this.private_pem;
         const public_pem = this.public_pem;

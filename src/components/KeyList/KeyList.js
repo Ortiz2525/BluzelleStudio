@@ -17,7 +17,7 @@ export const isLoading = observable(false);
 export const keys = observable([]);
 
 
-export const refreshKeys = () => {
+export const refreshKeys = () => new Promise(resolve => {
 
     isLoading.set(true);
 
@@ -26,13 +26,17 @@ export const refreshKeys = () => {
         keys.replace(k);
         isLoading.set(false);
 
+        resolve();
+
     }).catch(() => {
 
         isLoading.set(false);
         alert('Failed to fetch keys due to bluzelle network error.');
 
+        resolve();
+
     });
-};
+});
 
 export const tempKeys = observable([]);
 
