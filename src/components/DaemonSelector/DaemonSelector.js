@@ -123,6 +123,7 @@ export default class DaemonSelector extends Component {
                 <Header/>
                 <div onKeyUp={this.checkEnterKey.bind(this)}>
                     <BS.Card style={{marginTop: 20}}>
+
                         <div style={{width: 700, padding: 20}}>
 
                             { this.state.showConfigLoader &&
@@ -132,6 +133,7 @@ export default class DaemonSelector extends Component {
                             <BS.Form>
 
                                 <BS.FormGroup row>
+
                                     <BS.Label sm={3} for="priv_file">Private Key:</BS.Label>
                                     <BS.Col sm={9}>
 
@@ -150,6 +152,7 @@ export default class DaemonSelector extends Component {
 
                                 <BS.FormGroup row>
                                     <BS.Label sm={3} for="pub_file">Public Key:</BS.Label>
+
                                     <BS.Col sm={9}>
 
                                      <BS.InputGroup>
