@@ -1,7 +1,12 @@
 const config = require('../../../ethereum_config');
 
+const uuidv4 = require('uuid/v4');
+
+
 export const EthereumRPC = observable(config[0].ethereum_rpc);
 export const ContractAddress = observable(config[0].contract_address);
+export const uuid = observable(undefined);
+
 
 
 @observer
@@ -37,7 +42,7 @@ export class EthereumConfig extends Component {
                     style={{width: '100%'}}
                     onClick={() => this.setState({toggle: !this.state.toggle})}>
 
-                    Show Ethereum Config
+                    Show Config
                 </BS.Button>
                   
             </div>
@@ -49,16 +54,25 @@ export class EthereumConfig extends Component {
             <hr/>
 
             <BS.FormGroup row>
+                <BS.Label sm={3} for="uuid">UUID:</BS.Label>
+                <BS.Col sm={9}>
+                 <BS.InputGroup>
+                    <BS.Input type="text" name="uuid" onChange={e => uuid.set(e.target.value)} placeholder="<public key>"/>
+                  </BS.InputGroup>
+                </BS.Col>
+            </BS.FormGroup>
+
+            <BS.FormGroup row>
                 <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
                 <BS.Col sm={9}>
-                    <BS.Input type="text" name="address" onChange={e => EthereumRPC.set(e.target.value)} placeholder={EthereumRPC.get()}/>
+                    <BS.Input type="text" name="address" onChange={e => EthereumRPC.set(e.target.value)} placeholder={EthereumRPC.get()} ref={e => {this.address = e;}}/>
                 </BS.Col>
             </BS.FormGroup>
 
             <BS.FormGroup row>
                 <BS.Label sm={3} for="port">Contract Address:</BS.Label>
                 <BS.Col sm={9}>
-                    <BS.Input type="text" name="contract" onChange={e => ContractAddress.set(e.target.value)} placeholder={ContractAddress.get()}/>
+                    <BS.Input type="text" name="contract" onChange={e => ContractAddress.set(e.target.value)} placeholder={ContractAddress.get()} ref={e => {this.contract = e;}}/>
                 </BS.Col>
             </BS.FormGroup>
 
@@ -86,6 +100,9 @@ export class EthereumConfig extends Component {
 
                                     EthereumRPC.set(ethereum_rpc);
                                     ContractAddress.set(contract_address);
+
+                                    this.address && (this.address.value = '');
+                                    this.contract && (this.contract.value = '');
 
                                 }}>
 

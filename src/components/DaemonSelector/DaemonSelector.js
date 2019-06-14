@@ -1,11 +1,9 @@
 import CenterMiddle from './CenterMiddle'
 import {Header} from '../Header/Header'
 import {loadingBar} from '../loadingBar';
-import {EthereumConfig, EthereumRPC, ContractAddress} from './EthereumConfig';
+import {EthereumConfig, EthereumRPC, ContractAddress, uuid} from './EthereumConfig';
 
 import fetch from 'isomorphic-fetch';
-
-const uuidv4 = require('uuid/v4');
 
 
 const connecting = observable(false);
@@ -31,12 +29,6 @@ export default class DaemonSelector extends Component {
             return;
         }
 
-        this.uuid.value = this.uuid.value || this.uuid.placeholder;
-
-
-        // url_params.set('address', EthereumRPC.get());
-        // url_params.set('contract', ContractAddress.get());
-        url_params.set('uuid', this.uuid.value);
 
         const new_url_params = location.pathname + '?' + url_params.toString();
 
@@ -45,13 +37,15 @@ export default class DaemonSelector extends Component {
 
         const address = EthereumRPC.get();
         const contract = ContractAddress.get();
-        const uuid = this.uuid.value;
+        const uuid_ = uuid.get() || this.public_pem;
+
+
         const private_pem = this.private_pem;
         const public_pem = this.public_pem;
 
         connecting.set(true);
 
-        this.props.go(address, contract, uuid, private_pem, public_pem).catch(e => {
+        this.props.go(address, contract, uuid_, private_pem, public_pem).catch(e => {
             connecting.set(false);
         });
     }
@@ -115,34 +109,6 @@ export default class DaemonSelector extends Component {
         input.click();
     }
 
-    componentDidMount() {
-
-        if(url_params) {
-
-            // url_params.get('address') && (EthereumRPC.set(url_params.get('address')));
-            // url_params.get('contract') && (ContractAddress.set(url_params.get('contract')));
-
-            url_params.get('uuid') && (this.uuid.value = url_params.get('uuid'));
-
-
-            // We're disabling this for now, so you have to choose the private key manually each time.
-
-            // if(url_params.get('address') && url_params.get('port') && url_params.get('uuid')) {
-            //
-            //     this.go();
-            //     return;
-            //
-            // }
-
-        }
-
-    }
-
-    copy() {
-        this.uuid.value = this.uuid.placeholder;
-        this.uuid.select();
-        document.execCommand("copy");
-    }
 
     toggle() {
         this.setState({
@@ -168,16 +134,6 @@ export default class DaemonSelector extends Component {
 
                                 <BS.FormGroup row>
 
-                                    <BS.Label sm={3} for="uuid">UUID:</BS.Label>
-                                    <BS.Col sm={9}>
-                                     <BS.InputGroup>
-                                        <BS.Input type="text" name="uuid" placeholder={uuidv4()} innerRef={e => {this.uuid = e;}} />
-                                        <BS.InputGroupAddon addonType="append"><BS.Button outline color="secondary" type="button" onClick={() => this.copy()}><i className="fas fa-copy"></i></BS.Button></BS.InputGroupAddon>
-                                      </BS.InputGroup>
-                                    </BS.Col>
-                                </BS.FormGroup>
-
-                                <BS.FormGroup row>
                                     <BS.Label sm={3} for="priv_file">Private Key:</BS.Label>
                                     <BS.Col sm={9}>
 
