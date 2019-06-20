@@ -14,10 +14,19 @@ export class Editor extends Component {
         const showExpiryBar = activeValue.get() !== undefined && !loadingValue.get();
 
         return (
-            <div style={{height: '100%'}}>
+            <div style={{display: 'flex', flexFlow: 'column', height: '100%'}}>
                 {showExpiryBar && <ExpiryBar/>}
-                {showExpiryBar && <hr style={{marginBottom: 0}}/>}
+                {showExpiryBar && <div><hr style={{marginBottom: 0}}/></div>}
                 <Body/>
+                {showExpiryBar && <div style={{
+                    fontStyle: 'italic',
+                    fontSize: '0.7em',
+                    textAlign: 'center',
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0
+                }}>Actual database value may change. Refresh to see the most up-to-date.</div>}
             </div>
         );
 

@@ -46,7 +46,7 @@ export class PlainTextEditor extends Component {
 
         return (
 
-            <div style={{height: '100%'}}>
+            <div style={{flex: 'auto'}}>
                 <BS.Form style={{height: '100%'}}>
                     <BS.Input
                         style={{
