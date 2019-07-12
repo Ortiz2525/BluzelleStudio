@@ -4,7 +4,7 @@ module.exports = [
         color: 'primary', // primary, secondary, success, info, danger, warning, light, dark 
 
         ethereum_rpc: 'https://ropsten.infura.io',
-        contract_address: '0x32A29AEdB45537cDFa95d1fb17377c83ae1eC0c5',
+        contract_address: '0xf039E760a4E97b1E50689ea6572DD74a46359aD9',
     },
 
     {   

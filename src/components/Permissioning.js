@@ -2,6 +2,7 @@ import {autorun} from 'mobx';
 import {getClient, hasClient} from '../services/BluzelleService';
 import {Fragment} from 'react';
 import {loadingBar} from './loadingBar';
+import {public_pem_value} from './App';
 
 export const writers = observable();
 
@@ -17,7 +18,7 @@ autorun(() => {
     if(!hasClient()) return;
 
 
-    const pub_key = getClient().publicKey();
+    const pub_key = public_pem_value.get();
 
     if(pub_key === writers.get().owner) {
 
@@ -112,7 +113,7 @@ export class Permissioning extends Component {
         const render_pubkey = pubkey => 
             <td>
                 <code style={{whiteSpace: 'pre-wrap'}}>{(pubkey === undefined ? '' : pubkey + ' ')}</code>
-                {pubkey === getClient().publicKey() && <BS.Badge color="primary">Me</BS.Badge>}
+                {pubkey === public_pem_value.get() && <BS.Badge color="primary">Me</BS.Badge>}
             </td>;
 
         return (

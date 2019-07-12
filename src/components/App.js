@@ -24,11 +24,15 @@ import {createClient} from '../services/BluzelleService';
 
 export const connected = observable(false);
 
+export const public_pem_value = observable(false);
+
 @observer
 export class App extends Component {
 
 
     async go(address, contract, uuid, private_pem, public_pem) {
+
+        public_pem_value.set(public_pem);
 
         let client; 
 
@@ -61,7 +65,7 @@ export class App extends Component {
 
 
                 // random swarm
-                await apis[Math.floor(Math.random() * apis.length)].createDB();
+                await apis[Math.floor(Math.random() * apis.length)]._createDB();
 
                 apis.forEach(api => api.close());
 

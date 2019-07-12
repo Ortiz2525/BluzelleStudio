@@ -1,5 +1,6 @@
 import {autorun} from 'mobx';
 import {getClient, config} from '../services/BluzelleService';
+import {public_pem_value} from './App';
 
 import {version} from 'bluzelle';
 
@@ -26,7 +27,7 @@ export class Metadata extends Component {
                 <tbody>
                   <tr>
                     <th scope="row">public key</th>
-                    <td><code>{getClient().publicKey()}</code></td>
+                    <td><code>{public_pem_value.get()}</code></td>
                   </tr>
                   <tr>
                     <th scope="row">bluzelle-js version</th>
