@@ -48,7 +48,7 @@ observe(activeTTL, ({newValue, oldValue}) => {
 
         
         if(v - 1 <= 0) {
-            reload();
+            setTimeout(() => reload(), 1500);
         }
         
         update_time = false;
