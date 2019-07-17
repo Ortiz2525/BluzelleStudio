@@ -8,6 +8,14 @@ module.exports = [
     },
 
     {   
+        name: 'Tata Testnet',
+        color: 'danger',
+
+        ethereum_rpc: 'https://ropsten.infura.io',
+        contract_address: '0xf36af9818a39b05efd53b4866a63a65a0f70d3a0',
+    },
+
+    {   
         name: 'localhost',
         color: 'secondary',
 
