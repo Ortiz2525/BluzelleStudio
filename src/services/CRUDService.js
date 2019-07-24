@@ -106,7 +106,7 @@ observe(selectedKey, ({newValue, oldValue}) => {
             if(e.message.includes('DELETE_PENDING')) {
                 reload();
             } else {
-                alert('Failed to quickread value due to bluzelle network error.');
+                alert('Failed to read value due to bluzelle network error.');
             }
 
             loadingValue.set(false);
