@@ -18,7 +18,7 @@ module.exports = {
     createClient: async config => {
 
         configObservable.set(config);
-
+        
         bz = await bluzelle({
             ...config,
 

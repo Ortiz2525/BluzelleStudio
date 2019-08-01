@@ -64,6 +64,11 @@ export class App extends Component {
                 });
 
 
+                if(apis.length === 0) {
+                    throw new Error('Cannot connect to any swarm.');
+                }
+
+
                 // random swarm
                 await apis[Math.floor(Math.random() * apis.length)]._createDB();
 
