@@ -6,7 +6,7 @@ import {execute} from "../services/CommandQueueService";
 import DaemonSelector from './DaemonSelector'
 import {ColorSelector} from './ColorSelector';
 
-import {status} from './Metadata';
+import {status, size} from './Metadata';
 import {writers} from './Permissioning';
 
 
@@ -124,8 +124,10 @@ export class App extends Component {
             writers.set(w);
 
         })
-        .then(() => {
+        .then(() => client.size())
+        .then(s => {
 
+            size.set(s);
             connected.set(true);
 
         })

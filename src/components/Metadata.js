@@ -9,6 +9,8 @@ import {Fragment} from 'react';
 
 export const status = observable();
 
+export const size = observable();
+
 
 @observer
 export class Metadata extends Component {
@@ -37,6 +39,15 @@ export class Metadata extends Component {
                     <th scope="row">uuid</th>
                     <td><code>{config.get().uuid}</code></td>
                   </tr>
+
+
+                  {
+                    Object.entries(size.get()).map(([key, value]) => 
+                        <tr key={key}>
+                            <th scope="row">{key}</th>
+                            <td><code style={{whiteSpace: 'pre-wrap'}}>{value.toString()}</code></td>
+                        </tr>)
+                  }
 
                   {
                     Object.entries(status.get()).map(([key, value]) => 
