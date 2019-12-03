@@ -1,6 +1,10 @@
 This app is used to make changes to the [Bluzelle](https://bluzelle.com/) database.
 
 
+<img src="screen1.png"/>
+<img src="screen2.png"/>
+
+
 ## Instructions
 
 Be sure to have `NodeJS` and `npm` installed on your machine. You must first build be app (see below). Afterwards, you have the option of running it in-browser or on desktop with Electron. You may also choose to download pre-built desktop binaries for [Debian](https://bluzelle.jfrog.io/bluzelle/list/debian-local/pool/) or [OSX](https://bluzelle.jfrog.io/bluzelle/list/OSX/).
