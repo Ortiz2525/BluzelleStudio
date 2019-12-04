@@ -32,6 +32,16 @@ You need to serve the `dist/` on a server. We will show how to do this with a si
 Starting up http-server, serving ./
 Available on:
   http://127.0.0.1:8080
+  
+  
+OR use the standard HTTP port 80:
+
+
+3. sudo http-server -p 80
+
+Starting up http-server, serving ./
+Available on:
+  http://127.0.0.1:80
 ```
 
 
