@@ -36,6 +36,7 @@
     "chai-enzyme": "beta",
     "create-react-class": "^15.6.3",
     "css-loader": "^0.28.9",
+    "downloadjs": "^1.4.7",
     "enzyme": "^3.4.1",
     "enzyme-adapter-react-16": "^1.2.0",
     "express": "^4.16.4",

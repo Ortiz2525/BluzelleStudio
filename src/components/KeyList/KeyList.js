@@ -7,6 +7,7 @@ import {getClient, config} from '../../services/BluzelleService'
 import {Fragment} from 'react';
 import {is_writer} from '../Permissioning';
 import {importCSV} from './importCSV';
+import {exportCSV} from './exportCSV';
 import {loadingBar} from '../loadingBar';
 
 export const selectedKey = observable(undefined);
@@ -140,8 +141,22 @@ export class KeyList extends Component {
                             <i className="fas fa-file-import"></i>
                         </BS.Button>
 
-                        <BS.UncontrolledTooltip placement="right" target="importButton">
+                        <BS.UncontrolledTooltip placement="top" target="importButton">
                             Import CSV file
+                        </BS.UncontrolledTooltip>
+
+
+                        <BS.Button
+                            outline
+                            id="exportButton"
+                            color="secondary"
+                            onClick={exportCSV}>
+
+                            <i className="fas fa-file-export"></i>
+                        </BS.Button>
+
+                        <BS.UncontrolledTooltip placement="top" target="exportButton">
+                            Export CSV file
                         </BS.UncontrolledTooltip>
                     </BS.ButtonGroup>
                 </BS.ButtonToolbar>
