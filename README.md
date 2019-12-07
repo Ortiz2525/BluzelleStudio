@@ -7,7 +7,9 @@ This app is used to make changes to the [Bluzelle](https://bluzelle.com/) databa
 
 ## Instructions
 
-Be sure to have `NodeJS` and `npm` installed on your machine. You must first build be app (see below). Afterwards, you have the option of running it in-browser or on desktop with Electron. You may also choose to download pre-built desktop binaries for [Debian](https://bluzelle.jfrog.io/bluzelle/list/debian-local/pool/) or [OSX](https://bluzelle.jfrog.io/bluzelle/list/OSX/).
+Be sure to have `NodeJS` and `npm` installed on your machine. This application has last been verified with Node version 11.x. 
+
+You must first build be app (see below). Afterwards, you have the option of running it in-browser or on desktop with Electron. You may also choose to download pre-built desktop binaries for [Debian](https://bluzelle.jfrog.io/bluzelle/list/debian-local/pool/) or [OSX](https://bluzelle.jfrog.io/bluzelle/list/OSX/).
 
 
 ### Building the app
@@ -58,6 +60,8 @@ We use `Electron` to bundle the web app for desktop.
 
 
 ### Bundling desktop executables 
+
+Note that the commands given below can cross-compile for different platforms (verified on Mac). The binaries are placed in the `dist` folder.
 
 ```
 1. Ensure you can run the app (see above)
