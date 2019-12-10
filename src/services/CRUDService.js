@@ -177,31 +177,50 @@ export const create = (key, value) => {
 };
 
 
-export const rename = (oldKey, newKey) => new Promise(resolve => {
+export const rename = async (oldKey, newKey) => {
 
-    getClient().read(oldKey).then(v => {
+    tempKeys.push(oldKey);
 
-        getClient().delete(oldKey).then(() => {
+    try {
 
-            getClient().update(newKey, v).then(() => {
+        const v = await getClient().read(oldKey);
 
-            	const s = selectedKey;
+        await getClient().delete(oldKey);
 
-                if(selectedKey.get() === oldKey) {
 
-                    selectedKey.set(newKey);
+        if(await getClient().has(newKey)) {
 
-                }
+            await getClient().update(newKey, v);
 
-                reload().then(resolve);
+        } else {
 
-            }).catch(() => alert('Bluzelle network error.'));
+            await getClient().create(newKey, v);
 
-        }).catch(() => alert('Bluzelle network error.'));
+        }
 
-    }).catch(() => alert('Bluzelle network error.'));
 
-});
+        const s = selectedKey;
+
+        if(selectedKey.get() === oldKey) {
+
+            selectedKey.set(newKey);
+
+        }
+
+
+    } catch(e) {
+
+        console.error(e);
+        alert('Bluzelle network error.');
+
+    }
+
+    tempKeys.splice(tempKeys.indexOf(oldKey), 1);
+
+    
+    await reload();
+
+};
     
 
 

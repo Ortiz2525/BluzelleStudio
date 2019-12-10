@@ -1,5 +1,6 @@
 import {KeyListItem} from "./KeyListItem";
 import {NewKeyField} from "./NewKey/NewKeyField";
+import {RenameKeyField} from "./NewKey/RenameKeyField";
 import {activeValue, save, remove, reload} from '../../services/CRUDService';
 import {execute, removePreviousHistory, updateHistoryMessage} from '../../services/CommandQueueService';
 import {observe} from 'mobx';
@@ -49,7 +50,8 @@ export class KeyList extends Component {
         super(props);
 
         this.state = {
-            showNewKey: false
+            showNewKey: false,
+            renameKey: ''
         };
 
     }
@@ -62,10 +64,24 @@ export class KeyList extends Component {
     }
 
 
+    rename() {
+
+        this.setState({renameKey: selectedKey.get()});
+
+    }
+
+
     render() {
 
         const keyList = keys.sort().map(keyname =>
-            <KeyListItem key={keyname} keyname={keyname}/>);
+            keyname !== this.state.renameKey 
+                ? 
+                    <KeyListItem key={keyname} keyname={keyname}/>
+                :
+                    <RenameKeyField key={keyname} keyname={keyname}
+                        onChange={() => this.setState({renameKey: ''})}/>
+        );
+
 
         const actualKeysList = (
             <BS.ListGroup>
@@ -128,7 +144,24 @@ export class KeyList extends Component {
 
                         }
 
+                        {
+
+                            activeValue.get() !== undefined && 
+                            is_writer.get() !== 'read-only' &&
+
+                            <BS.Button 
+                                outline
+                                color="warning"
+                                onClick={() => this.rename()}>
+
+                                <i className="fas fa-i-cursor"></i>
+                            </BS.Button> 
+
+                        }
+
                         <SaveReloadRemove/>
+
+
                     </BS.ButtonGroup>
 
                     <BS.ButtonGroup style={{ paddingLeft: 10 }}>
@@ -247,3 +280,6 @@ const SaveReloadRemove = observer(({keyname}) =>
             }
 
         </Fragment>);
+
+
+
