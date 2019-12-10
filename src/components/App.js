@@ -21,6 +21,8 @@ configureDevtool({logEnabled: url_params.has('log')});
 
 
 import {createClient} from '../services/BluzelleService';
+import {pub_from_priv} from './DaemonSelector/key_operations';
+
 
 export const connected = observable(false);
 
@@ -30,7 +32,11 @@ export const public_pem_value = observable(false);
 export class App extends Component {
 
 
-    async go(address, contract, uuid, private_pem, public_pem) {
+    async go(address, contract, uuid, private_pem) {
+
+        const public_pem = pub_from_priv(private_pem);
+
+        uuid = uuid || public_pem;
 
         public_pem_value.set(public_pem);
 
@@ -45,7 +51,6 @@ export class App extends Component {
                 contract_address: contract,
                 uuid,
                 private_pem,
-                public_pem
             });
         } catch(e) {
 
@@ -59,7 +64,6 @@ export class App extends Component {
                     contract_address: contract,
                     uuid,
                     private_pem,
-                    public_pem,
                     _connect_to_all: true
                 });
 
@@ -80,7 +84,6 @@ export class App extends Component {
                     contract_address: contract,
                     uuid,
                     private_pem,
-                    public_pem
                 });
 
 

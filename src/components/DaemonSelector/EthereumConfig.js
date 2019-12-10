@@ -57,7 +57,7 @@ export class EthereumConfig extends Component {
                 <BS.Label sm={3} for="uuid">UUID:</BS.Label>
                 <BS.Col sm={9}>
                  <BS.InputGroup>
-                    <BS.Input type="text" name="uuid" onChange={e => uuid.set(e.target.value)} placeholder="<public key>"/>
+                    <BS.Input type="text" name="uuid" onChange={e => uuid.set(e.target.value)} placeholder='<pub key>'/>
                   </BS.InputGroup>
                 </BS.Col>
             </BS.FormGroup>
