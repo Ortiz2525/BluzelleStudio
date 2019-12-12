@@ -28,6 +28,8 @@ export class EthereumConfig extends Component {
             contract: window.cookiesObj.contract || config[0].contract_address,
         };
 
+        this.componentDidUpdate();
+
     }
 
     componentDidUpdate() {

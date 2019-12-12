@@ -33,6 +33,15 @@ window.cookiesObj = document.cookie.split('; ').reduce((prev, current) => {
 }, {});
 
 
+// refresh config cookies for one month
+
+const expiryDate = new Date();
+expiryDate.setMonth(expiryDate.getMonth() + 1);
+
+document.cookie = 'expires=' + expiryDate.toGMTString();
+
+
+
 export const connected = observable(false);
 
 export const public_pem_value = observable(false);

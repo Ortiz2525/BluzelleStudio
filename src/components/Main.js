@@ -23,11 +23,11 @@ export class Main extends Component {
                 <div>
                     <Header/>
 
-                    <BS.Table style={{marginBottom: 0}}>
-                        <tbody>
-                          <tr>
-                            <th scope="row">uuid</th>
-                            <td><code>{config.get().uuid}</code></td>
+                    <BS.Table style={{marginBottom: 0, textAlign: 'center'}}>
+                        <tbody style={{display: 'inline-table'}}>
+                          <tr style={{display: 'inline-table'}}>
+                            <th scope="row" style={{border: 0}}>uuid</th>
+                            <td style={{border: 0}}><code>{config.get().uuid}</code></td>
                           </tr>
                         </tbody>
                     </BS.Table>
