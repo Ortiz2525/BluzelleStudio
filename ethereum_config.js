@@ -16,7 +16,7 @@ module.exports = [
     },
 
     {   
-        name: 'localhost',
+        name: 'private',
         color: 'secondary',
 
         ethereum_rpc: 'http://127.0.0.1:8545',
