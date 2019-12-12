@@ -8,6 +8,9 @@ import {Header} from "./Header/Header";
 // import 'bootstrap/dist/css/bootstrap.css';
 // import './solar.css';
 
+import {config} from '../services/BluzelleService'
+
+
 import {CommandControls} from "./CommandControls";
 import {CollapsibleCard} from './CollapsibleCard';
 
@@ -19,7 +22,16 @@ export class Main extends Component {
             <ReflexContainer style={{height: '100%'}}>
                 <div>
                     <Header/>
-                    <hr/>
+
+                    <BS.Table style={{marginBottom: 0}}>
+                        <tbody>
+                          <tr>
+                            <th scope="row">uuid</th>
+                            <td><code>{config.get().uuid}</code></td>
+                          </tr>
+                        </tbody>
+                    </BS.Table>
+                    <hr style={{marginTop: 0}}/>
                 </div>
                 <ReflexElement flex={1}>
                     <ReflexContainer orientation='vertical'>

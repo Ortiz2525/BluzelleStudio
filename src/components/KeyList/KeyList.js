@@ -104,14 +104,6 @@ export class KeyList extends Component {
 
         return (
             <Fragment>
-            <BS.Table>
-                <tbody>
-                  <tr>
-                    <th scope="row">uuid</th>
-                    <td><code>{config.get().uuid}</code></td>
-                  </tr>
-                </tbody>
-            </BS.Table>
             <div style={{padding: 10}}>
 
                 {
