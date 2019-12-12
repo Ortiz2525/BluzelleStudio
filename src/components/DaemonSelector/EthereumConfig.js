@@ -36,6 +36,7 @@ export class EthereumConfig extends Component {
 
         EthereumRPC.set(this.state.address);
         ContractAddress.set(this.state.contract);
+        uuid.set(this.state.uuid);
 
         document.cookie = "toggle=" + this.state.toggle;
         document.cookie = "active=" + this.state.active;
