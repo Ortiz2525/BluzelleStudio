@@ -11,8 +11,15 @@ export class ColorSelector extends Component {
         super(props);
 
         this.state = {
-            mode: 'light'
+            theme: window.cookiesObj.theme || 'light'
         };
+    }
+
+
+    componentDidUpdate() {
+
+        document.cookie = 'theme=' + this.state.theme;
+
     }
 
     render() {
@@ -28,16 +35,16 @@ export class ColorSelector extends Component {
                 <BS.Button 
                     outline
                     color="primary"
-                    onClick={() => this.setState({ mode: this.state.mode === 'light' ? 'dark' : 'light' })}>
+                    onClick={() => this.setState({ theme: this.state.theme === 'light' ? 'dark' : 'light' })}>
 
-                    { this.state.mode === 'light' ? 
+                    { this.state.theme === 'light' ? 
                         <i className="far fa-lightbulb"></i> :
                         <i className="fas fa-lightbulb"></i>
                     }
                 </BS.Button>
 
                 <style> 
-                    { this.state.mode === 'light' ? default_ : solar }
+                    { this.state.theme === 'light' ? default_ : solar }
                 </style>
             </div>
         );

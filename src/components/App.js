@@ -24,6 +24,15 @@ import {createClient} from '../services/BluzelleService';
 import {pub_from_priv} from './DaemonSelector/key_operations';
 
 
+window.cookiesObj = document.cookie.split('; ').reduce((prev, current) => {
+    
+    const [name, value] = current.split('=');
+    prev[name] = value;
+    return prev;
+
+}, {});
+
+
 export const connected = observable(false);
 
 export const public_pem_value = observable(false);
