@@ -3,9 +3,13 @@ const config = require('../../../ethereum_config');
 const uuidv4 = require('uuid/v4');
 
 
-export const EthereumRPC = observable(config[0].ethereum_rpc);
-export const ContractAddress = observable(config[0].contract_address);
-export const uuid = observable(undefined);
+
+export const EthereumRPC = observable();
+export const ContractAddress = observable();
+export const uuid = observable();
+
+
+const getConfig = name_ => config.find(({name}) => name === name_);
 
 
 
@@ -17,15 +21,26 @@ export class EthereumConfig extends Component {
         super(props);
 
         this.state = {
-            toggle: false,
-            active: config[0].name
+            toggle: (window.cookiesObj.toggle === 'true') || false,
+            active: window.cookiesObj.active || config[0].name,
+            uuid: window.cookiesObj.uuid || '',
+            address: window.cookiesObj.address || config[0].ethereum_rpc,
+            contract: window.cookiesObj.contract || config[0].contract_address,
         };
 
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
 
+        EthereumRPC.set(this.state.address);
+        ContractAddress.set(this.state.contract);
 
+        document.cookie = "toggle=" + this.state.toggle;
+        document.cookie = "active=" + this.state.active;
+
+        document.cookie = "uuid=" + this.state.uuid;
+        document.cookie = "address=" + this.state.address;
+        document.cookie = "contract=" + this.state.contract;
 
     }
 
@@ -57,7 +72,7 @@ export class EthereumConfig extends Component {
                 <BS.Label sm={3} for="uuid">UUID:</BS.Label>
                 <BS.Col sm={9}>
                  <BS.InputGroup>
-                    <BS.Input type="text" name="uuid" onChange={e => uuid.set(e.target.value)} placeholder='<pub key>'/>
+                    <BS.Input type="text" name="uuid" value={this.state.uuid} onChange={e => this.setState({uuid: e.target.value})} placeholder='<pub key>'/>
                   </BS.InputGroup>
                 </BS.Col>
             </BS.FormGroup>
@@ -65,14 +80,14 @@ export class EthereumConfig extends Component {
             <BS.FormGroup row>
                 <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
                 <BS.Col sm={9}>
-                    <BS.Input type="text" name="address" onChange={e => EthereumRPC.set(e.target.value)} placeholder={EthereumRPC.get()} ref={e => {this.address = e;}}/>
+                    <BS.Input type="text" name="address" value={this.state.address} onChange={e => this.setState({address: e.target.value})}/>
                 </BS.Col>
             </BS.FormGroup>
 
             <BS.FormGroup row>
                 <BS.Label sm={3} for="port">Contract Address:</BS.Label>
                 <BS.Col sm={9}>
-                    <BS.Input type="text" name="contract" onChange={e => ContractAddress.set(e.target.value)} placeholder={ContractAddress.get()} ref={e => {this.contract = e;}}/>
+                    <BS.Input type="text" name="contract" value={this.state.contract} onChange={e => this.setState({contract: e.target.value})}/>
                 </BS.Col>
             </BS.FormGroup>
 
@@ -96,13 +111,7 @@ export class EthereumConfig extends Component {
                                 key={name}
                                 onClick={() => {
 
-                                    this.setState({active: name});
-
-                                    EthereumRPC.set(ethereum_rpc);
-                                    ContractAddress.set(contract_address);
-
-                                    this.address && (this.address.value = '');
-                                    this.contract && (this.contract.value = '');
+                                    this.setState({active: name, address: ethereum_rpc, contract: contract_address});
 
                                 }}>
 
