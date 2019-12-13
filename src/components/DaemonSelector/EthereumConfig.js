@@ -28,6 +28,22 @@ export class EthereumConfig extends Component {
             contract: window.cookiesObj.contract || config[0].contract_address,
         };
 
+
+        const url = new URL(window.location.href);
+
+        if(url.searchParams.get("uuid")) {
+            this.state.uuid = url.searchParams.get("uuid");
+        }
+
+        if(url.searchParams.get("address")) {
+            this.state.address = url.searchParams.get("address");
+        }
+
+        if(url.searchParams.get("contract")) {
+            this.state.contract = url.searchParams.get("contract");
+        }
+
+
         this.componentDidUpdate();
 
     }

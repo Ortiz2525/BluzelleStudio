@@ -52,6 +52,14 @@ export class App extends Component {
 
     async go(address, contract, uuid, private_pem) {
 
+
+        const params = new URLSearchParams();
+        params.set('address', address);
+        params.set('contract', contract);
+        params.set('uuid', uuid);
+        window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+
+
         const public_pem = pub_from_priv(private_pem);
 
         uuid = uuid || public_pem;
