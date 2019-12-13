@@ -165,9 +165,13 @@ export default class DaemonSelector extends Component {
 
                                         <BS.Input disabled type="text" name="priv_file" value={this.state.fileName}/>
                                         <BS.InputGroupAddon addonType="append">
-                                            <BS.Button outline={!this.state.save} color="warning" type="button" onClick={() => this.setState({save: !this.state.save})}><i className="fas fa-thumbtack"></i></BS.Button>
+                                            <BS.Button outline={!this.state.save} color="warning" type="button" id="saveButton" onClick={() => this.setState({save: !this.state.save})}><i className="fas fa-thumbtack"></i></BS.Button>
                                             <BS.Button outline color="secondary" type="button" onClick={() => this.toggle()}><i className="far fa-question-circle"></i></BS.Button>
                                         </BS.InputGroupAddon>
+
+                                        <BS.UncontrolledTooltip placement="top" target="saveButton">
+                                            Save key
+                                        </BS.UncontrolledTooltip>
                                       </BS.InputGroup>
                                     </BS.Col>
                                 </BS.FormGroup>
@@ -200,11 +204,15 @@ export default class DaemonSelector extends Component {
 
                                 <hr/>
 
-                                <p>Bluzelle uses the elliptic curve digital signature algorithm (<strong>ECDSA</strong>) on the curve <strong>secp256k1</strong> with an <strong>SHA-256</strong> hash.</p>
+                                <p>Bluzelle uses the elliptic curve digital signature algorithm (<strong>ECDSA</strong>) on the curve <strong>secp256k1</strong> with an <strong>SHA-256</strong> hash. To emulate different users, use different keys.</p>
 
                                 <hr/>
 
-                                <p>With OpenSSL installed, run <code>openssl ecparam -name secp256k1 -genkey -noout -out my_private_key.pem</code>. This will write the private key to a file called <code>my_private_key.pem</code>. Upload that file to BluzelleStudio. To emulate different users, use different keys. The file should looks like this:</p>
+                                <p>With OpenSSL installed, run <code>openssl ecparam -name secp256k1 -genkey -noout -out my_private_key.pem</code>. This will write the private key to a file called <code>my_private_key.pem</code>. Upload that file to BluzelleStudio.</p>
+
+                                <p>Alternatively, navigate to <a href="https://keytool.online/">https://keytool.online/</a>, select "ECDSA" and "P-256k" as the key type. Copy the private key and save it into a file on your computer. Upload that file to BluzelleStudio.</p>
+
+                                <p>The file should looks like this:</p>
 
                                 <div style={{overflow: 'scroll'}}>
                                 <code style={{whiteSpace: 'pre'}}>{'-----BEGIN EC PRIVATE KEY-----\nMHQCAQEEIFNmJHEiGpgITlRwao/CDki4OS7BYeI7nyz+CM8NW3xToAcGBSuBBAAK\noUQDQgAEndHOcS6bE1P9xjS/U+SM2a1GbQpPuH9sWNWtNYxZr0JcF+sCS2zsD+xl\nCcbrRXDZtfeDmgD9tHdWhcZKIy8ejQ==\n-----END EC PRIVATE KEY-----'}</code>
