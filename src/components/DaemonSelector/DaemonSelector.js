@@ -113,6 +113,7 @@ export default class DaemonSelector extends Component {
 
                     if(base_64.match(/^[A-Za-z0-9+/=]*$/)) {  
 
+                        this.forceUpdate();
                         callback(base_64);
 
                     } else {
