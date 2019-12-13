@@ -18,14 +18,36 @@ export default class DaemonSelector extends Component {
 
         this.state = {
             showConfigLoader: false,
-            modal: false
+            modal: false,
+            save: window.cookiesObj.save === 'true' || false,
+            private_pem: window.cookiesObj.private_pem || '',
+            fileName: window.cookiesObj.fileName || ''
         };
+    }
+
+
+    componentDidUpdate() {
+
+        document.cookie = 'save=' + this.state.save;
+
+        if(!this.state.save) {
+
+            document.cookie = 'private_pem=';
+            document.cookie = 'fileName=';
+
+        } else {
+
+            document.cookie = 'private_pem=' + this.state.private_pem;
+            document.cookie = 'fileName=' + this.state.fileName;
+
+        }
+
     }
 
     go() {
 
 
-        if(!this.private_pem) {
+        if(!this.state.private_pem) {
             alert('Please upload Bluzelle key.');
             return;
         }
@@ -41,11 +63,9 @@ export default class DaemonSelector extends Component {
         const uuid_ = uuid.get();
 
 
-        const private_pem = this.private_pem;
-
         connecting.set(true);
 
-        this.props.go(address, contract, uuid_, private_pem).catch(e => {
+        this.props.go(address, contract, uuid_, this.state.private_pem).catch(e => {
             console.error(e);
             connecting.set(false);
         });
@@ -140,11 +160,12 @@ export default class DaemonSelector extends Component {
 
                                      <BS.InputGroup>
                                         <BS.InputGroupAddon addonType="prepend">
-                                            <BS.Button outline color="primary" type="button" onClick={() => this.selectFile(base64 => {this.private_pem = base64;}, fname => {this.priv_file.value = fname;})}><i className="far fa-hdd"></i></BS.Button>
+                                            <BS.Button outline color="primary" type="button" onClick={() => this.selectFile(base64 => this.setState({private_pem: base64}), fname => this.setState({fileName: fname}))}><i className="far fa-hdd"></i></BS.Button>
                                         </BS.InputGroupAddon>
 
-                                        <BS.Input disabled type="text" name="priv_file" innerRef={e => {this.priv_file = e;}} />
+                                        <BS.Input disabled type="text" name="priv_file" value={this.state.fileName}/>
                                         <BS.InputGroupAddon addonType="append">
+                                            <BS.Button outline={!this.state.save} color="warning" type="button" onClick={() => this.setState({save: !this.state.save})}><i className="fas fa-thumbtack"></i></BS.Button>
                                             <BS.Button outline color="secondary" type="button" onClick={() => this.toggle()}><i className="far fa-question-circle"></i></BS.Button>
                                         </BS.InputGroupAddon>
                                       </BS.InputGroup>
