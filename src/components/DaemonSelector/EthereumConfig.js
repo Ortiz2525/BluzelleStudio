@@ -125,7 +125,6 @@ export class EthereumConfig extends Component {
                             <BS.Button
                                 style={{flex:1}}
                                 outline={true}
-                                active={this.state.active === name}
                                 color={color}
                                 key={name}
                                 onClick={() => {
