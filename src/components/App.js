@@ -1,31 +1,29 @@
-import 'babel-polyfill';
+import '@babel/polyfill';
 
-import {HashRouter, Route} from 'react-router-dom'
-import {Main} from 'components/Main'
-import {execute} from "../services/CommandQueueService";
+import { Main } from 'components/Main'
 import DaemonSelector from './DaemonSelector'
-import {ColorSelector} from './ColorSelector';
+import { ColorSelector } from './ColorSelector';
 
-import {status, size} from './Metadata';
-import {writers} from './Permissioning';
+import { status, size } from './Metadata';
+import { writers } from './Permissioning';
 
 
 import DevTools from 'mobx-react-devtools';
 
 // Debugging
-import {configureDevtool} from 'mobx-react-devtools';
+import { configureDevtool } from 'mobx-react-devtools';
 
 const url_params = window && new URLSearchParams(window.location.search);
 
-configureDevtool({logEnabled: url_params.has('log')});
+configureDevtool({ logEnabled: url_params.has('log') });
 
 
-import {createClient} from '../services/BluzelleService';
-import {pub_from_priv} from './DaemonSelector/key_operations';
+import { createClient } from '../services/BluzelleService';
+import { pub_from_priv } from './DaemonSelector/key_operations';
 
 
 window.cookiesObj = document.cookie.split('; ').reduce((prev, current) => {
-    
+
     const [name, value] = current.split('=');
     prev[name] = value;
     return prev;
@@ -66,19 +64,19 @@ export class App extends Component {
 
         public_pem_value.set(public_pem);
 
-        let client; 
+        let client;
 
 
         // try to open a client normally
 
         try {
             client = await createClient({
-                ethereum_rpc: address, 
+                ethereum_rpc: address,
                 contract_address: contract,
                 uuid,
                 private_pem,
             });
-        } catch(e) {
+        } catch (e) {
 
 
             // try to create the db
@@ -86,7 +84,7 @@ export class App extends Component {
             try {
 
                 const apis = await createClient({
-                    ethereum_rpc: address, 
+                    ethereum_rpc: address,
                     contract_address: contract,
                     uuid,
                     private_pem,
@@ -94,7 +92,7 @@ export class App extends Component {
                 });
 
 
-                if(apis.length === 0) {
+                if (apis.length === 0) {
                     throw new Error('Cannot connect to any swarm.');
                 }
 
@@ -106,16 +104,16 @@ export class App extends Component {
 
 
                 client = await createClient({
-                    ethereum_rpc: address, 
+                    ethereum_rpc: address,
                     contract_address: contract,
                     uuid,
                     private_pem,
                 });
 
 
-            } catch(e2) {
+            } catch (e2) {
 
-                if(e2.message.includes('ACCESS_DENIED')) {
+                if (e2.message.includes('ACCESS_DENIED')) {
 
                     alert(e.message);
 
@@ -132,41 +130,41 @@ export class App extends Component {
 
                     throw e2;
 
-                }    
+                }
 
-            }  
+            }
 
         }
 
-        
+
         Promise.resolve()
-        .then(() => client.status())
-        .then(s => {
+            .then(() => client.status())
+            .then(s => {
 
-            status.set(s);
+                status.set(s);
 
-            return client._getWriters();
+                return client._getWriters();
 
-        })
-        .then(w => {
+            })
+            .then(w => {
 
-            writers.set(w);
+                writers.set(w);
 
-        })
-        .then(() => client.size())
-        .then(s => {
+            })
+            .then(() => client.size())
+            .then(s => {
 
-            size.set(s);
-            connected.set(true);
+                size.set(s);
+                connected.set(true);
 
-        })
-        .catch(e => {
+            })
+            .catch(e => {
 
-            alert('Error initializing database connection: ' + e.message);
+                alert('Error initializing database connection: ' + e.message);
 
-            throw e;
+                throw e;
 
-        });
+            });
 
     }
 
@@ -174,16 +172,16 @@ export class App extends Component {
     render() {
 
         return (
-            <div style={{height: '100%'}}>
+            <div style={{ height: '100%' }}>
 
-                <ColorSelector/>
-                
-                {/dev-tools/.test(window.location.href) && <DevTools/>}
+                <ColorSelector />
+
+                {/dev-tools/.test(window.location.href) && <DevTools />}
 
                 {
                     connected.get() ?
-                        <Main/> :
-                        <DaemonSelector go={this.go.bind(this)}/>
+                        <Main /> :
+                        <DaemonSelector go={this.go.bind(this)} />
                 }
             </div>
         );

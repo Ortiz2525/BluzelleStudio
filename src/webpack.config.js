@@ -16,17 +16,16 @@ module.exports = {
     },
     devtool: PROD ? '' : 'inline-source-map',
     module: {
-        rules: [
-            {
+        rules: [{
 
                 test: /\.js$/,
                 include: (path) => {
 
-                    if(/bluzelle-client-common/.test(path)) {
+                    if (/bluzelle-client-common/.test(path)) {
                         return true;
                     }
 
-                    if(/node_modules/.test(path)) {
+                    if (/node_modules/.test(path)) {
                         return false;
                     }
 
@@ -36,8 +35,25 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env', 'react', 'stage-3', 'stage-2'],
-                        plugins: ['transform-decorators-legacy']
+                        presets: [
+                            require('@babel/preset-env'),
+                            require('@babel/preset-react')
+                        ],
+                        plugins: [
+                            ['@babel/plugin-proposal-decorators',
+                                {
+                                    "legacy": true
+                                }
+                            ],
+                            ['@babel/plugin-proposal-class-properties'],
+                            ['@babel/plugin-proposal-export-namespace-from'],
+                            ['@babel/plugin-proposal-function-sent'],
+                            ['@babel/plugin-proposal-json-strings'],
+                            ['@babel/plugin-proposal-numeric-separator'],
+                            ['@babel/plugin-proposal-throw-expressions'],
+                            ['@babel/plugin-syntax-dynamic-import'],
+                            ['@babel/plugin-syntax-import-meta']
+                        ]
                     }
                 }
             },
@@ -66,8 +82,8 @@ module.exports = {
             }
         ]
     },
-    externals:{
-        fs:    "commonjs fs",
+    externals: {
+        fs: "commonjs fs",
     },
     resolve: {
         symlinks: false,
@@ -126,5 +142,3 @@ module.exports = {
         new webpack.NamedModulesPlugin()
     ]
 };
-
-

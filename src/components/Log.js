@@ -1,21 +1,22 @@
-import {log} from '../services/BluzelleService'
+import { observe } from 'mobx';
+import { log } from '../services/BluzelleService'
 
-log.observe(v => {
+observe(log, v => {
 
-    if(logs.length === logs_max_length) {
+    if (logs.length === logs_max_length) {
         logs.shift();
     }
 
 
-    if(v.newValue[1].read && v.newValue[1].read.value) {
+    if (v.newValue[1].read && v.newValue[1].read.value) {
         v.newValue[1].read.value = ['...'];
     }
 
-    if(v.newValue[1].subscriptionUpdate) {
+    if (v.newValue[1].subscriptionUpdate) {
         v.newValue[1].subscriptionUpdate.value = ['...'];
     }
 
-    if(v.newValue[1].update && v.newValue[1].update.value) {
+    if (v.newValue[1].update && v.newValue[1].update.value) {
         v.newValue[1].update.value = ['...'];
     }
 
@@ -48,35 +49,35 @@ export class Log extends Component {
 
                 {logs.reverse().map((msg, i) =>
 
-                    <BS.ListGroupItem 
-                    color={
-                        (msg.json.error !== undefined || msg.type === 'Connection error') 
-                           ? 'danger' : ''}
-                    key={i}
-                    style={{
-                        wordBreak: 'break-all'
-                    }}>
+                    <BS.ListGroupItem
+                        color={
+                            (msg.json.error !== undefined || msg.type === 'Connection error')
+                                ? 'danger' : ''}
+                        key={i}
+                        style={{
+                            wordBreak: 'break-all'
+                        }}>
 
                         <BS.ListGroupItemHeading>
                             <span>
-                                <i 
-                                style={{
-                                    color: ({
-                                        'Outgoing database_msg\n': 'hotpink',
-                                        'Incoming database_response\n': 'purple',
-                                    })[msg.type]
-                                }}
-                                className={
-                                    ({
-                                        'Outgoing database_msg\n': "fas fa-sign-out-alt",
-                                        'Incoming database_response\n': 'fas fa-sign-in-alt fa-flip-horizontal'
-                                    })[msg.type]
-                                }></i>
+                                <i
+                                    style={{
+                                        color: ({
+                                            'Outgoing database_msg\n': 'hotpink',
+                                            'Incoming database_response\n': 'purple',
+                                        })[msg.type]
+                                    }}
+                                    className={
+                                        ({
+                                            'Outgoing database_msg\n': "fas fa-sign-out-alt",
+                                            'Incoming database_response\n': 'fas fa-sign-in-alt fa-flip-horizontal'
+                                        })[msg.type]
+                                    }></i>
                             </span>
                             &nbsp; &nbsp;&nbsp;&nbsp;
                             <BS.Badge pill>{msg.time}</BS.Badge>
                         </BS.ListGroupItemHeading>
-                        
+
 
                         <BS.ListGroupItemText style={{
                             fontFamily: 'monospace',
@@ -86,7 +87,7 @@ export class Log extends Component {
                         }}>
                             {JSON.stringify(msg.json, null, 4)}
                         </BS.ListGroupItemText>
-                        
+
 
                     </BS.ListGroupItem>
 
