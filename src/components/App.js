@@ -7,68 +7,45 @@ import { ColorSelector } from './ColorSelector';
 import { status, size } from './Metadata';
 import { writers } from './Permissioning';
 
-
 import DevTools from 'mobx-react-devtools';
 
 // Debugging
 import { configureDevtool } from 'mobx-react-devtools';
+import { createClient } from '../services/BluzelleService';
 
 const url_params = window && new URLSearchParams(window.location.search);
 
 configureDevtool({ logEnabled: url_params.has('log') });
 
-
-import { createClient } from '../services/BluzelleService';
-import { pub_from_priv } from './DaemonSelector/key_operations';
-
-
 window.cookiesObj = document.cookie.split('; ').reduce((prev, current) => {
-
     const [name, value] = current.split('=');
     prev[name] = value;
     return prev;
-
 }, {});
 
-
 // refresh config cookies for one month
-
 const expiryDate = new Date();
 expiryDate.setMonth(expiryDate.getMonth() + 1);
 
 document.cookie = 'expires=' + expiryDate.toGMTString();
 
-
-
 export const connected = observable(false);
-
 export const public_pem_value = observable(false);
 
-@observer
-export class App extends Component {
+const App = () => {
 
-
-    async go(address, contract, uuid, private_pem) {
-
-
+    // TODO: Save Mnemonic to Context
+    const go = async (address, contract, uuid, mnemonic) => {
         const params = new URLSearchParams();
         params.set('address', address);
         params.set('contract', contract);
         params.set('uuid', uuid);
         window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
 
-
-        const public_pem = pub_from_priv(private_pem);
-
-        uuid = uuid || public_pem;
-
-        public_pem_value.set(public_pem);
+        uuid = uuid || Date.now().toString();
 
         let client;
-
-
         // try to open a client normally
-
         try {
             client = await createClient({
                 ethereum_rpc: address,
@@ -77,12 +54,8 @@ export class App extends Component {
                 private_pem,
             });
         } catch (e) {
-
-
             // try to create the db
-
             try {
-
                 const apis = await createClient({
                     ethereum_rpc: address,
                     contract_address: contract,
@@ -91,17 +64,13 @@ export class App extends Component {
                     _connect_to_all: true
                 });
 
-
                 if (apis.length === 0) {
                     throw new Error('Cannot connect to any swarm.');
                 }
 
-
                 // random swarm
                 await apis[Math.floor(Math.random() * apis.length)]._createDB();
-
                 apis.forEach(api => api.close());
-
 
                 client = await createClient({
                     ethereum_rpc: address,
@@ -109,81 +78,53 @@ export class App extends Component {
                     uuid,
                     private_pem,
                 });
-
-
             } catch (e2) {
-
                 if (e2.message.includes('ACCESS_DENIED')) {
-
                     alert(e.message);
-
                     console.error(e);
-
                     throw e;
-
                 } else {
-
                     alert(e2.message);
-
-
                     console.error(e2);
-
                     throw e2;
-
                 }
-
             }
-
         }
-
 
         Promise.resolve()
             .then(() => client.status())
             .then(s => {
-
                 status.set(s);
-
                 return client._getWriters();
-
             })
             .then(w => {
-
                 writers.set(w);
-
             })
             .then(() => client.size())
             .then(s => {
-
                 size.set(s);
                 connected.set(true);
-
             })
             .catch(e => {
-
                 alert('Error initializing database connection: ' + e.message);
-
                 throw e;
-
             });
-
     }
 
+    return (
+        <div style={{ height: '100%' }}>
 
-    render() {
+            <ColorSelector />
 
-        return (
-            <div style={{ height: '100%' }}>
+            {/dev-tools/.test(window.location.href) && <DevTools />}
 
-                <ColorSelector />
+            {
+                connected.get() ?
+                    <Main /> :
+                    <DaemonSelector go={go} />
+            }
+        </div>
+    );
+}
 
-                {/dev-tools/.test(window.location.href) && <DevTools />}
-
-                {
-                    connected.get() ?
-                        <Main /> :
-                        <DaemonSelector go={this.go.bind(this)} />
-                }
-            </div>
-        );
-    }
-};
+export default App;

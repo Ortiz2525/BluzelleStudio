@@ -1,4 +1,4 @@
-const CenterMiddle = ({children}) => (
+const CenterMiddle = ({ children }) => (
     <div style={wrapperStyle}>
         <div style={innerStyle}>
             {children}

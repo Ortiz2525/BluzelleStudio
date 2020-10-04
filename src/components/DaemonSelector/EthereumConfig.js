@@ -1,145 +1,86 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
 import config from '../../../ethereum_config';
 
-export const EthereumRPC = observable();
-export const ContractAddress = observable();
-export const uuid = observable();
+const EthereumConfig = ({ address, contract, uuid, setAddress, setContract, setUuid }) => {
+    const [toggle, setToggle] = useState((window.cookiesObj.toggle === 'true') || false);
+    const [active, setActive] = useState(window.cookiesObj.active || config[0].name);
 
-@observer
-export class EthereumConfig extends Component {
+    useEffect(() => {
+        document.cookie = "toggle=" + toggle;
+        document.cookie = "active=" + active;
+    }, [toggle, active]);
 
-    constructor(props) {
+    return (
+        <>
+            <div style={{ marginTop: 10, textAlign: 'center' }}>
+                <BS.Button
+                    outline={true}
+                    color="secondary"
+                    style={{ width: '100%' }}
+                    onClick={() => setToggle(!toggle)}>
 
-        super(props);
-
-        this.state = {
-            toggle: (window.cookiesObj.toggle === 'true') || false,
-            active: window.cookiesObj.active || config[0].name,
-            uuid: window.cookiesObj.uuid || '',
-            address: window.cookiesObj.address || config[0].ethereum_rpc,
-            contract: window.cookiesObj.contract || config[0].contract_address,
-        };
-
-
-        const url = new URL(window.location.href);
-
-        if (url.searchParams.get("uuid")) {
-            this.state.uuid = url.searchParams.get("uuid");
-        }
-
-        if (url.searchParams.get("address")) {
-            this.state.address = url.searchParams.get("address");
-        }
-
-        if (url.searchParams.get("contract")) {
-            this.state.contract = url.searchParams.get("contract");
-        }
-
-
-        this.componentDidUpdate();
-
-    }
-
-    componentDidUpdate() {
-
-        EthereumRPC.set(this.state.address);
-        ContractAddress.set(this.state.contract);
-        uuid.set(this.state.uuid);
-
-        document.cookie = "toggle=" + this.state.toggle;
-        document.cookie = "active=" + this.state.active;
-
-        document.cookie = "uuid=" + this.state.uuid;
-        document.cookie = "address=" + this.state.address;
-        document.cookie = "contract=" + this.state.contract;
-
-    }
-
-    render() {
-
-        return (
-
-            <React.Fragment>
-                <div style={{ marginTop: 10, textAlign: 'center' }}>
-
-                    <BS.Button
-                        outline={true}
-                        color="secondary"
-                        style={{ width: '100%' }}
-                        onClick={() => this.setState({ toggle: !this.state.toggle })}>
-
-                        Show Config
+                    Show Config
                 </BS.Button>
+            </div>
 
-                </div>
+            {toggle &&
+                <>
+                    <hr />
 
+                    <BS.FormGroup row>
+                        <BS.Label sm={3} for="uuid">UUID:</BS.Label>
+                        <BS.Col sm={9}>
+                            <BS.InputGroup>
+                                <BS.Input type="text" name="uuid" value={uuid} onChange={e => setUuid(e.target.value)} placeholder='<pub key>' />
+                            </BS.InputGroup>
+                        </BS.Col>
+                    </BS.FormGroup>
 
-                { this.state.toggle &&
+                    <BS.FormGroup row>
+                        <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
+                        <BS.Col sm={9}>
+                            <BS.Input type="text" name="address" value={address} onChange={e => setAddress(e.target.value)} />
+                        </BS.Col>
+                    </BS.FormGroup>
 
-                    <React.Fragment>
-                        <hr />
+                    <BS.FormGroup row>
+                        <BS.Label sm={3} for="port">Contract Address:</BS.Label>
+                        <BS.Col sm={9}>
+                            <BS.Input type="text" name="contract" value={contract} onChange={e => setContract(e.target.value)} />
+                        </BS.Col>
+                    </BS.FormGroup>
 
-                        <BS.FormGroup row>
-                            <BS.Label sm={3} for="uuid">UUID:</BS.Label>
-                            <BS.Col sm={9}>
-                                <BS.InputGroup>
-                                    <BS.Input type="text" name="uuid" value={this.state.uuid} onChange={e => this.setState({ uuid: e.target.value })} placeholder='<pub key>' />
-                                </BS.InputGroup>
-                            </BS.Col>
-                        </BS.FormGroup>
+                    <div style={{ marginTop: 10, textAlign: 'center' }}>
+                        <BS.ButtonGroup style={{ width: '100%' }}>
+                            {
+                                config.map(({
+                                    name,
+                                    color,
+                                    ethereum_rpc,
+                                    contract_address
+                                }) =>
+                                    <BS.Button
+                                        style={{ flex: 1 }}
+                                        outline={true}
+                                        color={color}
+                                        key={name}
+                                        onClick={() => {
+                                            setActive(name);
+                                            setAddress(ethereum_rpc);
+                                            setContract(contract_address);
+                                        }}>
 
-                        <BS.FormGroup row>
-                            <BS.Label sm={3} for="address">Eth. RPC Address:</BS.Label>
-                            <BS.Col sm={9}>
-                                <BS.Input type="text" name="address" value={this.state.address} onChange={e => this.setState({ address: e.target.value })} />
-                            </BS.Col>
-                        </BS.FormGroup>
-
-                        <BS.FormGroup row>
-                            <BS.Label sm={3} for="port">Contract Address:</BS.Label>
-                            <BS.Col sm={9}>
-                                <BS.Input type="text" name="contract" value={this.state.contract} onChange={e => this.setState({ contract: e.target.value })} />
-                            </BS.Col>
-                        </BS.FormGroup>
-
-                        <div style={{ marginTop: 10, textAlign: 'center' }}>
-
-                            <BS.ButtonGroup style={{ width: '100%' }}>
-
-                                {
-                                    config.map(({
-                                        name,
-                                        color,
-                                        ethereum_rpc,
-                                        contract_address
-                                    }) =>
-
-                                        <BS.Button
-                                            style={{ flex: 1 }}
-                                            outline={true}
-                                            color={color}
-                                            key={name}
-                                            onClick={() => {
-
-                                                this.setState({ active: name, address: ethereum_rpc, contract: contract_address });
-
-                                            }}>
-
-                                            {name}
-                                        </BS.Button>
-
-                                    )
-                                }
-
-                            </BS.ButtonGroup>
-
-                        </div>
-
-                    </React.Fragment>
-                }
-
-            </React.Fragment>
-        );
-
-    }
-
+                                        {name}
+                                    </BS.Button>
+                                )
+                            }
+                        </BS.ButtonGroup>
+                    </div>
+                </>
+            }
+        </>
+    );
 }
+
+export default EthereumConfig;

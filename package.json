@@ -15,7 +15,9 @@
     "test": "npx mocha -r jsdom-global/register dist/runTests.js --exit",
     "test-server": "ws -d dist --spa test.html ",
     "coverage": "nyc --instrument=false --reporter=cobertura  --report-dir=coverage yarn test",
-    "coverage-text": "nyc --instrument=false yarn test"
+    "coverage-text": "nyc --instrument=false yarn test",
+    "dev": "webpack-dev-server --config ./webpack.config.js --mode=development --open --hot",
+    "build": "webpack --config ./webpack.config.js --mode=production"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
@@ -67,13 +69,9 @@
     "simple-monads": "^2.0.0",
     "sinon": "^9.1.0",
     "source-map-support": "0.5.19",
-    "style-loader": "^1.2.1",
     "text-encoding": "^0.6.4",
     "url-loader": "^4.1.0",
     "uuid": "^8.3.0",
-    "webpack": "4.44.2",
-    "webpack-beep-plugin": "^1.0.1",
-    "webpack-shell-plugin": "^0.5.0",
     "websocket": "^1.0.32"
   },
   "author": "",
@@ -93,6 +91,12 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "webpack-cli": "^3.3.12"
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^1.3.0",
+    "webpack": "4.44.2",
+    "webpack-beep-plugin": "^1.0.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-shell-plugin": "^0.5.0"
   }
 }

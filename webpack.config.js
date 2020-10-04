@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const BeepPlugin = require('webpack-beep-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const PROD = process.env.NODE_ENV === 'production';
 PROD && console.log('----------- Compiling for production ----------');
@@ -8,10 +9,10 @@ PROD && console.log('----------- Compiling for production ----------');
 
 module.exports = {
     entry: {
-        index: path.resolve('./index.js')
+        index: path.resolve('./src/index.js')
     },
     output: {
-        path: path.resolve('../dist/generated/js'),
+        path: path.resolve('./dist/generated/js'),
         filename: '[name].js'
     },
     devtool: PROD ? '' : 'inline-source-map',
@@ -19,25 +20,13 @@ module.exports = {
         rules: [{
 
                 test: /\.js$/,
-                include: (path) => {
-
-                    if (/bluzelle-client-common/.test(path)) {
-                        return true;
-                    }
-
-                    if (/node_modules/.test(path)) {
-                        return false;
-                    }
-
-                    return true;
-                },
-
+                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
                         presets: [
-                            require('@babel/preset-env'),
-                            require('@babel/preset-react')
+                            '@babel/preset-env',
+                            '@babel/preset-react'
                         ],
                         plugins: [
                             ['@babel/plugin-proposal-decorators',
@@ -88,14 +77,18 @@ module.exports = {
     resolve: {
         symlinks: false,
         alias: {
-            components: path.resolve('components'),
-            services: path.resolve('services'),
-            stores: path.resolve('stores'),
-            src: path.resolve(''),
-            constants: path.resolve('constants')
+            components: path.resolve('./src/components'),
+            services: path.resolve('./src/services'),
+            stores: path.resolve('./src/stores'),
+            src: path.resolve('./src'),
+            constants: path.resolve('./src/constants'),
+            res: path.resolve('./dist')
         }
     },
     plugins: [
+        new HtmlWebPackPlugin({
+            template: './dist/index.html',
+        }),
         new webpack.ProvidePlugin({
             React: 'react',
             Fragment: ['react', 'Fragment'],
