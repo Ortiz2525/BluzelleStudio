@@ -30,12 +30,9 @@ expiryDate.setMonth(expiryDate.getMonth() + 1);
 
 document.cookie = "expires=" + expiryDate.toGMTString();
 
-// TODO: Remove these variables
-export const connected = observable(false);
-export const public_pem_value = observable(false);
-
 const App = () => {
     const { setMnemonic } = useData();
+    const [connected, setConnected] = useState(false);
 
     const go = async (address, contract, uuid, mnemonic) => {
         setMnemonic(mnemonic);
@@ -111,7 +108,7 @@ const App = () => {
             .then(() => client.size())
             .then((s) => {
                 size.set(s);
-                connected.set(true);
+                setConnected(true);
             })
             .catch((e) => {
                 alert("Error initializing database connection: " + e.message);
@@ -120,12 +117,12 @@ const App = () => {
     };
 
     return (
-        <div>
+        <div style={{ height: "100%" }}>
             <ColorSelector />
 
             {/dev-tools/.test(window.location.href) && <DevTools />}
 
-            {connected.get() ? <Main /> : <DaemonSelector go={go} />}
+            {connected ? <Main /> : <DaemonSelector go={go} />}
         </div>
     );
 };
