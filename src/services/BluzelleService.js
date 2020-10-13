@@ -10,6 +10,7 @@ const configObservable = observable();
 let bz;
 
 export const config = configObservable;
+
 export const createClient = async (config) => {
     configObservable.set(config);
 

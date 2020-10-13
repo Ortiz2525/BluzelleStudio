@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import CenterMiddle from "./CenterMiddle";
-import { Header } from "../Header/Header";
+import Header from "../Header/Header";
 import loadingBar from "../loadingBar";
 import EthereumConfig from "./EthereumConfig";
 

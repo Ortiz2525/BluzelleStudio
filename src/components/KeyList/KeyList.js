@@ -1,8 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
 
-import KeyListItem from "./KeyListItem";
-import NewKeyField from "./NewKey/NewKeyField";
-import RenameKeyField from "./NewKey/RenameKeyField";
 import { activeValue, save, remove, reload } from "../../services/CRUDService";
 import {
     execute,
@@ -10,9 +7,14 @@ import {
     updateHistoryMessage,
 } from "../../services/CommandQueueService";
 import { getClient } from "../../services/BluzelleService";
+
+import KeyListItem from "./KeyListItem";
+import NewKeyField from "./NewKey/NewKeyField";
+import RenameKeyField from "./NewKey/RenameKeyField";
 import importCSV from "./importCSV";
 import exportCSV from "./exportCSV";
 import loadingBar from "../loadingBar";
+
 import useData from "components/DataContext/useData";
 
 export const tempKeys = observable([]);
@@ -20,18 +22,34 @@ export const tempKeys = observable([]);
 const KeyList = () => {
     const [showNewKey, setShowNewKey] = useState(false);
     const [renameKey, setRenameKey] = useState("");
+    const [keys, setKeys] = useState([]);
+    const [tempKeys, setTempKeys] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     // TODO: Check the original usage of these variables in other files and replace them with context
-    const {
-        keys,
-        setKeys,
-        isLoading,
-        setIsLoading,
-        selectedKey,
-        setSelectedKey,
-        isWriter,
-        refreshKeys,
-    } = useData();
+    const { selectedKey, setSelectedKey, isWriter } = useData();
+
+    const refreshKeys = () =>
+        new Promise((resolve) => {
+            setIsLoading(true);
+
+            getClient()
+                .keys()
+                .then((k) => {
+                    setKeys(k);
+                    setIsLoading(false);
+
+                    resolve();
+                })
+                .catch(() => {
+                    setIsLoading(false);
+                    alert(
+                        "Failed to fetch keys due to bluzelle network error."
+                    );
+
+                    resolve();
+                });
+        });
 
     useEffect(() => {
         refreshKeys();

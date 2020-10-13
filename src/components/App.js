@@ -1,8 +1,8 @@
 import "@babel/polyfill";
 
-import { Main } from "components/Main";
+import Main from "components/Main";
 import DaemonSelector from "./DaemonSelector";
-import { ColorSelector } from "./ColorSelector";
+import ColorSelector from "./ColorSelector";
 
 import { status, size } from "./Metadata";
 

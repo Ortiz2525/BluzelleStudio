@@ -7,8 +7,6 @@ const DataProvider = (props) => {
     const [state, setState] = useState({
         mnemonic: undefined,
         selectedKey: undefined,
-        isLoading: false,
-        keys: [],
         isWriter: false,
         writers: {},
     });
