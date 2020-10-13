@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import CenterMiddle from "./CenterMiddle";
 import { Header } from "../Header/Header";
-import { loadingBar } from "../loadingBar";
+import loadingBar from "../loadingBar";
 import EthereumConfig from "./EthereumConfig";
 
 import { useEffect } from "react";
@@ -85,50 +85,47 @@ const DaemonSelector = (props) => {
                 <BS.Card style={{ marginTop: 20 }}>
                     <div style={{ width: 700, padding: 20 }}>
                         {showConfigLoader && (
-                            <BS.Alert color="primary">
+                            <BS.Alert color='primary'>
                                 Loading config parameters from Heroku...
                             </BS.Alert>
                         )}
 
                         <BS.Form>
                             <BS.FormGroup row>
-                                <BS.Label sm={3} for="priv_file">
+                                <BS.Label sm={3} for='priv_file'>
                                     Mnemonic:
                                 </BS.Label>
                                 <BS.Col sm={9}>
                                     <BS.InputGroup>
                                         <BS.Input
-                                            type="text"
-                                            name="priv_file"
+                                            type='text'
+                                            name='priv_file'
                                             value={mnemonic}
                                             onChange={(e) =>
                                                 setMnemonic(e.target.value)
                                             }
                                         />
-                                        <BS.InputGroupAddon addonType="append">
+                                        <BS.InputGroupAddon addonType='append'>
                                             <BS.Button
                                                 outline={!save}
-                                                color="warning"
-                                                type="button"
-                                                id="saveButton"
-                                                onClick={() => setSave(!save)}
-                                            >
-                                                <i className="fas fa-thumbtack"></i>
+                                                color='warning'
+                                                type='button'
+                                                id='saveButton'
+                                                onClick={() => setSave(!save)}>
+                                                <i className='fas fa-thumbtack'></i>
                                             </BS.Button>
                                             <BS.Button
                                                 outline
-                                                color="secondary"
-                                                type="button"
-                                                onClick={toggleModal}
-                                            >
-                                                <i className="far fa-question-circle"></i>
+                                                color='secondary'
+                                                type='button'
+                                                onClick={toggleModal}>
+                                                <i className='far fa-question-circle'></i>
                                             </BS.Button>
                                         </BS.InputGroupAddon>
 
                                         <BS.UncontrolledTooltip
-                                            placement="top"
-                                            target="saveButton"
-                                        >
+                                            placement='top'
+                                            target='saveButton'>
                                             Save key
                                         </BS.UncontrolledTooltip>
                                     </BS.InputGroup>
@@ -149,10 +146,9 @@ const DaemonSelector = (props) => {
                             <div style={{ marginTop: 10, textAlign: "center" }}>
                                 {connecting.get() === false ? (
                                     <BS.Button
-                                        color="primary"
+                                        color='primary'
                                         style={{ width: "100%" }}
-                                        onClick={go}
-                                    >
+                                        onClick={go}>
                                         Go
                                     </BS.Button>
                                 ) : (
@@ -201,7 +197,7 @@ const DaemonSelector = (props) => {
 
                                 <p>
                                     Alternatively, navigate to{" "}
-                                    <a href="https://keytool.online/">
+                                    <a href='https://keytool.online/'>
                                         https://keytool.online/
                                     </a>
                                     , select "ECDSA" and "P-256k" as the key

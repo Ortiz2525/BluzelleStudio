@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 
-import { KeyListItem } from "./KeyListItem";
-import { NewKeyField } from "./NewKey/NewKeyField";
-import { RenameKeyField } from "./NewKey/RenameKeyField";
+import KeyListItem from "./KeyListItem";
+import NewKeyField from "./NewKey/NewKeyField";
+import RenameKeyField from "./NewKey/RenameKeyField";
 import { activeValue, save, remove, reload } from "../../services/CRUDService";
 import {
     execute,
@@ -10,10 +10,9 @@ import {
     updateHistoryMessage,
 } from "../../services/CommandQueueService";
 import { getClient } from "../../services/BluzelleService";
-import { is_writer } from "../Permissioning";
-import { importCSV } from "./importCSV";
-import { exportCSV } from "./exportCSV";
-import { loadingBar } from "../loadingBar";
+import importCSV from "./importCSV";
+import exportCSV from "./exportCSV";
+import loadingBar from "../loadingBar";
 import useData from "components/DataContext/useData";
 
 export const tempKeys = observable([]);
@@ -25,9 +24,12 @@ const KeyList = () => {
     // TODO: Check the original usage of these variables in other files and replace them with context
     const {
         keys,
+        setKeys,
         isLoading,
+        setIsLoading,
         selectedKey,
         setSelectedKey,
+        isWriter,
         refreshKeys,
     } = useData();
 
@@ -77,24 +79,23 @@ const KeyList = () => {
     };
 
     const AddButton = ({ onClick }) => (
-        <BS.Button outline color="success" onClick={onClick}>
-            <i className="fas fa-plus"></i>
+        <BS.Button outline color='success' onClick={onClick}>
+            <i className='fas fa-plus'></i>
         </BS.Button>
     );
 
     // TODO: Remove observer here
     const SaveReloadRemove = observer(({ keyname }) => (
         <Fragment>
-            <BS.Button outline color="info" onClick={executeReload}>
-                <i className="fas fa-sync"></i>
+            <BS.Button outline color='info' onClick={executeReload}>
+                <i className='fas fa-sync'></i>
             </BS.Button>
 
-            {activeValue.get() !== undefined &&
-                is_writer.get() !== "read-only" && (
-                    <BS.Button color="success" onClick={save}>
-                        <i className="fas fa-save"></i>
-                    </BS.Button>
-                )}
+            {activeValue.get() !== undefined && isWriter !== "read-only" && (
+                <BS.Button color='success' onClick={save}>
+                    <i className='fas fa-save'></i>
+                </BS.Button>
+            )}
         </Fragment>
     ));
 
@@ -121,8 +122,7 @@ const KeyList = () => {
                     style={{
                         fontStyle: "italic",
                         color: "#999999",
-                    }}
-                >
+                    }}>
                     No fields...
                 </h5>
             )}
@@ -142,29 +142,27 @@ const KeyList = () => {
             <div style={{ padding: 10 }}>
                 <BS.ButtonToolbar>
                     <BS.ButtonGroup>
-                        {is_writer.get() !== "read-only" && (
+                        {isWriter !== "read-only" && (
                             <AddButton onClick={() => setShowNewKey(true)} />
                         )}
 
                         {activeValue.get() !== undefined &&
-                            is_writer.get() !== "read-only" && (
+                            isWriter !== "read-only" && (
                                 <BS.Button
                                     outline
-                                    color="danger"
-                                    onClick={executeRemove}
-                                >
-                                    <i className="fas fa-times"></i>
+                                    color='danger'
+                                    onClick={executeRemove}>
+                                    <i className='fas fa-times'></i>
                                 </BS.Button>
                             )}
 
                         {activeValue.get() !== undefined &&
-                            is_writer.get() !== "read-only" && (
+                            isWriter !== "read-only" && (
                                 <BS.Button
                                     outline
-                                    color="warning"
-                                    onClick={() => rename()}
-                                >
-                                    <i className="fas fa-i-cursor"></i>
+                                    color='warning'
+                                    onClick={() => rename()}>
+                                    <i className='fas fa-i-cursor'></i>
                                 </BS.Button>
                             )}
 
@@ -174,33 +172,31 @@ const KeyList = () => {
                     <BS.ButtonGroup style={{ paddingLeft: 10 }}>
                         <BS.Button
                             outline
-                            id="importButton"
-                            color="primary"
-                            onClick={importCSV}
-                        >
-                            <i className="fas fa-file-import"></i>
+                            id='importButton'
+                            color='primary'
+                            onClick={() => importCSV(setIsLoading, setKeys)}>
+                            <i className='fas fa-file-import'></i>
                         </BS.Button>
 
                         <BS.UncontrolledTooltip
-                            placement="top"
-                            target="importButton"
-                        >
+                            placement='top'
+                            target='importButton'>
                             Import CSV file
                         </BS.UncontrolledTooltip>
 
                         <BS.Button
                             outline
-                            id="exportButton"
-                            color="secondary"
-                            onClick={exportCSV}
-                        >
-                            <i className="fas fa-file-export"></i>
+                            id='exportButton'
+                            color='secondary'
+                            onClick={() =>
+                                exportCSV(isLoading, setIsLoading, keys)
+                            }>
+                            <i className='fas fa-file-export'></i>
                         </BS.Button>
 
                         <BS.UncontrolledTooltip
-                            placement="top"
-                            target="exportButton"
-                        >
+                            placement='top'
+                            target='exportButton'>
                             Export CSV file
                         </BS.UncontrolledTooltip>
                     </BS.ButtonGroup>

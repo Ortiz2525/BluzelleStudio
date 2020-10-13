@@ -1,51 +1,33 @@
-import {FileName} from './FileName';
-import {FileSize} from "./FileSize";
-import {selectedKey} from '../KeyList';
-import {activeValue} from '../../services/CRUDService';
+import FileName from "./FileName";
+import FileSize from "./FileSize";
+import { activeValue } from "../../services/CRUDService";
 
+export default FileEditor = () => {
+    const [uploaded, setUploaded] = useState(false);
+    const [uploadedFilename, setUploadedFilename] = useState("");
 
-@observer
-export class FileEditor extends Component {
+    const { selectedKey } = useData();
 
+    let fileSelector = null;
 
-    constructor() {
-        super();
-
-        this.state = {
-
-            uploaded: false,
-            uploadedFilename: ''
-
-        };
-
-    }
-
-
-    onSubmit(e) {
-
+    const onSubmit = (e) => {
         e.preventDefault();
-        
-        if(!this.fileSelector) return;
-        if(!this.fileSelector.files[0]) return;
 
-        const file = this.fileSelector.files[0];
+        if (!fileSelector) return;
+        if (!fileSelector.files[0]) return;
+
+        const file = fileSelector.files[0];
 
         const reader = new FileReader();
 
-
         reader.onload = () => {
-
             // const oldBytearray = props.keyData.get('bytearray'),
             ///    oldFilename = props.keyData.get('filename');
 
-
             activeValue.set(new Uint8Array(reader.result));
 
-            this.setState({
-                uploaded: true,
-                uploadedFilename: file.name
-            });
-
+            setUploaded(true);
+            setUploadedFilename(file.name);
 
             // execute({
             //     doIt: () => {
@@ -58,76 +40,66 @@ export class FileEditor extends Component {
             //     },
             //     message: <span>Uploaded <code key={1}>{file.name}</code> to <code key={2}>{props.keyName}</code>.</span>
             // });
-
-
         };
 
         reader.readAsArrayBuffer(file);
+    };
 
-    }
-
-
-    download() {
-
+    const download = () => {
         const arr = activeValue.get();
 
         const blob = new Blob([arr.buffer]);
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
 
-        const fileName = selectedKey.get();
+        const fileName = selectedKey;
 
         link.download = fileName;
         link.click();
+    };
 
-    }
+    return (
+        <div style={{ padding: 15 }}>
+            <BS.Panel>
+                <BS.Panel.Heading>File Editor</BS.Panel.Heading>
+                <BS.Panel.Body>
+                    <div>
+                        File size:{" "}
+                        <code>
+                            <FileSize numBytes={activeValue.get().byteLength} />
+                        </code>
+                    </div>
+                    <div>
+                        File name: <code>{selectedKey}</code>
+                    </div>
 
+                    <hr />
 
-    render() {
+                    <BS.ListGroup>
+                        <BS.ListGroupItem onClick={download}>
+                            <BS.Glyphicon glyph='download' /> Download
+                        </BS.ListGroupItem>
+                    </BS.ListGroup>
 
-        return (
-            <div style={{ padding: 15 }}>
-                <BS.Panel>
-                    <BS.Panel.Heading>
-                        File Editor
-                    </BS.Panel.Heading>
-                    <BS.Panel.Body>
-                        <div>File size: <code><FileSize numBytes={activeValue.get().byteLength}/></code></div>
-                        <div>File name: <code>{selectedKey.get()}</code></div>
+                    <hr />
 
-                        <hr/>
-
+                    <BS.FormGroup>
+                        <input type='file' ref={(el) => (fileSelector = el)} />
                         <BS.ListGroup>
-                            <BS.ListGroupItem onClick={this.download.bind(this)}>
-                                <BS.Glyphicon glyph='download'/> Download
+                            <BS.ListGroupItem onClick={onSubmit}>
+                                Submit
                             </BS.ListGroupItem>
                         </BS.ListGroup>
+                    </BS.FormGroup>
 
-                        <hr/>
-
-                            <BS.FormGroup>
-                                <input
-                                    type='file'
-                                    ref={el => this.fileSelector = el}/>
-                                <BS.ListGroup>
-                                    <BS.ListGroupItem onClick={this.onSubmit.bind(this)}>
-                                        Submit
-                                    </BS.ListGroupItem>
-                                </BS.ListGroup>
-                            </BS.FormGroup>
-
-                        {
-                            this.state.uploaded &&
-
-                            <div>
-                                Uploaded <FileName filename={this.state.uploadedFilename}/> successfully as <code>{selectedKey.get()}</code>.
-                            </div>
-                        }
-
-                    </BS.Panel.Body>
-                </BS.Panel>
-            </div>
-        );
-    }
-
-}
+                    {uploaded && (
+                        <div>
+                            Uploaded <FileName filename={uploadedFilename} />{" "}
+                            successfully as <code>{selectedKey}</code>.
+                        </div>
+                    )}
+                </BS.Panel.Body>
+            </BS.Panel>
+        </div>
+    );
+};

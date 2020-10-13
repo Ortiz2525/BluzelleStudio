@@ -9,6 +9,8 @@ const DataProvider = (props) => {
         selectedKey: undefined,
         isLoading: false,
         keys: [],
+        isWriter: false,
+        writers: {},
     });
 
     return (

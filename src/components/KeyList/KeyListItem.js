@@ -1,83 +1,62 @@
-import {ValIcon} from "../ObjIcon";
-import {EditableField} from "../EditableField";
-import {selectedKey, tempKeys} from "./KeyList";
-import {activeValue, rename} from '../../services/CRUDService';
+import { tempKeys } from "./KeyList";
+import { rename } from "../../services/CRUDService";
 
-import {execute} from '../../services/CommandQueueService';
+import { execute } from "../../services/CommandQueueService";
 
-import {loadingBar} from '../loadingBar';
+import loadingBar from "../loadingBar";
 
+const KeyListItem = ({ keyname }) => {
+    const { selectedKey, setSelectedKey } = useData();
 
-@observer
-export class KeyListItem extends Component {
-
-    select(target) {
-
-        const old = selectedKey.get();
+    const select = (target) => {
+        const old = selectedKey;
 
         execute({
-
-            doIt: () => Promise.resolve(selectedKey.set(target)),
-            undoIt: () => Promise.resolve(selectedKey.set(old)),
-            message: <span>Selected <code key={1}>{target}</code>.</span>
-
+            doIt: () => Promise.resolve(setSelectedKey(target)),
+            undoIt: () => Promise.resolve(setSelectedKey(old)),
+            message: (
+                <span>
+                    Selected <code key={1}>{target}</code>.
+                </span>
+            ),
         });
-    }
+    };
 
-    rename(newKey) {
-
-        const { keyname: oldKey } = this.props;
-
+    const renameKey = (newKey) => {
         execute({
-            doIt: () => rename(oldKey, newKey),
-            undoIt: () => rename(newKey, oldKey),
-            message: <span>Renamed <code key={1}>{oldKey}</code> to <code key={2}>{newKey}</code>.</span>
+            doIt: () => rename(keyname, newKey),
+            undoIt: () => rename(newKey, keyname),
+            message: (
+                <span>
+                    Renamed <code key={1}>{keyname}</code> to{" "}
+                    <code key={2}>{newKey}</code>.
+                </span>
+            ),
         });
+    };
 
-    }
+    return (
+        <BS.ListGroupItem
+            onClick={() => {
+                if (tempKeys.includes(keyname)) return;
 
+                selectedKey === keyname ? select(undefined) : select(keyname);
+            }}
+            active={selectedKey === keyname}>
+            <span style={{ marginLeft: 15 }}>{keyname}</span>
 
-    render() {
+            {tempKeys.includes(keyname) && loadingBar}
 
-        const {keyname} = this.props;
+            {keyname === selectedKey && (
+                <i
+                    style={{
+                        float: "right",
+                        lineHeight: "24px",
+                    }}
+                    className='fas fa-chevron-right'></i>
+            )}
+        </BS.ListGroupItem>
+    );
+};
 
-
-        return (
-
-            <BS.ListGroupItem
-                onClick={() => {
-
-                    if(tempKeys.includes(keyname)) return;
-
-                    selectedKey.get() === keyname ? 
-                        this.select(undefined) : 
-                        this.select(keyname)}
-
-                }
-                active={selectedKey.get() === keyname}>
-
-
-                <span style={{marginLeft: 15}}>{keyname}</span>
-
-
-                {
-                    tempKeys.includes(keyname) && loadingBar
-                }
-
-                {
-
-                    keyname === selectedKey.get() &&
-
-                        <i style={{
-                                float: 'right',
-                                lineHeight: '24px'
-                            }}
-                            className="fas fa-chevron-right"></i>
-
-                }
-
-            </BS.ListGroupItem>
-
-        );
-    }
-}
+export default KeyListItem;

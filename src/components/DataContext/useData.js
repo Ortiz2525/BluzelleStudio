@@ -22,6 +22,14 @@ const useData = () => {
         setState((state) => ({ ...state, selectedKey }));
     };
 
+    const setIsWriter = (isWriter) => {
+        setState((state) => ({ ...state, isWriter }));
+    };
+
+    const setWriters = (writers) => {
+        setState((state) => ({ ...state, writers }));
+    };
+
     const setValue = (key, value) => {
         setState((state) => ({ ...state, key: value }));
     };
@@ -53,6 +61,8 @@ const useData = () => {
         setIsLoading,
         setKeys,
         setSelectedKey,
+        setIsWriter,
+        setWriters,
         setValue,
 
         refreshKeys,
@@ -61,6 +71,8 @@ const useData = () => {
         isLoading: state.isLoading,
         keys: state.keys,
         selectedKey: state.selectedKey,
+        isWriter: state.isWriter,
+        writers: state.writers,
     };
 };
 

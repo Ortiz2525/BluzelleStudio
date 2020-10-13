@@ -5,7 +5,6 @@ import DaemonSelector from "./DaemonSelector";
 import { ColorSelector } from "./ColorSelector";
 
 import { status, size } from "./Metadata";
-import { writers } from "./Permissioning";
 
 import DevTools from "mobx-react-devtools";
 
@@ -31,7 +30,7 @@ expiryDate.setMonth(expiryDate.getMonth() + 1);
 document.cookie = "expires=" + expiryDate.toGMTString();
 
 const App = () => {
-    const { setMnemonic } = useData();
+    const { setMnemonic, setWriters } = useData();
     const [connected, setConnected] = useState(false);
 
     const go = async (address, contract, uuid, mnemonic) => {
@@ -103,7 +102,7 @@ const App = () => {
                 return client._getWriters();
             })
             .then((w) => {
-                writers.set(w);
+                setWriters(w);
             })
             .then(() => client.size())
             .then((s) => {
