@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import RenderArray from "../Arrays/RenderArray";
 import RenderObject from "../Objects/RenderObject";
 import RenderField from "./RenderField";
-import { isObservableArray } from "mobx";
 import Hoverable from "../Hoverable";
 
 const RenderTree = (props) => {
@@ -13,7 +12,7 @@ const RenderTree = (props) => {
     let r;
 
     // If array
-    if (!editing && isObservableArray(val)) {
+    if (!editing && Array.isArray(val)) {
         r = <RenderArray {...props} onEdit={() => setEditing(true)} />;
 
         // If object

@@ -2,7 +2,7 @@ import React from "react";
 
 import EditableField from "../../EditableField";
 import { Delete } from "../Buttons";
-import { observableMapRecursive as omr } from "../JSONEditor";
+import { mapRecursive } from "../JSONEditor";
 
 const RenderField = ({
     val,
@@ -21,7 +21,7 @@ const RenderField = ({
             onChange={(v) => {
                 onChange();
 
-                set(omr(JSON.parse(v)));
+                set(mapRecursive(JSON.parse(v)));
             }}
             val={JSON.stringify(val)}
             validateJSON={true}

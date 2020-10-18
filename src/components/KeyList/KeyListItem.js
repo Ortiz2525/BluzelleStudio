@@ -1,12 +1,13 @@
 import React from "react";
 
 import { rename } from "../../services/CRUDService";
-import { execute } from "../../services/CommandQueueService";
+import useCommandQueueService from "../../services/CommandQueueService";
 
 import loadingBar from "../loadingBar";
 
 const KeyListItem = ({ keyname }) => {
     const { selectedKey, setSelectedKey, tempKeys } = useData();
+    const { execute } = useCommandQueueService();
 
     const select = (target) => {
         const old = selectedKey;

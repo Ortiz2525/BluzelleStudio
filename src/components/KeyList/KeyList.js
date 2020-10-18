@@ -1,11 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import { save, remove, reload, refreshKeys } from "../../services/CRUDService";
-import {
-    execute,
-    removePreviousHistory,
-    updateHistoryMessage,
-} from "../../services/CommandQueueService";
+import useCommandQueueService from "../../services/CommandQueueService";
 import { getClient } from "../../services/BluzelleService";
 
 import KeyListItem from "./KeyListItem";
@@ -21,6 +17,11 @@ const KeyList = () => {
     const [showNewKey, setShowNewKey] = useState(false);
     const [renameKey, setRenameKey] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const {
+        execute,
+        removePreviousHistory,
+        updateHistoryMessage,
+    } = useCommandQueueService();
 
     const {
         selectedKey,
@@ -86,8 +87,7 @@ const KeyList = () => {
         </BS.Button>
     );
 
-    // TODO: Remove observer here
-    const SaveReloadRemove = observer(({ keyname }) => (
+    const SaveReloadRemove = ({ keyname }) => (
         <Fragment>
             <BS.Button outline color='info' onClick={executeReload}>
                 <i className='fas fa-sync'></i>
@@ -99,7 +99,7 @@ const KeyList = () => {
                 </BS.Button>
             )}
         </Fragment>
-    ));
+    );
 
     const keyList = keys
         .sort()

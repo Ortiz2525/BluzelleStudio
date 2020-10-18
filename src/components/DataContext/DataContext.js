@@ -11,7 +11,7 @@ const DataProvider = (props) => {
         isWriter: false,
         writers: {},
         activeValue: undefined,
-        activeValueMap: undefined,
+        activeMap: undefined,
         loadingValue: false,
         activeTTL: undefined,
         loadingTTL: false,
@@ -20,6 +20,8 @@ const DataProvider = (props) => {
         log: undefined,
         metaStatus: undefined,
         metaSize: undefined,
+        commandQueue: undefined,
+        currentPosition: 0,
     });
 
     return (

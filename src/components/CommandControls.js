@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import {
-    commandQueue,
-    undo,
-    redo,
-    canUndo,
-    canRedo,
-    currentPosition,
-} from "../services/CommandQueueService";
+import useCommandQueueService from "../services/CommandQueueService";
+import useData from "./DataContext/useData";
 
 const CommandControls = () => {
     const [show, setShow] = useState(false);
+    const { commandQueue, currentPosition } = useData();
+    const { canUndo, canRedo, undo, redo } = useCommandQueueService();
 
     const undoButton = (
         <BS.Button outline color='primary' onClick={undo} disabled={!canUndo()}>
@@ -53,7 +49,7 @@ const CommandControls = () => {
         <BS.ListGroupItem
             onClick={revert}
             key={index}
-            active={currentPosition.get() === index}>
+            active={currentPosition === index}>
             {message}
         </BS.ListGroupItem>
     ));

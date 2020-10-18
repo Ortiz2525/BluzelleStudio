@@ -30,8 +30,8 @@ const useData = () => {
         setState((state) => ({ ...state, activeValue }));
     };
 
-    const setActiveValueMap = (activeValueMap) => {
-        setState((state) => ({ ...state, activeValueMap }));
+    const setActiveMap = (activeMap) => {
+        setState((state) => ({ ...state, activeMap }));
     };
 
     const setLoadingValue = (loadingValue) => {
@@ -167,6 +167,14 @@ const useData = () => {
         setState((state) => ({ ...state, metaSize }));
     };
 
+    const setCommandQueue = (commandQueue) => {
+        setState((state) => ({ ...state, commandQueue }));
+    };
+
+    const setCurrentPosition = (currentPosition) => {
+        setState((state) => ({ ...state, currentPosition }));
+    };
+
     const setValue = (key, value) => {
         setState((state) => ({ ...state, [key]: value }));
     };
@@ -178,7 +186,7 @@ const useData = () => {
         setIsWriter,
         setWriters,
         setActiveValue,
-        setActiveValueMap,
+        setActiveMap,
         setLoadingValue,
         setActiveTTL,
         setLoadingTTL,
@@ -188,6 +196,8 @@ const useData = () => {
         setLog,
         setMetaStatus,
         setMetaSize,
+        setCommandQueue,
+        setCurrentPosition,
         setValue,
 
         mnemonic: state.mnemonic,
@@ -196,7 +206,7 @@ const useData = () => {
         isWriter: state.isWriter,
         writers: state.writers,
         activeValue: state.activeValue,
-        activeValueMap: state.activeValueMap,
+        activeMap: state.activeMap,
         loadingValue: state.loadingValue,
         activeTTL: state.activeTTL,
         loadingTTL: state.loadingTTL,
@@ -205,6 +215,8 @@ const useData = () => {
         log: state.log,
         metaStatus: state.metaStatus,
         metaSize: state.metaSize,
+        commandQueue: state.commandQueue,
+        currentPosition: state.currentPosition,
     };
 };
 

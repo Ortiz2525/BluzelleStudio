@@ -1,66 +1,104 @@
-export const commandQueue = observable([]);
-export const currentPosition = observable(0);
+import useData from "components/DataContext/useData";
 
-const revert = (targetPosition) => {
-    const cp = currentPosition.get();
+export default useCommandQueueService = () => {
+    const {
+        commandQueue,
+        setCommandQueue,
+        currentPosition,
+        setCurrentPosition,
+    } = useData();
 
-    if (cp > targetPosition) {
-        const prev = commandQueue[cp - 1];
+    const revert = (targetPosition) => {
+        const { commandQueue, currentPosition, setCurrentPosition } = useData();
 
-        commandQueue[cp].undoIt(prev).then(() => {
-            currentPosition.set(cp - 1);
-            revert(targetPosition);
-        });
+        if (cp > targetPosition) {
+            const prev = commandQueue[currentPosition - 1];
+
+            commandQueue[currentPosition].undoIt(prev).then(() => {
+                setCurrentPosition(currentPosition - 1);
+                revert(targetPosition);
+            });
+        }
+
+        if (currentPosition < targetPosition) {
+            commandQueue[currentPosition + 1].doIt().then(() => {
+                setCurrentPosition(currentPosition + 1);
+                revert(targetPosition);
+            });
+        }
+    };
+
+    if (commandQueue === undefined) {
+        const newCommandQueue = [
+            {
+                message: "Initial state",
+                revert: revert.bind(this, 0),
+            },
+        ];
+        setCommandQueue(newCommandQueue);
     }
 
-    if (cp < targetPosition) {
-        commandQueue[cp + 1].doIt().then(() => {
-            currentPosition.set(cp + 1);
-            revert(targetPosition);
+    const canUndo = () => {
+        return currentPosition > 0;
+    };
+
+    const undo = () => {
+        canUndo() && revert(currentPosition - 1);
+    };
+
+    const canRedo = () => {
+        return currentPosition < commandQueue.length - 1;
+    };
+
+    const redo = () => {
+        canRedo() && revert(currentPosition + 1);
+    };
+
+    // Caution: the consecutive execution of undoIt and doIt should cancel
+    // each other out exactly. If the action is to, for instance, create a new
+    // object, the object should have the same identity as it had before
+    // undoing and redoing.
+
+    const execute = ({ doIt, undoIt, message }) => {
+        new Promise((resolve) => {
+            doIt().then(resolve);
+
+            setCurrentPosition(currentPosition + 1);
+            deleteFuture();
+
+            const newCommandQueue = [...commandQueue];
+            newCommandQueue.push({
+                revert: () => revert(currentPosition),
+                doIt,
+                undoIt,
+                message,
+            });
+
+            setCommandQueue(newCommandQueue);
         });
-    }
+    };
+
+    const deleteFuture = () =>
+        currentPosition >= 0 && (commandQueue.length = currentPosition);
+
+    const removePreviousHistory = () => {
+        const newCommandQueue = [...commandQueue];
+        newCommandQueue.slice(currentPosition);
+        setCommandQueue(newCommandQueue);
+        setCurrentPosition(0);
+    };
+
+    const updateHistoryMessage = (message) =>
+        (commandQueue[currentPosition].message = message);
+
+    return {
+        canUndo,
+        undo,
+        canRedo,
+        redo,
+        execute,
+        deleteFuture,
+        removePreviousHistory,
+        updateHistoryMessage,
+    };
 };
-
-commandQueue.push({
-    message: "Initial state",
-    revert: revert.bind(this, 0),
-});
-
-export const canUndo = () => currentPosition.get() > 0;
-
-export const undo = () => canUndo() && revert(currentPosition.get() - 1);
-
-export const canRedo = () => currentPosition.get() < commandQueue.length - 1;
-
-export const redo = () => canRedo() && revert(currentPosition.get() + 1);
-
-// Caution: the consecutive execution of undoIt and doIt should cancel
-// each other out exactly. If the action is to, for instance, create a new
-// object, the object should have the same identity as it had before
-// undoing and redoing.
-
-export const execute = ({ doIt, undoIt, message }) =>
-    new Promise((resolve) => {
-        doIt().then(resolve);
-
-        currentPosition.set(currentPosition.get() + 1);
-        deleteFuture();
-
-        commandQueue.push({
-            revert: revert.bind(this, currentPosition.get()),
-            doIt,
-            undoIt,
-            message,
-        });
-    });
-
-const deleteFuture = () =>
-    currentPosition.get() >= 0 && (commandQueue.length = currentPosition.get());
-
-export const removePreviousHistory = () => {
-    commandQueue.replace(commandQueue.slice(currentPosition.get()));
-    currentPosition.set(0);
-};
-
-export const updateHistoryMessage = (message) =>
-    (commandQueue[currentPosition.get()].message = message);

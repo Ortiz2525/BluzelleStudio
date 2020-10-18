@@ -1,7 +1,7 @@
 import React from "react";
 import RenderTree from "../Trees/RenderTree";
 
-export const RenderTreeWithEditableKey = ({ ...props }) => {
+export default RenderTreeWithEditableKey = ({ ...props }) => {
     // Not sure how to get this working...
 
     // const preamble =

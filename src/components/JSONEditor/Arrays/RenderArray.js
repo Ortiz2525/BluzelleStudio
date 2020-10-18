@@ -6,12 +6,13 @@ import { Plus, Edit, Delete } from "../Buttons";
 import Hoverable from "../Hoverable";
 import NewField from "./NewField";
 
-import { observableMapRecursive as omr } from "../JSONEditor";
+import { mapRecursive } from "../JSONEditor";
 
-import { execute } from "../../../services/CommandQueueService";
+import useCommandQueueService from "../../../services/CommandQueueService";
 
 const RenderArray = (props) => {
     const [showNewField, setShowNewField] = useState(false);
+    const { execute } = useCommandQueueService();
 
     const { val, set, del, preamble, hovering, onEdit } = props;
 
@@ -30,7 +31,7 @@ const RenderArray = (props) => {
                 onChange={(newObj) => {
                     setShowNewField(false);
 
-                    const v2 = omr(newObj);
+                    const v2 = mapRecursive(newObj);
 
                     execute({
                         doIt: () => Promise.resolve(val.push(v2)),
