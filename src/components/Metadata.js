@@ -1,16 +1,11 @@
 import React, { Fragment } from "react";
-
-import { config } from "../services/BluzelleService";
 import { version } from "bluzelle";
 
 import useData from "./DataContext/useData";
 
-export const status = observable();
-
-export const size = observable();
-
 const Metadata = () => {
-    const { mnemonic } = useData();
+    const { mnemonic, config, metaStatus, metaSize } = useData();
+
     return (
         <Fragment>
             <BS.Table>
@@ -36,11 +31,11 @@ const Metadata = () => {
                     <tr>
                         <th scope='row'>uuid</th>
                         <td>
-                            <code>{config.get().uuid}</code>
+                            <code>{config.uuid}</code>
                         </td>
                     </tr>
 
-                    {Object.entries(size.get()).map(([key, value]) => (
+                    {Object.entries(metaSize).map(([key, value]) => (
                         <tr key={key}>
                             <th scope='row'>{key}</th>
                             <td>
@@ -51,7 +46,7 @@ const Metadata = () => {
                         </tr>
                     ))}
 
-                    {Object.entries(status.get()).map(([key, value]) => (
+                    {Object.entries(metaStatus).map(([key, value]) => (
                         <tr key={key}>
                             <th scope='row'>{key}</th>
                             <td>

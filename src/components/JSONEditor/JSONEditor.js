@@ -2,7 +2,6 @@ import React from "react";
 
 import RenderTree from "./Trees/RenderTree";
 import { observe } from "mobx";
-import { activeValue } from "../../services/CRUDService";
 
 import { isObservable, toJS } from "mobx";
 import { isPlainObject, mapValues, extend } from "lodash";
@@ -12,11 +11,11 @@ import useData from "components/DataContext/useData";
 
 const activeObservableMap = observable();
 
-export const observableMapRecursive = (obj) => {
+export const mapRecursive = (obj) => {
     const omr = isPlainObject(obj)
-        ? observable.map(mapValues(obj, observableMapRecursive))
+        ? mapValues(obj, mapRecursive)
         : Array.isArray(obj)
-        ? observable.array(obj.map(observableMapRecursive))
+        ? obj.map(mapRecursive)
         : obj;
 
     isObservable(omr) && observe(omr, () => onChange());
@@ -38,32 +37,34 @@ const onChange = () => {
     setActiveValue(activeValue);
 };
 
-observe(activeValue, ({ newValue }) => {
-    if (typeof newValue === "object" && !(newValue instanceof Uint8Array)) {
-        activeObservableMap.set(observableMapRecursive(newValue));
-    }
-});
+// observe(activeValue, ({ newValue }) => {
+//     if (typeof newValue === "object" && !(newValue instanceof Uint8Array)) {
+//         activeObservableMap.set(mapRecursive(newValue));
+//     }
+// });
 
 const JSONEditor = () => {
-    if (activeObservableMap.get() === undefined) {
+    const [activeMap, setActiveMap] = useState(undefined);
+
+    if (activeMap.get() === undefined) {
         return null;
     }
 
     return (
         <RenderTree
-            val={activeObservableMap.get()}
+            val={activeMap}
             set={(v) => {
                 if (typeof v !== "object") {
                     alert("Must be object type.");
                     return;
                 }
 
-                const v2 = observableMapRecursive(v);
-                const old = activeObservableMap.get();
+                const v2 = mapRecursive(v);
+                const old = activeMap;
 
                 execute({
-                    doIt: () => Promise.resolve(activeObservableMap.set(v2)),
-                    undoIt: () => Promise.resolve(activeObservableMap.set(old)),
+                    doIt: () => Promise.resolve(setActiveMap(v2)),
+                    undoIt: () => Promise.resolve(setActiveMap(old)),
                     message: (
                         <span>
                             Set root to <code key={1}>{JSON.stringify(v)}</code>

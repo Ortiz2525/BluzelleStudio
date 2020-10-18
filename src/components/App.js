@@ -5,18 +5,10 @@ import Main from "components/Main";
 import DaemonSelector from "./DaemonSelector";
 import ColorSelector from "./ColorSelector";
 
-import { status, size } from "./Metadata";
-
-import DevTools from "mobx-react-devtools";
-
-// Debugging
-import { configureDevtool } from "mobx-react-devtools";
 import { createClient } from "../services/BluzelleService";
 import useData from "./DataContext/useData";
 
-const url_params = window && new URLSearchParams(window.location.search);
-
-configureDevtool({ logEnabled: url_params.has("log") });
+// const url_params = window && new URLSearchParams(window.location.search);
 
 window.cookiesObj = document.cookie.split("; ").reduce((prev, current) => {
     const [name, value] = current.split("=");
@@ -31,7 +23,7 @@ expiryDate.setMonth(expiryDate.getMonth() + 1);
 document.cookie = "expires=" + expiryDate.toGMTString();
 
 const App = () => {
-    const { setMnemonic, setWriters } = useData();
+    const { setMnemonic, setWriters, setMetaStatus, setMetaSize } = useData();
     const [connected, setConnected] = useState(false);
 
     const go = async (address, contract, uuid, mnemonic) => {
@@ -99,7 +91,7 @@ const App = () => {
         Promise.resolve()
             .then(() => client.status())
             .then((s) => {
-                status.set(s);
+                setMetaStatus(s);
                 return client._getWriters();
             })
             .then((w) => {
@@ -107,7 +99,7 @@ const App = () => {
             })
             .then(() => client.size())
             .then((s) => {
-                size.set(s);
+                setMetaSize(s);
                 setConnected(true);
             })
             .catch((e) => {
@@ -119,8 +111,6 @@ const App = () => {
     return (
         <div style={{ height: "100%" }}>
             <ColorSelector />
-
-            {/dev-tools/.test(window.location.href) && <DevTools />}
 
             {connected ? <Main /> : <DaemonSelector go={go} />}
         </div>

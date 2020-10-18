@@ -6,15 +6,20 @@ const DataContext = React.createContext([{}, () => {}]);
 const DataProvider = (props) => {
     const [state, setState] = useState({
         mnemonic: undefined,
+        config: {},
         selectedKey: undefined,
         isWriter: false,
         writers: {},
         activeValue: undefined,
+        activeValueMap: undefined,
         loadingValue: false,
         activeTTL: undefined,
         loadingTTL: false,
         keys: [],
         tempKeys: [],
+        log: undefined,
+        metaStatus: undefined,
+        metaSize: undefined,
     });
 
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 import EditableField from "../../EditableField";
 
-export const NewField = ({ preamble, onChange, onError }) => (
+export default NewField = ({ preamble, onChange, onError }) => (
     <div>
         {preamble}:
         <EditableField

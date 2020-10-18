@@ -1,4 +1,3 @@
-import React from "react";
 import { getClient } from "../../services/BluzelleService";
 
 import download from "downloadjs";

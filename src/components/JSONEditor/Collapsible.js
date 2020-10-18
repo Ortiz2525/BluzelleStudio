@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const Collapsible = ({ children, collapsed, label, buttons, preamble }) => {
-    const [collapsed, setCollapsed] = useState(collapsed || false);
+const Collapsible = (props) => {
+    const [collapsed, setCollapsed] = useState(props.collapsed || false);
 
     const toggleCollapse = () => {
         setCollapsed(!collapsed);
@@ -14,13 +14,13 @@ const Collapsible = ({ children, collapsed, label, buttons, preamble }) => {
     return (
         <React.Fragment>
             <div style={{ minHeight: 21 }}>
-                {preamble && (
-                    <span style={{ marginRight: 5 }}>{preamble}:</span>
+                {props.preamble && (
+                    <span style={{ marginRight: 5 }}>{props.preamble}:</span>
                 )}
                 <span onClick={toggleCollapse}>
-                    <BS.Glyphicon glyph={collapseTriangle()} /> {label}
+                    <BS.Glyphicon glyph={collapseTriangle()} /> {props.label}
                 </span>
-                {buttons}
+                {props.buttons}
             </div>
             <div
                 style={{
@@ -28,7 +28,7 @@ const Collapsible = ({ children, collapsed, label, buttons, preamble }) => {
                     background: "white",
                     borderLeft: "1px solid #CCCCCC",
                 }}>
-                {collapsed || children}
+                {collapsed || props.children}
             </div>
         </React.Fragment>
     );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SelectedInput } from "./SelectedInput";
+import SelectedInput from "./SelectedInput";
 
 const EditableField = (props) => {
     const { formValue, setFormValue } = useState(props.val);

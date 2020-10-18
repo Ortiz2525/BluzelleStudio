@@ -1,18 +1,12 @@
 import { bluzelle } from "bluzelle";
-import { observable } from "mobx";
-
-export const log = observable();
+import useData from "components/DataContext/useData";
 
 const url_params = window && new URLSearchParams(window.location.search);
-
-const configObservable = observable();
-
 let bz;
 
-export const config = configObservable;
-
 export const createClient = async (config) => {
-    configObservable.set(config);
+    const { setConfig } = useData();
+    setConfig(config);
 
     bz = await bluzelle({
         ...config,

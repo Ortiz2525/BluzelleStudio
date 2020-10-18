@@ -2,8 +2,6 @@ import useData from "components/DataContext/useData";
 
 import { getClient } from "./BluzelleService";
 
-export const activeValue = observable(undefined);
-
 export const save = () => {
     const { selectedKey, activeValue } = useData();
 

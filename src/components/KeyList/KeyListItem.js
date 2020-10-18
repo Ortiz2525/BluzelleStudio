@@ -1,12 +1,12 @@
-import { tempKeys } from "./KeyList";
-import { rename } from "../../services/CRUDService";
+import React from "react";
 
+import { rename } from "../../services/CRUDService";
 import { execute } from "../../services/CommandQueueService";
 
 import loadingBar from "../loadingBar";
 
 const KeyListItem = ({ keyname }) => {
-    const { selectedKey, setSelectedKey } = useData();
+    const { selectedKey, setSelectedKey, tempKeys } = useData();
 
     const select = (target) => {
         const old = selectedKey;

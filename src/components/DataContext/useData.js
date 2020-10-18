@@ -14,6 +14,10 @@ const useData = () => {
         setState((state) => ({ ...state, mnemonic }));
     };
 
+    const setConfig = (config) => {
+        setState((state) => ({ ...state, config }));
+    };
+
     const setIsWriter = (isWriter) => {
         setState((state) => ({ ...state, isWriter }));
     };
@@ -24,6 +28,10 @@ const useData = () => {
 
     const setActiveValue = (activeValue) => {
         setState((state) => ({ ...state, activeValue }));
+    };
+
+    const setActiveValueMap = (activeValueMap) => {
+        setState((state) => ({ ...state, activeValueMap }));
     };
 
     const setLoadingValue = (loadingValue) => {
@@ -147,34 +155,56 @@ const useData = () => {
         setState((state) => ({ ...state, tempKeys: [...tempKeys] }));
     };
 
+    const setLog = (log) => {
+        setState((state) => ({ ...state, log }));
+    };
+
+    const setMetaStatus = (metaStatus) => {
+        setState((state) => ({ ...state, metaStatus }));
+    };
+
+    const setMetaSize = (metaSize) => {
+        setState((state) => ({ ...state, metaSize }));
+    };
+
     const setValue = (key, value) => {
         setState((state) => ({ ...state, [key]: value }));
     };
 
     return {
         setMnemonic,
+        setConfig,
         setSelectedKey,
         setIsWriter,
         setWriters,
         setActiveValue,
+        setActiveValueMap,
         setLoadingValue,
         setActiveTTL,
         setLoadingTTL,
         reloadTTL,
         setKeys,
         setTempKeys,
+        setLog,
+        setMetaStatus,
+        setMetaSize,
         setValue,
 
         mnemonic: state.mnemonic,
+        config: state.config,
         selectedKey: state.selectedKey,
         isWriter: state.isWriter,
         writers: state.writers,
         activeValue: state.activeValue,
+        activeValueMap: state.activeValueMap,
         loadingValue: state.loadingValue,
         activeTTL: state.activeTTL,
         loadingTTL: state.loadingTTL,
         keys: state.keys,
         tempKeys: state.tempKeys,
+        log: state.log,
+        metaStatus: state.metaStatus,
+        metaSize: state.metaSize,
     };
 };
 

@@ -1,3 +1,4 @@
+import React from "react";
 import useData from "components/DataContext/useData";
 
 const PlainTextEditor = () => {

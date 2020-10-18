@@ -1,5 +1,4 @@
 import React from "react";
-import EditableField from "../../EditableField";
 import RenderTree from "../Trees/RenderTree";
 
 export const RenderTreeWithEditableKey = ({ ...props }) => {

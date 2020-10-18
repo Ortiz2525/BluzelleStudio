@@ -5,11 +5,12 @@ import Metadata from "./Metadata";
 import Permissioning from "./Permissioning";
 import Header from "./Header/Header";
 
-import { config } from "../services/BluzelleService";
-
-import { CollapsibleCard } from "./CollapsibleCard";
+import CollapsibleCard from "./CollapsibleCard";
+import useData from "./DataContext/useData";
 
 export default Main = () => {
+    const { config } = useData();
+
     return (
         <ReflexContainer style={{ height: "100%" }}>
             <div>
@@ -22,7 +23,7 @@ export default Main = () => {
                                 uuid
                             </th>
                             <td style={{ border: 0 }}>
-                                <code>{config.get().uuid}</code>
+                                <code>{config.uuid}</code>
                             </td>
                         </tr>
                     </tbody>

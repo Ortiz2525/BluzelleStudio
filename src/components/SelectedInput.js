@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-export class SelectedInput extends Component {
-    componentDidMount() {
-        this.input && this.input.select();
-    }
+const SelectedInput = () => {
+    const inputRef = React.createRef();
 
-    render() {
-        return (
-            <BS.Input
-                type='text'
-                {...this.props}
-                innerRef={(c) => (this.input = c)}
-                style={{ width: "100%" }}
-            />
-        );
-    }
-}
+    useEffect(() => {
+        inputRef.select();
+    });
+
+    return (
+        <BS.Input
+            type='text'
+            {...this.props}
+            innerRef={inputRef}
+            style={{ width: "100%" }}
+        />
+    );
+};
+
+export default SelectedInput;

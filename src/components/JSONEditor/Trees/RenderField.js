@@ -21,18 +21,7 @@ const RenderField = ({
             onChange={(v) => {
                 onChange();
 
-                // const oldVal = get(obj, propName);
-                // const newVal = observableMapRecursive(JSON.parse(v));
-
-                // obj.set(propName, newVal)
-
                 set(omr(JSON.parse(v)));
-
-                // context.execute({
-                //     doIt: () => ,
-                //     undoIt: () => obj.set(propName, oldVal),
-                //     message: <span>Set <code key={1}>{propName}</code> to <code key={2}>{v}</code>.</span>
-                // });
             }}
             val={JSON.stringify(val)}
             validateJSON={true}
