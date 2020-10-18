@@ -1,20 +1,27 @@
 import { useState } from "react";
 
-import { activeTTL, loadingTTL, reloadTTL } from "../services/CRUDService";
 import loadingBar from "./loadingBar";
 import { getClient } from "../services/BluzelleService";
+
+import useData from "./DataContext/useData";
 
 export const ExpiryBar = () => {
     const [expiry, setExpiry] = useState("");
 
-    const { selectedKey } = useData();
+    const {
+        selectedKey,
+        activeTTL,
+        loadingTTL,
+        setLoadingTTL,
+        reloadTTL,
+    } = useData();
 
     const expire = () => {
         const v = sanitizeExpiry(expiry);
 
         setExpiry("");
 
-        loadingTTL.set(true);
+        setLoadingTTL(true);
 
         getClient()
             .expire(selectedKey, v)
@@ -27,7 +34,7 @@ export const ExpiryBar = () => {
     };
 
     const persist = () => {
-        loadingTTL.set(true);
+        setLoadingTTL(true);
 
         setExpiry("");
 
@@ -72,18 +79,18 @@ export const ExpiryBar = () => {
             }}>
             <BS.Card>
                 <BS.CardBody>
-                    {loadingTTL.get() && (
+                    {loadingTTL && (
                         <div style={{ textAlign: "center", padding: 15 }}>
                             {loadingBar}
                         </div>
                     )}
-                    {!loadingTTL.get() && (
+                    {!loadingTTL && (
                         <BS.InputGroup>
                             <BS.InputGroupAddon addonType='prepend'>
                                 Expiry (s):{" "}
                             </BS.InputGroupAddon>
                             <BS.Input
-                                placeholder={renderTTL(activeTTL.get())}
+                                placeholder={renderTTL(activeTTL)}
                                 onChange={(e) => setExpiry(e.target.value)}
                             />
                             <BS.InputGroupAddon addonType='append'>
@@ -101,7 +108,7 @@ export const ExpiryBar = () => {
                                     outline
                                     color='danger'
                                     type='button'
-                                    disabled={activeTTL.get() === 0}
+                                    disabled={activeTTL === 0}
                                     onClick={persist}>
                                     <i className='fas fa-ban'></i>
                                 </BS.Button>

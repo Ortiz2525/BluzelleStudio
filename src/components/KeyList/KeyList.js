@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 
-import { activeValue, save, remove, reload } from "../../services/CRUDService";
+import { save, remove, reload, refreshKeys } from "../../services/CRUDService";
 import {
     execute,
     removePreviousHistory,
@@ -17,42 +17,26 @@ import loadingBar from "../loadingBar";
 
 import useData from "components/DataContext/useData";
 
-export const tempKeys = observable([]);
-
 const KeyList = () => {
     const [showNewKey, setShowNewKey] = useState(false);
     const [renameKey, setRenameKey] = useState("");
-    const [keys, setKeys] = useState([]);
-    const [tempKeys, setTempKeys] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    // TODO: Check the original usage of these variables in other files and replace them with context
-    const { selectedKey, setSelectedKey, isWriter } = useData();
-
-    const refreshKeys = () =>
-        new Promise((resolve) => {
-            setIsLoading(true);
-
-            getClient()
-                .keys()
-                .then((k) => {
-                    setKeys(k);
-                    setIsLoading(false);
-
-                    resolve();
-                })
-                .catch(() => {
-                    setIsLoading(false);
-                    alert(
-                        "Failed to fetch keys due to bluzelle network error."
-                    );
-
-                    resolve();
-                });
-        });
+    const {
+        selectedKey,
+        setSelectedKey,
+        isWriter,
+        keys,
+        setKeys,
+        activeValue,
+    } = useData();
 
     useEffect(() => {
-        refreshKeys();
+        setIsLoading(true);
+
+        refreshKeys().then(() => {
+            setIsLoading(false);
+        });
     }, []);
 
     const rename = () => {
@@ -61,7 +45,7 @@ const KeyList = () => {
 
     const executeRemove = () => {
         const sk = selectedKey;
-        const val = activeValue.get();
+        const val = activeValue;
 
         execute({
             doIt: () => remove(),
@@ -109,7 +93,7 @@ const KeyList = () => {
                 <i className='fas fa-sync'></i>
             </BS.Button>
 
-            {activeValue.get() !== undefined && isWriter !== "read-only" && (
+            {activeValue !== undefined && isWriter !== "read-only" && (
                 <BS.Button color='success' onClick={save}>
                     <i className='fas fa-save'></i>
                 </BS.Button>
@@ -164,25 +148,23 @@ const KeyList = () => {
                             <AddButton onClick={() => setShowNewKey(true)} />
                         )}
 
-                        {activeValue.get() !== undefined &&
-                            isWriter !== "read-only" && (
-                                <BS.Button
-                                    outline
-                                    color='danger'
-                                    onClick={executeRemove}>
-                                    <i className='fas fa-times'></i>
-                                </BS.Button>
-                            )}
+                        {activeValue !== undefined && isWriter !== "read-only" && (
+                            <BS.Button
+                                outline
+                                color='danger'
+                                onClick={executeRemove}>
+                                <i className='fas fa-times'></i>
+                            </BS.Button>
+                        )}
 
-                        {activeValue.get() !== undefined &&
-                            isWriter !== "read-only" && (
-                                <BS.Button
-                                    outline
-                                    color='warning'
-                                    onClick={() => rename()}>
-                                    <i className='fas fa-i-cursor'></i>
-                                </BS.Button>
-                            )}
+                        {activeValue !== undefined && isWriter !== "read-only" && (
+                            <BS.Button
+                                outline
+                                color='warning'
+                                onClick={() => rename()}>
+                                <i className='fas fa-i-cursor'></i>
+                            </BS.Button>
+                        )}
 
                         <SaveReloadRemove />
                     </BS.ButtonGroup>

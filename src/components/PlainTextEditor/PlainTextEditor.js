@@ -1,14 +1,14 @@
-import { activeValue } from "../../services/CRUDService";
+import useData from "components/DataContext/useData";
 
 const PlainTextEditor = () => {
-    const [value, setValue] = useState(activeValue.get());
+    const { isWriter, activeValue, setActiveValue } = useData();
 
-    const { isWriter } = useData();
+    const [value, setValue] = useState(activeValue);
 
     const onSubmit = (e) => {
         e && e.preventDefault();
 
-        activeValue.set(value);
+        setActiveValue(value);
 
         // const {keyName, keyData} = this.props;
 

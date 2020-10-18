@@ -1,6 +1,6 @@
 const common = {
     border: 0,
-    background: 'none'
+    background: "none",
 };
 
 export const Delete = ({ onClick }) => (
@@ -8,23 +8,24 @@ export const Delete = ({ onClick }) => (
         bsSize='xsmall'
         style={{
             ...common,
-            float: 'right',
-            color: 'red'
-        }} onClick={ onClick }>
-        <BS.Glyphicon glyph='remove'/>
+            float: "right",
+            color: "red",
+        }}
+        onClick={onClick}>
+        <BS.Glyphicon glyph='remove' />
     </BS.Button>
 );
-
 
 export const Edit = ({ onClick }) => (
     <BS.Button
         bsSize='xsmall'
         style={{
             ...common,
-            float: 'right',
-            color: 'orange'
-        }} onClick={ onClick }>
-        <BS.Glyphicon glyph='pencil'/>
+            float: "right",
+            color: "orange",
+        }}
+        onClick={onClick}>
+        <BS.Glyphicon glyph='pencil' />
     </BS.Button>
 );
 
@@ -33,8 +34,9 @@ export const Plus = ({ onClick }) => (
         bsSize='xsmall'
         style={{
             ...common,
-            color: 'green'
-        }} onClick={ onClick }>
-        <BS.Glyphicon glyph='plus'/>
+            color: "green",
+        }}
+        onClick={onClick}>
+        <BS.Glyphicon glyph='plus' />
     </BS.Button>
 );

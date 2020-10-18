@@ -7,8 +7,6 @@ import EthereumConfig from "./EthereumConfig";
 
 import { useEffect } from "react";
 
-const connecting = observable(false);
-
 const url_params = window && new URLSearchParams(window.location.search);
 
 const DaemonSelector = (props) => {
@@ -17,6 +15,7 @@ const DaemonSelector = (props) => {
     const [save, setSave] = useState(
         window.cookiesObj.save === "true" || false
     );
+    const [connecting, setConnecting] = useState(false);
     const [mnemonic, setMnemonic] = useState(window.cookiesObj.mnemonic || "");
 
     const [uuid, setUuid] = useState(window.cookiesObj.uuid || "");
@@ -64,11 +63,11 @@ const DaemonSelector = (props) => {
 
         window.history.pushState("", "", new_url_params);
 
-        connecting.set(true);
+        setConnecting(true);
 
         props.go(address, contract, uuid, mnemonic).catch((e) => {
             console.error(e);
-            connecting.set(false);
+            setConnecting(false);
         });
     };
 
@@ -144,7 +143,7 @@ const DaemonSelector = (props) => {
                             <hr />
 
                             <div style={{ marginTop: 10, textAlign: "center" }}>
-                                {connecting.get() === false ? (
+                                {connecting === false ? (
                                     <BS.Button
                                         color='primary'
                                         style={{ width: "100%" }}

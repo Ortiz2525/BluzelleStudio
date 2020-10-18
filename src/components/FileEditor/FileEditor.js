@@ -1,12 +1,13 @@
 import FileName from "./FileName";
 import FileSize from "./FileSize";
-import { activeValue } from "../../services/CRUDService";
+
+import useData from "components/DataContext/useData";
 
 export default FileEditor = () => {
     const [uploaded, setUploaded] = useState(false);
     const [uploadedFilename, setUploadedFilename] = useState("");
 
-    const { selectedKey } = useData();
+    const { selectedKey, activeValue, setActiveValue } = useData();
 
     let fileSelector = null;
 
@@ -24,7 +25,7 @@ export default FileEditor = () => {
             // const oldBytearray = props.keyData.get('bytearray'),
             ///    oldFilename = props.keyData.get('filename');
 
-            activeValue.set(new Uint8Array(reader.result));
+            setActiveValue(new Uint8Array(reader.result));
 
             setUploaded(true);
             setUploadedFilename(file.name);
@@ -46,7 +47,7 @@ export default FileEditor = () => {
     };
 
     const download = () => {
-        const arr = activeValue.get();
+        const arr = activeValue;
 
         const blob = new Blob([arr.buffer]);
         const link = document.createElement("a");
@@ -66,7 +67,7 @@ export default FileEditor = () => {
                     <div>
                         File size:{" "}
                         <code>
-                            <FileSize numBytes={activeValue.get().byteLength} />
+                            <FileSize numBytes={activeValue.byteLength} />
                         </code>
                     </div>
                     <div>

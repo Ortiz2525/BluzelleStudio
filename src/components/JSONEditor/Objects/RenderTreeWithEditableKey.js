@@ -1,45 +1,39 @@
-import {EditableField} from "../../EditableField";
-import {RenderTree} from "../Trees/RenderTree";
+import { EditableField } from "../../EditableField";
+import RenderTree from "../Trees/RenderTree";
 
-export const RenderTreeWithEditableKey =
-    ({...props}) => {
+export const RenderTreeWithEditableKey = ({ ...props }) => {
+    // Not sure how to get this working...
 
+    // const preamble =
 
-        // Not sure how to get this working...
+    //     <EditableField
+    //         val={val}
+    //         renderVal={val => <span style={{color: 'navy'}}>{val}</span>}
+    //         onChange={newkey => {
 
-        // const preamble =
+    // const oldval = val;
+    // obj.delete(propName);
+    // obj.set(newkey, oldval);
 
-        //     <EditableField
-        //         val={val}
-        //         renderVal={val => <span style={{color: 'navy'}}>{val}</span>}
-        //         onChange={newkey => {
+    // Not sure how this will work
 
-                    // const oldval = val;
-                    // obj.delete(propName);
-                    // obj.set(newkey, oldval);
+    // del();
+    // set();
 
+    // context.execute({
+    //     doIt: () => {
+    //         const oldval = obj.get(propName);
+    //         obj.delete(propName);
+    //         obj.set(newkey, oldval);
+    //     },
+    //     undoIt: () => {
+    //         const oldval = obj.get(newkey);
+    //         obj.delete(newkey);
+    //         obj.set(propName, oldval);
+    //     },
+    //     message: <span>Renamed <code key={1}>{propName}</code> to <code key={2}>{newkey}</code>.</span>
+    // });
+    //       }}/>;
 
-                    // Not sure how this will work
-
-                    // del();
-                    // set();
-
-
-                    // context.execute({
-                    //     doIt: () => {
-                    //         const oldval = obj.get(propName);
-                    //         obj.delete(propName);
-                    //         obj.set(newkey, oldval);
-                    //     },
-                    //     undoIt: () => {
-                    //         const oldval = obj.get(newkey);
-                    //         obj.delete(newkey);
-                    //         obj.set(propName, oldval);
-                    //     },
-                    //     message: <span>Renamed <code key={1}>{propName}</code> to <code key={2}>{newkey}</code>.</span>
-                    // });
-         //       }}/>;
-
-        return <RenderTree {...props}/>;
-
-    };
+    return <RenderTree {...props} />;
+};

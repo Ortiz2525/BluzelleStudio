@@ -1,4 +1,4 @@
-import { Editor } from "./Editor";
+import Editor from "./Editor";
 import KeyList from "./KeyList";
 import { Metadata } from "./Metadata";
 import Permissioning from "./Permissioning";
