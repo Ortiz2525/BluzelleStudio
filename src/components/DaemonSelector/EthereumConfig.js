@@ -3,10 +3,10 @@ import config from "../../../ethereum_config";
 
 const EthereumConfig = ({
     address,
-    contract,
+    chainid,
     uuid,
     setAddress,
-    setContract,
+    setChainid,
     setUuid,
 }) => {
     const [toggle, setToggle] = useState(
@@ -48,7 +48,7 @@ const EthereumConfig = ({
                                     name='uuid'
                                     value={uuid}
                                     onChange={(e) => setUuid(e.target.value)}
-                                    placeholder='<pub key>'
+                                    placeholder='<uuid>'
                                 />
                             </BS.InputGroup>
                         </BS.Col>
@@ -70,14 +70,14 @@ const EthereumConfig = ({
 
                     <BS.FormGroup row>
                         <BS.Label sm={3} for='port'>
-                            Contract Address:
+                            Chain Name:
                         </BS.Label>
                         <BS.Col sm={9}>
                             <BS.Input
                                 type='text'
-                                name='contract'
-                                value={contract}
-                                onChange={(e) => setContract(e.target.value)}
+                                name='chainid'
+                                value={chainid}
+                                onChange={(e) => setChainid(e.target.value)}
                             />
                         </BS.Col>
                     </BS.FormGroup>
@@ -85,12 +85,7 @@ const EthereumConfig = ({
                     <div style={{ marginTop: 10, textAlign: "center" }}>
                         <BS.ButtonGroup style={{ width: "100%" }}>
                             {config.map(
-                                ({
-                                    name,
-                                    color,
-                                    ethereum_rpc,
-                                    contract_address,
-                                }) => (
+                                ({ name, color, ethereum_rpc, chainid }) => (
                                     <BS.Button
                                         style={{ flex: 1 }}
                                         outline={true}
@@ -99,7 +94,7 @@ const EthereumConfig = ({
                                         onClick={() => {
                                             setActive(name);
                                             setAddress(ethereum_rpc);
-                                            setContract(contract_address);
+                                            setChainid(chainid);
                                         }}>
                                         {name}
                                     </BS.Button>

@@ -2,7 +2,7 @@ import { getClient } from "../../services/BluzelleService";
 
 import download from "downloadjs";
 
-export default exportCSV = async (isLoading, setIsLoading, keys) => {
+const exportCSV = async (isLoading, setIsLoading, keys) => {
     if (isLoading) {
         alert("Cannot export while loading keys list.");
         return;
@@ -37,3 +37,5 @@ const downloadCSV = (fields) => {
 };
 
 const sanitize = (str) => '"' + str.replace(/"/g, '""') + '"';
+
+export default exportCSV;

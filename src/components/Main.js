@@ -8,7 +8,7 @@ import Header from "./Header/Header";
 import CollapsibleCard from "./CollapsibleCard";
 import useData from "./DataContext/useData";
 
-export default Main = () => {
+const Main = () => {
     const { config } = useData();
 
     return (
@@ -72,3 +72,5 @@ export default Main = () => {
         </ReflexContainer>
     );
 };
+
+export default Main;

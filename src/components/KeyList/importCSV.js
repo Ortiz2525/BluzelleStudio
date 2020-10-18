@@ -2,7 +2,7 @@ import { getClient } from "../../services/BluzelleService";
 import Papa from "papaparse";
 import { create } from "../../services/CRUDService";
 
-export default importCSV = (setIsLoading, setKeys) => {
+const importCSV = (setIsLoading, setKeys) => {
     const createFields = async (fields) => {
         setIsLoading(true);
 
@@ -59,3 +59,5 @@ export default importCSV = (setIsLoading, setKeys) => {
 
     input.click();
 };
+
+export default importCSV;

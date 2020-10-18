@@ -5,7 +5,7 @@ import FileSize from "./FileSize";
 
 import useData from "components/DataContext/useData";
 
-export default FileEditor = () => {
+const FileEditor = () => {
     const [uploaded, setUploaded] = useState(false);
     const [uploadedFilename, setUploadedFilename] = useState("");
 
@@ -106,3 +106,5 @@ export default FileEditor = () => {
         </div>
     );
 };
+
+export default FileEditor;

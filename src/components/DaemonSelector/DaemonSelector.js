@@ -4,6 +4,7 @@ import CenterMiddle from "./CenterMiddle";
 import Header from "../Header/Header";
 import loadingBar from "../loadingBar";
 import EthereumConfig from "./EthereumConfig";
+import config from "../../../ethereum_config";
 
 const url_params = window && new URLSearchParams(window.location.search);
 
@@ -15,13 +16,13 @@ const DaemonSelector = (props) => {
     );
     const [connecting, setConnecting] = useState(false);
     const [mnemonic, setMnemonic] = useState(window.cookiesObj.mnemonic || "");
-
     const [uuid, setUuid] = useState(window.cookiesObj.uuid || "");
+
     const [address, setAddress] = useState(
         window.cookiesObj.address || config[0].ethereum_rpc
     );
-    const [contract, setContract] = useState(
-        window.cookiesObj.contract || config[0].contract_address
+    const [chainid, setChainid] = useState(
+        window.cookiesObj.chainid || "bluzelle"
     );
 
     const url = new URL(window.location.href);
@@ -34,10 +35,6 @@ const DaemonSelector = (props) => {
         setAddress(url.searchParams.get("address"));
     }
 
-    if (url.searchParams.get("contract")) {
-        setContract(url.searchParams.get("contract"));
-    }
-
     useEffect(() => {
         document.cookie = "save=" + save;
         if (!save) {
@@ -47,9 +44,9 @@ const DaemonSelector = (props) => {
         }
 
         document.cookie = "uuid=" + uuid;
+        document.cookie = "chainid=" + chainid;
         document.cookie = "address=" + address;
-        document.cookie = "contract=" + contract;
-    }, [address, contract, uuid, save, mnemonic]);
+    }, [address, uuid, chainid, save, mnemonic]);
 
     const go = () => {
         if (!mnemonic) {
@@ -63,7 +60,7 @@ const DaemonSelector = (props) => {
 
         setConnecting(true);
 
-        props.go(address, contract, uuid, mnemonic).catch((e) => {
+        props.go(address, uuid, chainid, mnemonic).catch((e) => {
             console.error(e);
             setConnecting(false);
         });
@@ -132,10 +129,10 @@ const DaemonSelector = (props) => {
                             <hr />
                             <EthereumConfig
                                 address={address}
-                                contract={contract}
+                                chainid={chainid}
                                 uuid={uuid}
                                 setAddress={setAddress}
-                                setContract={setContract}
+                                setChainid={setChainid}
                                 setUuid={setUuid}
                             />
                             <hr />

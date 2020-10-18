@@ -1,6 +1,6 @@
 import React from "react";
 
-export default loadingBar = (
+const loadingBar = (
     <div className='lds-ellipsis' style={{ marginLeft: 15 }}>
         <div className='badge-primary'></div>
         <div className='badge-primary'></div>
@@ -20,3 +20,5 @@ export default loadingBar = (
         </style>
     </div>
 );
+
+export default loadingBar;

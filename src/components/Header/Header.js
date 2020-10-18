@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.png";
 
-export default Header = () => (
+const Header = () => (
     <div
         style={{
             textAlign: "center",
@@ -10,3 +10,5 @@ export default Header = () => (
         <img width='320px' src={logo} />
     </div>
 );
+
+export default Header;

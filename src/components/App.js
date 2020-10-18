@@ -1,5 +1,5 @@
 import "@babel/polyfill";
-import React from "react";
+import React, { useState } from "react";
 
 import Main from "components/Main";
 import DaemonSelector from "./DaemonSelector";
@@ -26,12 +26,12 @@ const App = () => {
     const { setMnemonic, setWriters, setMetaStatus, setMetaSize } = useData();
     const [connected, setConnected] = useState(false);
 
-    const go = async (address, contract, uuid, mnemonic) => {
+    const go = async (address, uuid, chainid, mnemonic) => {
         setMnemonic(mnemonic);
 
         const params = new URLSearchParams();
         params.set("address", address);
-        params.set("contract", contract);
+        params.set("chainid", chainid);
         params.set("uuid", uuid);
         window.history.replaceState(
             {},
@@ -45,19 +45,19 @@ const App = () => {
         // try to open a client normally
         try {
             client = await createClient({
+                mnemonic,
                 ethereum_rpc: address,
-                contract_address: contract,
+                chainid: chainid,
                 uuid,
-                private_pem,
             });
         } catch (e) {
             // try to create the db
             try {
                 const apis = await createClient({
+                    mnemonic,
                     ethereum_rpc: address,
-                    contract_address: contract,
+                    chainid: chainid,
                     uuid,
-                    private_pem,
                     _connect_to_all: true,
                 });
 
@@ -70,10 +70,10 @@ const App = () => {
                 apis.forEach((api) => api.close());
 
                 client = await createClient({
+                    mnemonic,
                     ethereum_rpc: address,
-                    contract_address: contract,
+                    chainid: chainid,
                     uuid,
-                    private_pem,
                 });
             } catch (e2) {
                 if (e2.message.includes("ACCESS_DENIED")) {

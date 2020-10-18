@@ -5,7 +5,7 @@ import { getClient } from "../services/BluzelleService";
 
 import useData from "./DataContext/useData";
 
-export default ExpiryBar = () => {
+const ExpiryBar = () => {
     const [expiry, setExpiry] = useState("");
 
     const {
@@ -120,3 +120,5 @@ export default ExpiryBar = () => {
         </div>
     );
 };
+
+export default ExpiryBar;

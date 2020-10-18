@@ -3,7 +3,7 @@ import useData from "./DataContext/useData";
 
 const logs_max_length = 10;
 
-export default Log = () => {
+const Log = () => {
     const { log, setLog } = useData();
     const [logs, setLogs] = useState([]);
 
@@ -87,3 +87,5 @@ export default Log = () => {
         </BS.ListGroup>
     );
 };
+
+export default Log;

@@ -1,6 +1,6 @@
 import useData from "components/DataContext/useData";
 
-export default useCommandQueueService = () => {
+const useCommandQueueService = () => {
     const {
         commandQueue,
         setCommandQueue,
@@ -102,3 +102,5 @@ export default useCommandQueueService = () => {
         updateHistoryMessage,
     };
 };
+
+export default useCommandQueueService;
