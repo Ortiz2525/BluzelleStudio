@@ -1,6 +1,7 @@
+import React from "react";
 import Editor from "./Editor";
 import KeyList from "./KeyList";
-import { Metadata } from "./Metadata";
+import Metadata from "./Metadata";
 import Permissioning from "./Permissioning";
 import Header from "./Header/Header";
 

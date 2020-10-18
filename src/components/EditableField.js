@@ -1,80 +1,72 @@
-import {SelectedInput} from "./SelectedInput";
+import React, { useEffect, useState } from "react";
+import { SelectedInput } from "./SelectedInput";
 
-export class EditableField extends Component {
-    constructor(props) {
-        super(props);
+const EditableField = (props) => {
+    const { formValue, setFormValue } = useState(props.val);
+    const { formActive, setFormActive } = useState(false);
+    const { hovering, setHovering } = useState(false);
 
-        this.state = {
-            formValue: props.val,
-            formActive: false,
-            hovering: false
-        };
-    }
+    useEffect(() => {
+        props.active && setFormActive(true);
+    }, [props.active]);
 
-    componentWillMount() {
-        this.props.active && this.setState({ formActive: true });
-    }
+    const handleChange = (event) => {
+        setFormValue(event.target.value);
+    };
 
-    componentWillReceiveProps(nextProps) {
-        nextProps.active && this.setState({ formActive: true });
-    }
-
-    handleChange(event) {
-        this.setState({
-            formValue: event.target.value
-        });
-    }
-
-    handleSubmit(event) {
-        const {onChange} = this.props;
+    const handleSubmit = (event) => {
+        const { onChange } = props;
         event.preventDefault();
 
-        this.setState({
-            formActive: false
-        });
+        setFormActive(false);
 
-        onChange(this.state.formValue);
-    }
+        onChange(formValue);
+    };
 
-    validationState() {
+    const validationState = () => {
         try {
-            JSON.parse(this.state.formValue);
-            return 'success';
-        } catch(e) {
-            return 'error';
+            JSON.parse(formValue);
+            return "success";
+        } catch (e) {
+            return "error";
         }
-    }
+    };
 
-    render() {
-        const {val, renderVal, validateJSON} = this.props;
-        const renderValWithDefault = renderVal || (i => i);
+    const { val, renderVal, validateJSON } = props;
+    const renderValWithDefault = renderVal || ((i) => i);
 
-        return (
-            <span onClick={e => {
+    return (
+        <span
+            onClick={(e) => {
                 e.stopPropagation();
-                this.setState({ formActive: true, hovering: false })
+                setFormActive(true);
+                setHovering(false);
             }}>
-              {this.state.formActive ?
-                  <BS.Form inline
-                        style={{display: 'inline'}}
-                        onSubmit={this.handleSubmit.bind(this)}>
-                     
-                        <SelectedInput
-                            type='text'
-                            value={this.state.formValue}
-                            onChange={this.handleChange.bind(this)}
-                            onBlur={this.handleSubmit.bind(this)}
-                        />
-                  </BS.Form>
-                  : <span style={{
-                      textDecoration: this.state.hovering ? 'underline' : 'none',
-                      cursor: 'pointer'
-                  }}
-                          onMouseOver={() => this.setState({hovering: true})}
-                          onMouseLeave={() => this.setState({hovering: false})}>
-                      {renderValWithDefault(val)}
-                  </span>}
-              </span>
-        );
-    }
-}
+            {formActive ? (
+                <BS.Form
+                    inline
+                    style={{ display: "inline" }}
+                    onSubmit={handleSubmit}>
+                    <SelectedInput
+                        type='text'
+                        value={formValue}
+                        onChange={handleChange}
+                        onBlur={handleSubmit}
+                    />
+                </BS.Form>
+            ) : (
+                <span
+                    style={{
+                        textDecoration: hovering ? "underline" : "none",
+                        cursor: "pointer",
+                    }}
+                    onMouseOver={() => setHovering(true)}
+                    onMouseLeave={() => setHovering(false)}>
+                    {renderValWithDefault(val)}
+                </span>
+            )}
+        </span>
+    );
+};
+
+export default EditableField;

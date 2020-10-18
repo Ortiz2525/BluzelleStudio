@@ -1,3 +1,5 @@
+import React from "react";
+
 import RenderTree from "./Trees/RenderTree";
 import { observe } from "mobx";
 import { activeValue } from "../../services/CRUDService";
@@ -73,3 +75,5 @@ const JSONEditor = () => {
         />
     );
 };
+
+export default JSONEditor;

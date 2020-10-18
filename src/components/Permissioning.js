@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import { getClient, hasClient } from "../services/BluzelleService";
 import loadingBar from "./loadingBar";

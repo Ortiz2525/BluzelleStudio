@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { observableMapRecursive } from "../../../util/mobXUtils";
-import { EditableField } from "../../EditableField";
+import React, { useState } from "react";
+import EditableField from "../../EditableField";
 
 const NewField = (props) => {
     const [currentInput, setCurrentInput] = useState("key");

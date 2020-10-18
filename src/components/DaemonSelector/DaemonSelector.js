@@ -1,11 +1,9 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CenterMiddle from "./CenterMiddle";
 import Header from "../Header/Header";
 import loadingBar from "../loadingBar";
 import EthereumConfig from "./EthereumConfig";
-
-import { useEffect } from "react";
 
 const url_params = window && new URLSearchParams(window.location.search);
 

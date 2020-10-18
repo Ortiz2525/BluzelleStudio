@@ -1,4 +1,5 @@
 import "@babel/polyfill";
+import React from "react";
 
 import Main from "components/Main";
 import DaemonSelector from "./DaemonSelector";

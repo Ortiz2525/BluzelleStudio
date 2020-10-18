@@ -1,4 +1,6 @@
-import { EditableField } from "../../EditableField";
+import React from "react";
+
+import EditableField from "../../EditableField";
 import { rename } from "../../../services/CRUDService";
 
 const RenameKeyField = ({ keyname, onChange }) => {

@@ -1,3 +1,5 @@
+import React from "react";
+
 const common = {
     border: 0,
     background: "none",

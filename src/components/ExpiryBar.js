@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import loadingBar from "./loadingBar";
 import { getClient } from "../services/BluzelleService";
 
 import useData from "./DataContext/useData";
 
-export const ExpiryBar = () => {
+export default ExpiryBar = () => {
     const [expiry, setExpiry] = useState("");
 
     const {

@@ -1,3 +1,5 @@
+import React from "react";
+
 const FileSize = ({ numBytes }) => {
     if (numBytes < 1000) {
         return <span>{numBytes} bytes</span>;

@@ -1,11 +1,14 @@
+import React, { useState } from "react";
+
 import RenderTree from "../Trees/RenderTree";
 import Collapsible from "../Collapsible";
 import { Plus, Edit, Delete } from "../Buttons";
 import Hoverable from "../Hoverable";
 import NewField from "./NewField";
+
 import { observableMapRecursive as omr } from "../JSONEditor";
+
 import { execute } from "../../../services/CommandQueueService";
-import { useState } from "react";
 
 const RenderArray = (props) => {
     const [showNewField, setShowNewField] = useState(false);

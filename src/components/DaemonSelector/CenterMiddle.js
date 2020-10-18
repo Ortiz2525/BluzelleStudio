@@ -1,3 +1,5 @@
+import React from "react";
+
 const CenterMiddle = ({ children }) => (
     <div style={wrapperStyle}>
         <div style={innerStyle}>{children}</div>

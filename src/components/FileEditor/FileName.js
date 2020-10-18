@@ -1,3 +1,5 @@
+import React from "react";
+
 const FileName = ({ filename }) => {
     const getPrefix = (s) => s.split(".")[0];
 

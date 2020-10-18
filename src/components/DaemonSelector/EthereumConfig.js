@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import config from "../../../ethereum_config";
 
 const EthereumConfig = ({
@@ -26,10 +26,9 @@ const EthereumConfig = ({
             <div style={{ marginTop: 10, textAlign: "center" }}>
                 <BS.Button
                     outline={true}
-                    color="secondary"
+                    color='secondary'
                     style={{ width: "100%" }}
-                    onClick={() => setToggle(!toggle)}
-                >
+                    onClick={() => setToggle(!toggle)}>
                     Show Config
                 </BS.Button>
             </div>
@@ -39,30 +38,30 @@ const EthereumConfig = ({
                     <hr />
 
                     <BS.FormGroup row>
-                        <BS.Label sm={3} for="uuid">
+                        <BS.Label sm={3} for='uuid'>
                             UUID:
                         </BS.Label>
                         <BS.Col sm={9}>
                             <BS.InputGroup>
                                 <BS.Input
-                                    type="text"
-                                    name="uuid"
+                                    type='text'
+                                    name='uuid'
                                     value={uuid}
                                     onChange={(e) => setUuid(e.target.value)}
-                                    placeholder="<pub key>"
+                                    placeholder='<pub key>'
                                 />
                             </BS.InputGroup>
                         </BS.Col>
                     </BS.FormGroup>
 
                     <BS.FormGroup row>
-                        <BS.Label sm={3} for="address">
+                        <BS.Label sm={3} for='address'>
                             Eth. RPC Address:
                         </BS.Label>
                         <BS.Col sm={9}>
                             <BS.Input
-                                type="text"
-                                name="address"
+                                type='text'
+                                name='address'
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                             />
@@ -70,13 +69,13 @@ const EthereumConfig = ({
                     </BS.FormGroup>
 
                     <BS.FormGroup row>
-                        <BS.Label sm={3} for="port">
+                        <BS.Label sm={3} for='port'>
                             Contract Address:
                         </BS.Label>
                         <BS.Col sm={9}>
                             <BS.Input
-                                type="text"
-                                name="contract"
+                                type='text'
+                                name='contract'
                                 value={contract}
                                 onChange={(e) => setContract(e.target.value)}
                             />
@@ -101,8 +100,7 @@ const EthereumConfig = ({
                                             setActive(name);
                                             setAddress(ethereum_rpc);
                                             setContract(contract_address);
-                                        }}
-                                    >
+                                        }}>
                                         {name}
                                     </BS.Button>
                                 )

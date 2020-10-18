@@ -1,8 +1,10 @@
-import { EditableField } from "../../EditableField";
+import React from "react";
+
+import EditableField from "../../EditableField";
 import { Delete } from "../Buttons";
 import { observableMapRecursive as omr } from "../JSONEditor";
 
-export const RenderField = ({
+const RenderField = ({
     val,
     set,
     del,
@@ -50,3 +52,5 @@ const colorTypeMap = {
 };
 
 const colorFromType = (obj) => colorTypeMap[typeof JSON.parse(obj)] || "pink";
+
+export default RenderField;

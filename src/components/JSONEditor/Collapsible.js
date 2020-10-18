@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const Collapsible = ({ children, collapsed, label, buttons, preamble }) => {
     const [collapsed, setCollapsed] = useState(collapsed || false);

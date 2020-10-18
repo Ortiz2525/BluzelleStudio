@@ -1,4 +1,4 @@
-// Loading bar from https://loading.io/css/
+import React from "react";
 
 export default loadingBar = (
     <div className='lds-ellipsis' style={{ marginLeft: 15 }}>

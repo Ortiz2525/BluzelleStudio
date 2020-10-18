@@ -1,5 +1,7 @@
-import { JSONEditor } from "./JSONEditor";
-import { ExpiryBar } from "./ExpiryBar";
+import React from "react";
+
+import JSONEditor from "./JSONEditor";
+import ExpiryBar from "./ExpiryBar";
 import PlainTextEditor from "./PlainTextEditor";
 import FileEditor from "./FileEditor/FileEditor";
 import loadingBar from "./loadingBar";

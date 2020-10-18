@@ -1,9 +1,10 @@
+import React, { useState } from "react";
+
 import RenderArray from "../Arrays/RenderArray";
-import { RenderObject } from "../Objects/RenderObject";
-import { RenderField } from "./RenderField";
+import RenderObject from "../Objects/RenderObject";
+import RenderField from "./RenderField";
 import { isObservableArray } from "mobx";
 import Hoverable from "../Hoverable";
-import { useState } from "react";
 
 const RenderTree = (props) => {
     const [editing, setEditing] = useState(false);

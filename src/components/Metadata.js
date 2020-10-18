@@ -1,8 +1,8 @@
-import { config } from "../services/BluzelleService";
+import React, { Fragment } from "react";
 
+import { config } from "../services/BluzelleService";
 import { version } from "bluzelle";
 
-import { Fragment } from "react";
 import useData from "./DataContext/useData";
 
 export const status = observable();
@@ -22,19 +22,19 @@ const Metadata = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">Mnemonic</th>
+                        <th scope='row'>Mnemonic</th>
                         <td>
                             <code>{mnemonic}</code>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">bluzelle-js version</th>
+                        <th scope='row'>bluzelle-js version</th>
                         <td>
                             <code>{version}</code>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">uuid</th>
+                        <th scope='row'>uuid</th>
                         <td>
                             <code>{config.get().uuid}</code>
                         </td>
@@ -42,7 +42,7 @@ const Metadata = () => {
 
                     {Object.entries(size.get()).map(([key, value]) => (
                         <tr key={key}>
-                            <th scope="row">{key}</th>
+                            <th scope='row'>{key}</th>
                             <td>
                                 <code style={{ whiteSpace: "pre-wrap" }}>
                                     {value.toString()}
@@ -53,7 +53,7 @@ const Metadata = () => {
 
                     {Object.entries(status.get()).map(([key, value]) => (
                         <tr key={key}>
-                            <th scope="row">{key}</th>
+                            <th scope='row'>{key}</th>
                             <td>
                                 <code style={{ whiteSpace: "pre-wrap" }}>
                                     {
