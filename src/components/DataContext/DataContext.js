@@ -10,7 +10,7 @@ const DataProvider = (props) => {
         config: {},
         selectedKey: undefined,
         isWriter: false,
-        writers: {},
+        writers: { owner: undefined, writers: [] },
         activeValue: undefined,
         activeMap: undefined,
         loadingValue: false,

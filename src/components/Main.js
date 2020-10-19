@@ -44,7 +44,7 @@ const Main = () => {
                             <KeyList />
                         </CollapsibleCard>
 
-                        {/* <div style={{ height: 20 }}></div>
+                        <div style={{ height: 20 }}></div>
 
                         <CollapsibleCard title='Permissioning'>
                             <Permissioning />
@@ -54,7 +54,7 @@ const Main = () => {
 
                         <CollapsibleCard collapsed={true} title='Metadata'>
                             <Metadata />
-                        </CollapsibleCard> */}
+                        </CollapsibleCard>
 
                         {/*<div style={{height: 20}}></div>
                             

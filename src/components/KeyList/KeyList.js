@@ -7,8 +7,8 @@ import useBluzelle from "../../services/BluzelleService";
 import KeyListItem from "./KeyListItem";
 import NewKeyField from "./NewKey/NewKeyField";
 import RenameKeyField from "./NewKey/RenameKeyField";
-import importCSV from "./importCSV";
-import exportCSV from "./exportCSV";
+import useImportCSV from "./importCSV";
+import useExportCSV from "./exportCSV";
 import loadingBar from "../loadingBar";
 
 import useData from "components/DataContext/useData";
@@ -25,6 +25,8 @@ const KeyList = () => {
     } = useCommandQueueService();
     const { getClient } = useBluzelle();
     const { save, remove, reload, refreshKeys } = useCRUDService();
+    const importCSV = useImportCSV();
+    const exportCSV = useExportCSV();
 
     const {
         selectedKey,

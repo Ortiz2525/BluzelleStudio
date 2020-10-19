@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-const SelectedInput = () => {
-    const inputRef = React.createRef();
+const SelectedInput = (props) => {
+    const [inputRef, setInputRef] = useState();
 
     useEffect(() => {
-        inputRef.select();
-    });
+        if (inputRef) {
+            inputRef.focus();
+        }
+    }, [inputRef]);
 
     return (
         <BS.Input
             type='text'
-            {...this.props}
-            innerRef={inputRef}
+            {...props}
+            innerRef={(ref) => setInputRef(ref)}
             style={{ width: "100%" }}
         />
     );

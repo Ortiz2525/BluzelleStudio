@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import SelectedInput from "./SelectedInput";
 
 const EditableField = (props) => {
-    const { formValue, setFormValue } = useState(props.val);
-    const { formActive, setFormActive } = useState(false);
-    const { hovering, setHovering } = useState(false);
+    const [formValue, setFormValue] = useState(props.val);
+    const [formActive, setFormActive] = useState(false);
+    const [hovering, setHovering] = useState(false);
 
     useEffect(() => {
         props.active && setFormActive(true);

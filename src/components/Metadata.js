@@ -35,36 +35,38 @@ const Metadata = () => {
                         </td>
                     </tr>
 
-                    {Object.entries(metaSize).map(([key, value]) => (
-                        <tr key={key}>
-                            <th scope='row'>{key}</th>
-                            <td>
-                                <code style={{ whiteSpace: "pre-wrap" }}>
-                                    {value.toString()}
-                                </code>
-                            </td>
-                        </tr>
-                    ))}
+                    {metaSize &&
+                        Object.entries(metaSize).map(([key, value]) => (
+                            <tr key={key}>
+                                <th scope='row'>{key}</th>
+                                <td>
+                                    <code style={{ whiteSpace: "pre-wrap" }}>
+                                        {value.toString()}
+                                    </code>
+                                </td>
+                            </tr>
+                        ))}
 
-                    {Object.entries(metaStatus).map(([key, value]) => (
-                        <tr key={key}>
-                            <th scope='row'>{key}</th>
-                            <td>
-                                <code style={{ whiteSpace: "pre-wrap" }}>
-                                    {
-                                        // Add a special JSON styling to moduleStatusJson
-                                        key === "moduleStatusJson"
-                                            ? JSON.stringify(
-                                                  JSON.parse(value),
-                                                  null,
-                                                  4
-                                              )
-                                            : value.toString()
-                                    }
-                                </code>
-                            </td>
-                        </tr>
-                    ))}
+                    {metaStatus &&
+                        Object.entries(metaStatus).map(([key, value]) => (
+                            <tr key={key}>
+                                <th scope='row'>{key}</th>
+                                <td>
+                                    <code style={{ whiteSpace: "pre-wrap" }}>
+                                        {
+                                            // Add a special JSON styling to moduleStatusJson
+                                            key === "moduleStatusJson"
+                                                ? JSON.stringify(
+                                                      JSON.parse(value),
+                                                      null,
+                                                      4
+                                                  )
+                                                : value.toString()
+                                        }
+                                    </code>
+                                </td>
+                            </tr>
+                        ))}
                 </tbody>
             </BS.Table>
         </Fragment>

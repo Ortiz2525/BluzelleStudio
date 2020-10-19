@@ -8,7 +8,7 @@ const Hoverable = ({ children }) => {
             style={{
                 padding: 5,
                 paddingRight: 0,
-                background: this.state.hovering ? "#F9F9F9" : "#FFFFFF",
+                background: hovering ? "#F9F9F9" : "#FFFFFF",
             }}
             onMouseOver={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}>
