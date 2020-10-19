@@ -1,24 +1,24 @@
 const config = [
     {
-        name: "Ropsten Testnet",
+        name: "Mainnet",
         color: "primary", // primary, secondary, success, info, danger, warning, light, dark
 
-        ethereum_rpc: "https://ropsten.infura.io:443",
-        chainid: "ropsten",
+        endpoint: "https://client.sentry.bluzellenet.bluzelle.com:1319/",
+        chainid: "Bluzelle-Soft-Mainnet",
     },
     {
-        name: "Tata Testnet",
+        name: "Test Public",
         color: "danger",
 
-        ethereum_rpc: "https://ropsten.infura.io:443",
-        chainid: "tata",
+        endpoint: "https://client.sentry.testnet.public.bluzelle.com:1319/",
+        chainid: "Bluzelle-Test-Public",
     },
     {
-        name: "Private",
+        name: "Test Private",
         color: "secondary",
 
-        ethereum_rpc: "http://127.0.0.1:8545",
-        chainid: "Fill me",
+        endpoint: "https://client.sentry.testnet.private.bluzelle.com:1319/",
+        chainid: "Bluzelle-Test-Private",
     },
 ];
 

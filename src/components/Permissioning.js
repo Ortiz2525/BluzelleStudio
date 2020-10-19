@@ -1,12 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 
-import { getClient, hasClient } from "../services/BluzelleService";
+import useBluzelle from "../services/BluzelleService";
 import loadingBar from "./loadingBar";
 import useData from "./DataContext/useData";
 
 const Permissioning = () => {
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { getClient, hasClient } = useBluzelle();
 
     const { mnemonic, isWriter, setIsWriter, writers, setWriters } = useData();
 

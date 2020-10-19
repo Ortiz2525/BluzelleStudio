@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import config from "../../../ethereum_config";
 
 const EthereumConfig = ({
-    address,
+    endpoint,
     chainid,
     uuid,
-    setAddress,
+    setEndpoint,
     setChainid,
     setUuid,
 }) => {
@@ -55,22 +55,22 @@ const EthereumConfig = ({
                     </BS.FormGroup>
 
                     <BS.FormGroup row>
-                        <BS.Label sm={3} for='address'>
-                            Eth. RPC Address:
+                        <BS.Label sm={3} for='endpoint'>
+                            Endpoint:
                         </BS.Label>
                         <BS.Col sm={9}>
                             <BS.Input
                                 type='text'
-                                name='address'
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
+                                name='endpoint'
+                                value={endpoint}
+                                onChange={(e) => setEndpoint(e.target.value)}
                             />
                         </BS.Col>
                     </BS.FormGroup>
 
                     <BS.FormGroup row>
                         <BS.Label sm={3} for='port'>
-                            Chain Name:
+                            Chain ID:
                         </BS.Label>
                         <BS.Col sm={9}>
                             <BS.Input
@@ -85,7 +85,7 @@ const EthereumConfig = ({
                     <div style={{ marginTop: 10, textAlign: "center" }}>
                         <BS.ButtonGroup style={{ width: "100%" }}>
                             {config.map(
-                                ({ name, color, ethereum_rpc, chainid }) => (
+                                ({ name, color, endpoint, chainid }) => (
                                     <BS.Button
                                         style={{ flex: 1 }}
                                         outline={true}
@@ -93,7 +93,7 @@ const EthereumConfig = ({
                                         key={name}
                                         onClick={() => {
                                             setActive(name);
-                                            setAddress(ethereum_rpc);
+                                            setEndpoint(endpoint);
                                             setChainid(chainid);
                                         }}>
                                         {name}

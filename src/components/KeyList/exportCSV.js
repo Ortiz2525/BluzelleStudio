@@ -1,8 +1,10 @@
-import { getClient } from "../../services/BluzelleService";
+import useBluzelle from "../../services/BluzelleService";
 
 import download from "downloadjs";
 
 const exportCSV = async (isLoading, setIsLoading, keys) => {
+    const { getClient } = useBluzelle();
+
     if (isLoading) {
         alert("Cannot export while loading keys list.");
         return;

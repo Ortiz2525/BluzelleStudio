@@ -1,14 +1,16 @@
 import { useContext } from "react";
 import { DataContext } from "./DataContext";
 
-import { getClient } from "../../services/BluzelleService";
-
 // For updating activeTTL
 let time, countdown, value;
 let update_time = true;
 
 const useData = () => {
     const [state, setState] = useContext(DataContext);
+
+    const setClient = (client) => {
+        setState((state) => ({ ...state, client }));
+    };
 
     const setMnemonic = (mnemonic) => {
         setState((state) => ({ ...state, mnemonic }));
@@ -74,7 +76,7 @@ const useData = () => {
     const reloadTTL = () => {
         setLoadingTTL(true);
 
-        getClient()
+        state.client
             .ttl(state.selectedKey)
             .then((value) => {
                 setActiveTTL(value);
@@ -105,7 +107,7 @@ const useData = () => {
 
             setLoadingValue(true);
 
-            getClient()
+            state.client
                 .quickread(selectedKey)
                 .then((value) => {
                     setActiveValue(value);
@@ -180,6 +182,7 @@ const useData = () => {
     };
 
     return {
+        setClient,
         setMnemonic,
         setConfig,
         setSelectedKey,
@@ -200,6 +203,7 @@ const useData = () => {
         setCurrentPosition,
         setValue,
 
+        client: state.client,
         mnemonic: state.mnemonic,
         config: state.config,
         selectedKey: state.selectedKey,

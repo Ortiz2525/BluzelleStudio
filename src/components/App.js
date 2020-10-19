@@ -5,7 +5,7 @@ import Main from "components/Main";
 import DaemonSelector from "./DaemonSelector";
 import ColorSelector from "./ColorSelector";
 
-import { createClient } from "../services/BluzelleService";
+import useBluzelle from "../services/BluzelleService";
 import useData from "./DataContext/useData";
 
 // const url_params = window && new URLSearchParams(window.location.search);
@@ -25,14 +25,15 @@ document.cookie = "expires=" + expiryDate.toGMTString();
 const App = () => {
     const { setMnemonic, setWriters, setMetaStatus, setMetaSize } = useData();
     const [connected, setConnected] = useState(false);
+    const { createClient } = useBluzelle();
 
-    const go = async (address, uuid, chainid, mnemonic) => {
+    const go = async (endpoint, uuid, chainid, mnemonic) => {
         setMnemonic(mnemonic);
 
         const params = new URLSearchParams();
-        params.set("address", address);
-        params.set("chainid", chainid);
+        params.set("endpoint", endpoint);
         params.set("uuid", uuid);
+        params.set("chainid", chainid);
         window.history.replaceState(
             {},
             "",
@@ -46,8 +47,8 @@ const App = () => {
         try {
             client = await createClient({
                 mnemonic,
-                ethereum_rpc: address,
-                chainid: chainid,
+                endpoint: endpoint,
+                chain_id: chainid,
                 uuid,
             });
         } catch (e) {
@@ -55,8 +56,8 @@ const App = () => {
             try {
                 const apis = await createClient({
                     mnemonic,
-                    ethereum_rpc: address,
-                    chainid: chainid,
+                    endpoint: endpoint,
+                    chain_id: chainid,
                     uuid,
                     _connect_to_all: true,
                 });
@@ -71,8 +72,8 @@ const App = () => {
 
                 client = await createClient({
                     mnemonic,
-                    ethereum_rpc: address,
-                    chainid: chainid,
+                    endpoint: endpoint,
+                    chain_id: chainid,
                     uuid,
                 });
             } catch (e2) {
@@ -88,24 +89,25 @@ const App = () => {
             }
         }
 
-        Promise.resolve()
-            .then(() => client.status())
-            .then((s) => {
-                setMetaStatus(s);
-                return client._getWriters();
-            })
-            .then((w) => {
-                setWriters(w);
-            })
-            .then(() => client.size())
-            .then((s) => {
-                setMetaSize(s);
-                setConnected(true);
-            })
-            .catch((e) => {
-                alert("Error initializing database connection: " + e.message);
-                throw e;
-            });
+        Promise.resolve().then(() => setConnected(true));
+        // Promise.resolve()
+        //     .then(() => client.status())
+        //     .then((s) => {
+        //         setMetaStatus(s);
+        //         return client._getWriters();
+        //     })
+        //     .then((w) => {
+        //         setWriters(w);
+        //     })
+        //     .then(() => client.size())
+        //     .then((s) => {
+        //         setMetaSize(s);
+        //         setConnected(true);
+        //     })
+        //     .catch((e) => {
+        //         alert("Error initializing database connection: " + e.message);
+        //         throw e;
+        //     });
     };
 
     return (

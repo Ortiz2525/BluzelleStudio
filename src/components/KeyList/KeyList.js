@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { save, remove, reload, refreshKeys } from "../../services/CRUDService";
 import useCommandQueueService from "../../services/CommandQueueService";
-import { getClient } from "../../services/BluzelleService";
+import useBluzelle from "../../services/BluzelleService";
 
 import KeyListItem from "./KeyListItem";
 import NewKeyField from "./NewKey/NewKeyField";
@@ -22,6 +22,7 @@ const KeyList = () => {
         removePreviousHistory,
         updateHistoryMessage,
     } = useCommandQueueService();
+    const { getClient } = useBluzelle();
 
     const {
         selectedKey,

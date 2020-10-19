@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
 import loadingBar from "./loadingBar";
-import { getClient } from "../services/BluzelleService";
+import useBluzelle from "../services/BluzelleService";
 
 import useData from "./DataContext/useData";
 
 const ExpiryBar = () => {
     const [expiry, setExpiry] = useState("");
+    const { getClient } = useBluzelle();
 
     const {
         selectedKey,

@@ -14,26 +14,25 @@ const DaemonSelector = (props) => {
     const [save, setSave] = useState(
         window.cookiesObj.save === "true" || false
     );
-    const [connecting, setConnecting] = useState(false);
-    const [mnemonic, setMnemonic] = useState(window.cookiesObj.mnemonic || "");
-    const [uuid, setUuid] = useState(window.cookiesObj.uuid || "");
-
-    const [address, setAddress] = useState(
-        window.cookiesObj.address || config[0].ethereum_rpc
-    );
-    const [chainid, setChainid] = useState(
-        window.cookiesObj.chainid || "bluzelle"
-    );
 
     const url = new URL(window.location.href);
 
-    if (url.searchParams.get("uuid")) {
-        setUuid(url.searchParams.get("uuid"));
-    }
+    const [connecting, setConnecting] = useState(false);
+    const [mnemonic, setMnemonic] = useState(window.cookiesObj.mnemonic || "");
+    const [uuid, setUuid] = useState(
+        url.searchParams.get("uuid") || window.cookiesObj.uuid || ""
+    );
 
-    if (url.searchParams.get("address")) {
-        setAddress(url.searchParams.get("address"));
-    }
+    const [endpoint, setEndpoint] = useState(
+        url.searchParams.get("endpoint") ||
+            window.cookiesObj.endpoint ||
+            config[0].endpoint
+    );
+    const [chainid, setChainid] = useState(
+        url.searchParams.get("chainid") ||
+            window.cookiesObj.chainid ||
+            config[0].chainid
+    );
 
     useEffect(() => {
         document.cookie = "save=" + save;
@@ -45,8 +44,8 @@ const DaemonSelector = (props) => {
 
         document.cookie = "uuid=" + uuid;
         document.cookie = "chainid=" + chainid;
-        document.cookie = "address=" + address;
-    }, [address, uuid, chainid, save, mnemonic]);
+        document.cookie = "endpoint=" + endpoint;
+    }, [endpoint, uuid, chainid, save, mnemonic]);
 
     const go = () => {
         if (!mnemonic) {
@@ -60,7 +59,7 @@ const DaemonSelector = (props) => {
 
         setConnecting(true);
 
-        props.go(address, uuid, chainid, mnemonic).catch((e) => {
+        props.go(endpoint, uuid, chainid, mnemonic).catch((e) => {
             console.error(e);
             setConnecting(false);
         });
@@ -128,10 +127,10 @@ const DaemonSelector = (props) => {
 
                             <hr />
                             <EthereumConfig
-                                address={address}
+                                endpoint={endpoint}
                                 chainid={chainid}
                                 uuid={uuid}
-                                setAddress={setAddress}
+                                setEndpoint={setEndpoint}
                                 setChainid={setChainid}
                                 setUuid={setUuid}
                             />

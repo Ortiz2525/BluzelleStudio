@@ -1,9 +1,10 @@
 import useData from "components/DataContext/useData";
 
-import { getClient } from "./BluzelleService";
+import useBluzelle from "./BluzelleService";
 
 export const save = () => {
     const { selectedKey, activeValue } = useData();
+    const { getClient } = useBluzelle();
 
     getClient()
         .update(selectedKey, activeValue)
@@ -12,6 +13,7 @@ export const save = () => {
 
 export const remove = () => {
     const { selectedKey, setSelectedKey, tempKeys, setTempKeys } = useData();
+    const { getClient } = useBluzelle();
 
     return new Promise((resolve) => {
         const sk = selectedKey;
@@ -37,6 +39,7 @@ export const remove = () => {
 
 export const create = (key, value) => {
     const { keys, setKeys, tempKeys, setTempKeys } = useData();
+    const { getClient } = useBluzelle();
 
     const newKeys = [...keys],
         newTempKeys = [...tempKeys];
@@ -69,6 +72,7 @@ export const create = (key, value) => {
 
 export const rename = async (oldKey, newKey) => {
     const { selectedKey, setSelectedKey, tempKeys, setTempKeys } = useData();
+    const { getClient } = useBluzelle();
 
     const newTempKeys = [...tempKeys];
     newTempKeys.push(oldKey);
@@ -118,7 +122,9 @@ export const reloadKey = () => {
     }
 };
 
-export const refreshKeys = () =>
+export const refreshKeys = () => {
+    const { getClient } = useBluzelle();
+
     new Promise((resolve) => {
         getClient()
             .keys()
@@ -133,3 +139,4 @@ export const refreshKeys = () =>
                 resolve();
             });
     });
+};
