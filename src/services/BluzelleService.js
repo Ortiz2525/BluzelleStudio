@@ -8,7 +8,6 @@ const useBluzelle = () => {
 
     const createClient = async (config) => {
         setConfig(config);
-        console.log(config);
 
         const bzClient = await bluzelle({
             ...config,

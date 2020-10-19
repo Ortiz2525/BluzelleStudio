@@ -114,10 +114,6 @@ module.exports = {
 
             Maybe: ["monet", "Maybe"],
             Either: ["monet", "Either"],
-
-            ReflexContainer: ["react-reflex", "ReflexContainer"],
-            ReflexSplitter: ["react-reflex", "ReflexSplitter"],
-            ReflexElement: ["react-reflex", "ReflexElement"],
         }),
         new BeepPlugin(),
         new webpack.NamedModulesPlugin(),

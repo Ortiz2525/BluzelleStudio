@@ -1,10 +1,11 @@
 import React from "react";
 
 import EditableField from "../../EditableField";
-import { create } from "../../../services/CRUDService";
+import useCRUDService from "../../../services/CRUDService";
 
 const NewKeyField = ({ onChange }) => {
     const [keyField, setKeyField] = useState("");
+    const { create } = useCRUDService();
 
     const onChangeKey = (key) => {
         setKeyField(key);

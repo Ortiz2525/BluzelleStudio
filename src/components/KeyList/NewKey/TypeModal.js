@@ -1,7 +1,8 @@
 import React from "react";
-import { create } from "../../../services/CRUDService";
+import useCRUDService from "../../../services/CRUDService";
 
 const TypeModal = ({ keyField }) => {
+    const { create } = useCRUDService();
     // This will choose text every time.
     // Removing this re-enables the popup dialog where you
     // can choose text/JSON/file.

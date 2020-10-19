@@ -1,5 +1,4 @@
 import React from "react";
-import { ReflexContainer, ReflexElement } from "react-reflex";
 
 import Editor from "./Editor";
 import KeyList from "./KeyList";
@@ -14,7 +13,7 @@ const Main = () => {
     const { config } = useData();
 
     return (
-        <ReflexContainer style={{ height: "100%" }}>
+        <div style={{ display: "flex", height: "100%" }}>
             <div>
                 <Header />
 
@@ -32,9 +31,9 @@ const Main = () => {
                 </BS.Table>
                 <hr style={{ marginTop: 0 }} />
             </div>
-            <ReflexElement flex={1}>
-                <ReflexContainer orientation='vertical'>
-                    <ReflexElement flex={0.5} style={{ padding: 10 }}>
+            <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ padding: 10, flex: 0.5 }}>
                         {/* Disabling these for now. Too many variables to have a reliable undo/redo.
 
                             <CommandControls/>
@@ -45,7 +44,7 @@ const Main = () => {
                             <KeyList />
                         </CollapsibleCard>
 
-                        <div style={{ height: 20 }}></div>
+                        {/* <div style={{ height: 20 }}></div>
 
                         <CollapsibleCard title='Permissioning'>
                             <Permissioning />
@@ -55,7 +54,7 @@ const Main = () => {
 
                         <CollapsibleCard collapsed={true} title='Metadata'>
                             <Metadata />
-                        </CollapsibleCard>
+                        </CollapsibleCard> */}
 
                         {/*<div style={{height: 20}}></div>
                             
@@ -64,14 +63,14 @@ const Main = () => {
                             </CollapsibleCard>*/}
 
                         <div style={{ height: 20 }}></div>
-                    </ReflexElement>
-                    <ReflexSplitter />
-                    <ReflexElement flex={0.5}>
+                    </div>
+
+                    <div style={{ flex: 0.5 }}>
                         <Editor />
-                    </ReflexElement>
-                </ReflexContainer>
-            </ReflexElement>
-        </ReflexContainer>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 

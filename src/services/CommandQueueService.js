@@ -28,16 +28,6 @@ const useCommandQueueService = () => {
         }
     };
 
-    if (commandQueue === undefined) {
-        const newCommandQueue = [
-            {
-                message: "Initial state",
-                revert: revert.bind(this, 0),
-            },
-        ];
-        setCommandQueue(newCommandQueue);
-    }
-
     const canUndo = () => {
         return currentPosition > 0;
     };
@@ -92,6 +82,7 @@ const useCommandQueueService = () => {
         (commandQueue[currentPosition].message = message);
 
     return {
+        revert,
         canUndo,
         undo,
         canRedo,

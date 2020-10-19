@@ -1,10 +1,11 @@
 import React from "react";
 
 import EditableField from "../../EditableField";
-import { rename } from "../../../services/CRUDService";
+import useCRUDService from "../../../services/CRUDService";
 
 const RenameKeyField = ({ keyname, onChange }) => {
     const [keyField, setKeyField] = useState("");
+    const { rename } = useCRUDService();
 
     const onChangeKey = (key) => {
         setKeyField(key);

@@ -1,9 +1,10 @@
 import useBluzelle from "../../services/BluzelleService";
 import Papa from "papaparse";
-import { create } from "../../services/CRUDService";
+import useCRUDService from "../../services/CRUDService";
 
 const importCSV = (setIsLoading, setKeys) => {
     const { getClient } = useBluzelle();
+    const { create } = useCRUDService();
 
     const createFields = async (fields) => {
         setIsLoading(true);

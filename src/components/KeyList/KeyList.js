@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import { save, remove, reload, refreshKeys } from "../../services/CRUDService";
+import useCRUDService from "../../services/CRUDService";
 import useCommandQueueService from "../../services/CommandQueueService";
 import useBluzelle from "../../services/BluzelleService";
 
@@ -21,8 +21,10 @@ const KeyList = () => {
         execute,
         removePreviousHistory,
         updateHistoryMessage,
+        revert,
     } = useCommandQueueService();
     const { getClient } = useBluzelle();
+    const { save, remove, reload, refreshKeys } = useCRUDService();
 
     const {
         selectedKey,
@@ -31,6 +33,8 @@ const KeyList = () => {
         keys,
         setKeys,
         activeValue,
+        commandQueue,
+        setCommandQueue,
     } = useData();
 
     useEffect(() => {
@@ -40,6 +44,18 @@ const KeyList = () => {
             setIsLoading(false);
         });
     }, []);
+
+    useEffect(() => {
+        if (commandQueue === undefined) {
+            const newCommandQueue = [
+                {
+                    message: "Initial state",
+                    revert,
+                },
+            ];
+            setCommandQueue(newCommandQueue);
+        }
+    }, [commandQueue]);
 
     const rename = () => {
         setRenameKey(selectedKey);
