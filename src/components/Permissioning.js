@@ -1,39 +1,39 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react"
 
-import useBluzelle from "../services/BluzelleService";
-import loadingBar from "./loadingBar";
-import useData from "./DataContext/useData";
+import useBluzelle from "../services/BluzelleService"
+import loadingBar from "./loadingBar"
+import useData from "./DataContext/useData"
 
 const Permissioning = () => {
-    const [modal, setModal] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const { getClient, hasClient } = useBluzelle();
+    const [modal, setModal] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const { getClient, hasClient } = useBluzelle()
 
-    const { mnemonic, isWriter, setIsWriter, writers, setWriters } = useData();
+    const { mnemonic, isWriter, setIsWriter, writers, setWriters } = useData()
 
     const refresh = () => {
-        setLoading(true);
+        setLoading(true)
 
         getClient()
             ._getWriters()
             .then(
                 (w) => {
-                    setLoading(false);
-                    setWriters(w);
+                    setLoading(false)
+                    setWriters(w)
                 },
                 (e) => {
-                    setLoading(false);
-                    alert("Failed to get writers.");
-                    throw e;
+                    setLoading(false)
+                    alert("Failed to get writers.")
+                    throw e
                 }
-            );
-    };
+            )
+    }
 
     const addWriter = () => {
         const pub = prompt(
             "Please enter the public key of the new writer.",
             "MFYwEAY..."
-        );
+        )
 
         if (pub.length) {
             getClient()
@@ -41,12 +41,12 @@ const Permissioning = () => {
                 .then(
                     () => refresh(),
                     (e) => {
-                        alert("Failed to add writer.");
-                        throw e;
+                        alert("Failed to add writer.")
+                        throw e
                     }
-                );
+                )
         }
-    };
+    }
 
     const deleteWriter = (writer) => {
         getClient()
@@ -54,27 +54,27 @@ const Permissioning = () => {
             .then(
                 () => refresh(),
                 (e) => {
-                    alert("Failed to delete writer.");
-                    throw e;
+                    alert("Failed to delete writer.")
+                    throw e
                 }
-            );
-    };
+            )
+    }
 
     const toggle = () => {
-        setModal(!modal);
-    };
+        setModal(!modal)
+    }
 
     useEffect(() => {
-        if (!hasClient()) return;
+        if (!hasClient()) return
 
-        if (mnemonic === writers.owner) {
-            setIsWriter("owner");
-        } else if (writers.writers.includes(mnemonic)) {
-            setIsWriter("writer");
-        } else {
-            setIsWriter("read-only");
-        }
-    }, [mnemonic]);
+        // if (mnemonic === writers.owner) {
+        //     setIsWriter("owner")
+        // } else if (writers.writers.includes(mnemonic)) {
+        //     setIsWriter("writer")
+        // } else {
+        //     setIsWriter("read-only")
+        // }
+    }, [mnemonic])
 
     const render_mnemonic = (_mnemonic) => (
         <td>
@@ -83,7 +83,7 @@ const Permissioning = () => {
             </code>
             {_mnemonic === mnemonic && <BS.Badge color='primary'>Me</BS.Badge>}
         </td>
-    );
+    )
 
     return (
         <Fragment>
@@ -172,7 +172,7 @@ const Permissioning = () => {
                 </BS.ModalBody>
             </BS.Modal>
         </Fragment>
-    );
-};
+    )
+}
 
-export default Permissioning;
+export default Permissioning

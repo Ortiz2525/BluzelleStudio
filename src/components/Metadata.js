@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
-import { version } from "bluzelle";
+import React, { Fragment } from "react"
+import { version } from "bluzelle"
 
-import useData from "./DataContext/useData";
+import useData from "./DataContext/useData"
 
 const Metadata = () => {
-    const { mnemonic, config, metaStatus, metaSize } = useData();
+    const { mnemonic, config, metaStatus, metaSize } = useData()
 
     return (
         <Fragment>
@@ -70,7 +70,7 @@ const Metadata = () => {
                 </tbody>
             </BS.Table>
         </Fragment>
-    );
-};
+    )
+}
 
-export default Metadata;
+export default Metadata

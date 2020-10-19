@@ -1,16 +1,16 @@
-import React from "react";
+import React from "react"
 
-import Editor from "./Editor";
-import KeyList from "./KeyList";
-import Metadata from "./Metadata";
-import Permissioning from "./Permissioning";
-import Header from "./Header/Header";
+import Editor from "./Editor"
+import KeyList from "./KeyList"
+import Metadata from "./Metadata"
+import Permissioning from "./Permissioning"
+import Header from "./Header/Header"
 
-import CollapsibleCard from "./CollapsibleCard";
-import useData from "./DataContext/useData";
+import CollapsibleCard from "./CollapsibleCard"
+import useData from "./DataContext/useData"
 
 const Main = () => {
-    const { config } = useData();
+    const { config } = useData()
 
     return (
         <div style={{ display: "flex", height: "100%" }}>
@@ -71,7 +71,7 @@ const Main = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Main;
+export default Main

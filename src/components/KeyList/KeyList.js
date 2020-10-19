@@ -1,32 +1,32 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react"
 
-import useCRUDService from "../../services/CRUDService";
-import useCommandQueueService from "../../services/CommandQueueService";
-import useBluzelle from "../../services/BluzelleService";
+import useCRUDService from "../../services/CRUDService"
+import useCommandQueueService from "../../services/CommandQueueService"
+import useBluzelle from "../../services/BluzelleService"
 
-import KeyListItem from "./KeyListItem";
-import NewKeyField from "./NewKey/NewKeyField";
-import RenameKeyField from "./NewKey/RenameKeyField";
-import useImportCSV from "./importCSV";
-import useExportCSV from "./exportCSV";
-import loadingBar from "../loadingBar";
+import KeyListItem from "./KeyListItem"
+import NewKeyField from "./NewKey/NewKeyField"
+import RenameKeyField from "./NewKey/RenameKeyField"
+import useImportCSV from "./importCSV"
+import useExportCSV from "./exportCSV"
+import loadingBar from "../loadingBar"
 
-import useData from "components/DataContext/useData";
+import useData from "components/DataContext/useData"
 
 const KeyList = () => {
-    const [showNewKey, setShowNewKey] = useState(false);
-    const [renameKey, setRenameKey] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [showNewKey, setShowNewKey] = useState(false)
+    const [renameKey, setRenameKey] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const {
         execute,
         removePreviousHistory,
         updateHistoryMessage,
         revert,
-    } = useCommandQueueService();
-    const { getClient } = useBluzelle();
-    const { save, remove, reload, refreshKeys } = useCRUDService();
-    const importCSV = useImportCSV();
-    const exportCSV = useExportCSV();
+    } = useCommandQueueService()
+    const { getClient } = useBluzelle()
+    const { save, remove, reload, refreshKeys } = useCRUDService()
+    const importCSV = useImportCSV()
+    const exportCSV = useExportCSV()
 
     const {
         selectedKey,
@@ -37,15 +37,15 @@ const KeyList = () => {
         activeValue,
         commandQueue,
         setCommandQueue,
-    } = useData();
+    } = useData()
 
     useEffect(() => {
-        setIsLoading(true);
+        setIsLoading(true)
 
         refreshKeys().then(() => {
-            setIsLoading(false);
-        });
-    }, []);
+            setIsLoading(false)
+        })
+    }, [])
 
     useEffect(() => {
         if (commandQueue === undefined) {
@@ -54,18 +54,18 @@ const KeyList = () => {
                     message: "Initial state",
                     revert,
                 },
-            ];
-            setCommandQueue(newCommandQueue);
+            ]
+            setCommandQueue(newCommandQueue)
         }
-    }, [commandQueue]);
+    }, [commandQueue])
 
     const rename = () => {
-        setRenameKey(selectedKey);
-    };
+        setRenameKey(selectedKey)
+    }
 
     const executeRemove = () => {
-        const sk = selectedKey;
-        const val = activeValue;
+        const sk = selectedKey
+        const val = activeValue
 
         execute({
             doIt: () => remove(),
@@ -76,13 +76,13 @@ const KeyList = () => {
                         .create(sk, val)
                         .then(() =>
                             reload().then(() => {
-                                setSelectedKey(sk);
-                                resolve();
+                                setSelectedKey(sk)
+                                resolve()
                             })
                         )
                         .catch(() =>
                             alert("Undo failed due to bluzelle network error.")
-                        );
+                        )
                 }),
 
             message: (
@@ -90,21 +90,21 @@ const KeyList = () => {
                     Removed key <code key={1}>{sk}</code>.
                 </span>
             ),
-        });
-    };
+        })
+    }
 
     const executeReload = () => {
-        reload();
+        reload()
 
-        removePreviousHistory();
-        updateHistoryMessage("Reload");
-    };
+        removePreviousHistory()
+        updateHistoryMessage("Reload")
+    }
 
     const AddButton = ({ onClick }) => (
         <BS.Button outline color='success' onClick={onClick}>
             <i className='fas fa-plus'></i>
         </BS.Button>
-    );
+    )
 
     const SaveReloadRemove = ({ keyname }) => (
         <Fragment>
@@ -118,7 +118,7 @@ const KeyList = () => {
                 </BS.Button>
             )}
         </Fragment>
-    );
+    )
 
     const keyList = keys
         .sort()
@@ -132,7 +132,7 @@ const KeyList = () => {
                     onChange={() => setRenameKey("")}
                 />
             )
-        );
+        )
 
     const actualKeysList = (
         <BS.ListGroup>
@@ -152,7 +152,7 @@ const KeyList = () => {
                 <NewKeyField onChange={() => setShowNewKey(false)} />
             )}
         </BS.ListGroup>
-    );
+    )
 
     return (
         <Fragment>
@@ -222,7 +222,7 @@ const KeyList = () => {
                 </BS.ButtonToolbar>
             </div>
         </Fragment>
-    );
-};
+    )
+}
 
-export default KeyList;
+export default KeyList
