@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import EditableField from "../../EditableField";
-import useCRUDService from "../../../services/CRUDService";
+import EditableField from "../../EditableField"
+import useCRUDService from "../../../services/CRUDService"
 
 const NewKeyField = ({ onChange }) => {
-    const [keyField, setKeyField] = useState("");
-    const { create } = useCRUDService();
+    const [keyField, setKeyField] = useState("")
+    const { create } = useCRUDService()
 
     const onChangeKey = (key) => {
-        setKeyField(key);
+        setKeyField(key)
 
         if (key !== "") {
-            exit();
+            exit()
 
-            create(key, "");
+            create(key, " ")
         }
-    };
+    }
 
     const exit = () => {
-        onChange();
-    };
+        onChange()
+    }
 
     return (
         <React.Fragment>
@@ -31,7 +31,7 @@ const NewKeyField = ({ onChange }) => {
                 />
             </BS.ListGroupItem>
         </React.Fragment>
-    );
-};
+    )
+}
 
-export default NewKeyField;
+export default NewKeyField

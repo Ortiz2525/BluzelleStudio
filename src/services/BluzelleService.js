@@ -1,13 +1,15 @@
-import { bluzelle } from "bluzelle";
-import useData from "components/DataContext/useData";
+import { bluzelle } from "bluzelle"
+import useData from "components/DataContext/useData"
 
-const url_params = window && new URLSearchParams(window.location.search);
+const url_params = window && new URLSearchParams(window.location.search)
 
 const useBluzelle = () => {
-    const { setConfig, client, setClient } = useData();
+    const { setConfig, client, setClient } = useData()
 
     const createClient = async (config) => {
-        setConfig(config);
+        setConfig(config)
+
+        console.log("config", config)
 
         const bzClient = await bluzelle({
             ...config,
@@ -16,33 +18,33 @@ const useBluzelle = () => {
                 // Print log to console
 
                 if (url_params.has("log")) {
-                    console.log(...args);
+                    console.log(...args)
                 }
             },
-        });
+        })
 
-        setClient(bzClient);
+        setClient(bzClient)
 
-        return bzClient;
-    };
+        return bzClient
+    }
 
     const hasClient = () => {
-        return !!client;
-    };
+        return !!client
+    }
 
     const getClient = () => {
         if (!client) {
-            throw new Error("trying to get a client that wasn't created");
+            throw new Error("trying to get a client that wasn't created")
         }
 
-        return client;
-    };
+        return client
+    }
 
     return {
         createClient,
         hasClient,
         getClient,
-    };
-};
+    }
+}
 
-export default useBluzelle;
+export default useBluzelle

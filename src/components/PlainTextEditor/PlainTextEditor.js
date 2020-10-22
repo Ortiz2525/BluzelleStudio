@@ -1,15 +1,15 @@
-import React from "react";
-import useData from "components/DataContext/useData";
+import React, { useState } from "react"
+import useData from "components/DataContext/useData"
 
 const PlainTextEditor = () => {
-    const { isWriter, activeValue, setActiveValue } = useData();
+    const { isWriter, activeValue, setActiveValue } = useData()
 
-    const [value, setValue] = useState(activeValue);
+    const [value, setValue] = useState(activeValue)
 
     const onSubmit = (e) => {
-        e && e.preventDefault();
+        e && e.preventDefault()
 
-        setActiveValue(value);
+        setActiveValue(value)
 
         // const {keyName, keyData} = this.props;
 
@@ -21,11 +21,11 @@ const PlainTextEditor = () => {
         //     undoIt: () => keyData.set('localChanges', oldVal),
         //     message: <span>Updated <code key={1}>{keyName}</code>.</span>
         // });
-    };
+    }
 
     const onChange = (e) => {
-        setValue(e.target.value);
-    };
+        setValue(e.target.value)
+    }
 
     return (
         <div style={{ flex: "auto" }}>
@@ -53,7 +53,7 @@ const PlainTextEditor = () => {
                 />
             </BS.Form>
         </div>
-    );
-};
+    )
+}
 
-export default PlainTextEditor;
+export default PlainTextEditor

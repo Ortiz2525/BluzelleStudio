@@ -24,7 +24,7 @@ const KeyList = () => {
         revert,
     } = useCommandQueueService()
     const { getClient } = useBluzelle()
-    const { save, remove, reload, refreshKeys } = useCRUDService()
+    const { save, remove } = useCRUDService()
     const importCSV = useImportCSV()
     const exportCSV = useExportCSV()
 
@@ -37,6 +37,8 @@ const KeyList = () => {
         activeValue,
         commandQueue,
         setCommandQueue,
+        reload,
+        refreshKeys,
     } = useData()
 
     useEffect(() => {
@@ -107,7 +109,7 @@ const KeyList = () => {
     )
 
     const SaveReloadRemove = ({ keyname }) => (
-        <Fragment>
+        <>
             <BS.Button outline color='info' onClick={executeReload}>
                 <i className='fas fa-sync'></i>
             </BS.Button>
@@ -117,7 +119,7 @@ const KeyList = () => {
                     <i className='fas fa-save'></i>
                 </BS.Button>
             )}
-        </Fragment>
+        </>
     )
 
     const keyList = keys
@@ -177,10 +179,7 @@ const KeyList = () => {
                         )}
 
                         {activeValue !== undefined && isWriter !== "read-only" && (
-                            <BS.Button
-                                outline
-                                color='warning'
-                                onClick={() => rename()}>
+                            <BS.Button outline color='warning' onClick={rename}>
                                 <i className='fas fa-i-cursor'></i>
                             </BS.Button>
                         )}

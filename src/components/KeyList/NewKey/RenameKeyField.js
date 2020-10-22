@@ -1,25 +1,27 @@
-import React from "react";
+import React, { useState } from "react"
 
-import EditableField from "../../EditableField";
-import useCRUDService from "../../../services/CRUDService";
+import EditableField from "../../EditableField"
+import useCRUDService from "../../../services/CRUDService"
+import useData from "components/DataContext/useData"
 
 const RenameKeyField = ({ keyname, onChange }) => {
-    const [keyField, setKeyField] = useState("");
-    const { rename } = useCRUDService();
+    const { selectedKey } = useData()
+    const [keyField, setKeyField] = useState(selectedKey)
+    const { rename } = useCRUDService()
 
     const onChangeKey = (key) => {
-        setKeyField(key);
+        setKeyField(key)
 
         if (key !== "") {
-            exit();
+            exit()
 
-            rename(keyname, key);
+            rename(keyname, key)
         }
-    };
+    }
 
     const exit = () => {
-        onChange();
-    };
+        onChange()
+    }
 
     return (
         <React.Fragment>
@@ -31,7 +33,7 @@ const RenameKeyField = ({ keyname, onChange }) => {
                 />
             </BS.ListGroupItem>
         </React.Fragment>
-    );
-};
+    )
+}
 
-export default RenameKeyField;
+export default RenameKeyField

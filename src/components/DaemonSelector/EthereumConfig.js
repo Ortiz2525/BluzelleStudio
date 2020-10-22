@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import config from "../../../ethereum_config";
+import useData from "components/DataContext/useData"
+import React, { useEffect, useState } from "react"
+import config from "../../../ethereum_config"
 
 const EthereumConfig = ({
     endpoint,
@@ -11,15 +12,17 @@ const EthereumConfig = ({
 }) => {
     const [toggle, setToggle] = useState(
         window.cookiesObj.toggle === "true" || false
-    );
+    )
     const [active, setActive] = useState(
         window.cookiesObj.active || config[0].name
-    );
+    )
+
+    const { setGasPrice } = useData()
 
     useEffect(() => {
-        document.cookie = "toggle=" + toggle;
-        document.cookie = "active=" + active;
-    }, [toggle, active]);
+        document.cookie = "toggle=" + toggle
+        document.cookie = "active=" + active
+    }, [toggle, active])
 
     return (
         <>
@@ -85,16 +88,23 @@ const EthereumConfig = ({
                     <div style={{ marginTop: 10, textAlign: "center" }}>
                         <BS.ButtonGroup style={{ width: "100%" }}>
                             {config.map(
-                                ({ name, color, endpoint, chainid }) => (
+                                ({
+                                    name,
+                                    color,
+                                    endpoint,
+                                    chainid,
+                                    gas_price,
+                                }) => (
                                     <BS.Button
                                         style={{ flex: 1 }}
                                         outline={true}
                                         color={color}
                                         key={name}
                                         onClick={() => {
-                                            setActive(name);
-                                            setEndpoint(endpoint);
-                                            setChainid(chainid);
+                                            setActive(name)
+                                            setEndpoint(endpoint)
+                                            setChainid(chainid)
+                                            setGasPrice(gas_price)
                                         }}>
                                         {name}
                                     </BS.Button>
@@ -105,7 +115,7 @@ const EthereumConfig = ({
                 </>
             )}
         </>
-    );
-};
+    )
+}
 
-export default EthereumConfig;
+export default EthereumConfig

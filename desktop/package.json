@@ -5,7 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "command-line-args": "^5.0.2",
-    "electron": "^3.0.7",
+    "electron": "^10.1.4",
     "electron-installer-debian": "^0.8.1",
     "electron-packager": "^12.1.0",
     "electron-react-devtools": "^0.5.3"

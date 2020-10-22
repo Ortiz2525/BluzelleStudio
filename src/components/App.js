@@ -89,7 +89,9 @@ const App = () => {
             }
         }
 
-        Promise.resolve().then(() => setConnected(true))
+        Promise.resolve()
+            // .then(() => client.owner)
+            .then(() => setConnected(true))
         // Promise.resolve()
         //     .then(() => client.status())
         //     .then((s) => {
