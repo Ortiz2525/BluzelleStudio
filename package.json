@@ -5,10 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "cd src; NODE_ENV=production webpack",
-    "prod-compile": "cd src; NODE_ENV=production webpack",
-    "dev-compile": "cd src; webpack --env.beep",
-    "dev-compile-watch": "cd src; webpack --watch --env.beep",
     "test-compile": "cd src; webpack --env.beep --config webpack-test.config.js",
     "test-compile-watch": "cd src; webpack --watch --env.beep --config webpack-test.config.js",
     "test-watch": "npx mocha -r jsdom-global/register dist/runTests.js --source-maps --watch",
