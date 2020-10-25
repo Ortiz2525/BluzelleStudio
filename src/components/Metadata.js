@@ -1,10 +1,18 @@
-import React, { Fragment } from "react"
-import { version } from "bluzelle"
+import React, { Fragment, useState, useEffect } from "react"
 
 import useData from "./DataContext/useData"
+import useBluzelle from "services/BluzelleService"
 
 const Metadata = () => {
     const { mnemonic, config, metaStatus, metaSize } = useData()
+    const [version, setVersion] = useState(0)
+    const { getClient } = useBluzelle()
+
+    useEffect(() => {
+        getClient()
+            .version()
+            .then((v) => setVersion(v))
+    }, [])
 
     return (
         <Fragment>

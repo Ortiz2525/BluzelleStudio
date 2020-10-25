@@ -1,14 +1,17 @@
 {
   "name": "bluzelle-crud",
+  "productName": "Bluzelle Studio",
   "version": "1.0.2",
   "description": "Bluzelle Database CRUD Application",
   "main": "main.js",
   "dependencies": {
     "command-line-args": "^5.0.2",
-    "electron": "^10.1.4",
     "electron-installer-debian": "^3.1.0",
     "electron-packager": "^15.1.0",
     "electron-react-devtools": "^0.5.3"
+  },
+  "devDependencies": {
+    "electron": "^10.1.4"
   },
   "scripts": {
     "emulator": "./emulator/Emulator.js",
@@ -17,7 +20,19 @@
     "package-mac": "electron-packager . --out=dist --platform=darwin --arch=x64 --icon=logo.icns --overwrite --package-manager=yarn --asar",
     "package-linux": "electron-packager . --out=dist --platform=linux --arch=x64 --overwrite --package-manager=yarn",
     "package-windows": "electron-packager . --out=dist --platform=win32 --arch=x64 --overwrite --package-manager=yarn",
-    "package-deb": "electron-installer-debian --src dist/bluzelle-crud-linux-x64/ --dest dist --arch amd64 --options.icon logo.png"
+    "package-deb": "electron-installer-debian --src dist/bluzelle-crud-linux-x64/ --dest dist --arch amd64 --options.icon logo.png",
+    "dist-mac": "electron-builder build"
+  },
+  "build": {
+    "asar": false,
+    "files": [
+      "dist",
+      "main.js",
+      "ApplicationMenu.js"
+    ],
+    "directories": {
+      "output": "release"
+    }
   },
   "license": "UNLICENSED",
   "private": true

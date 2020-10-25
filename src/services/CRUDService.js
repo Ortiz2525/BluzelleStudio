@@ -16,7 +16,6 @@ const useCRUDService = () => {
     } = useData()
     const { getClient } = useBluzelle()
 
-    console.log("@#!@#!@#", gasPrice)
     const gas_info = {
         gas_price: gasPrice,
         max_gas: 100000000,

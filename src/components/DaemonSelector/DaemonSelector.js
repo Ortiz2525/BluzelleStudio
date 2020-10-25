@@ -1,75 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 
-import CenterMiddle from "./CenterMiddle";
-import Header from "../Header/Header";
-import loadingBar from "../loadingBar";
-import EthereumConfig from "./EthereumConfig";
-import config from "../../../ethereum_config";
+import CenterMiddle from "./CenterMiddle"
+import Header from "../Header/Header"
+import loadingBar from "../loadingBar"
+import EthereumConfig from "./EthereumConfig"
+import config from "../../../ethereum_config"
 
-const url_params = window && new URLSearchParams(window.location.search);
+const url_params = window && new URLSearchParams(window.location.search)
 
 const DaemonSelector = (props) => {
-    const [showConfigLoader, setShowConfigLoader] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [save, setSave] = useState(
-        window.cookiesObj.save === "true" || false
-    );
+    const [showConfigLoader, setShowConfigLoader] = useState(false)
+    const [showMnemonic, setShowMnemonic] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [save, setSave] = useState(window.cookiesObj.save === "true" || false)
 
-    const url = new URL(window.location.href);
+    const url = new URL(window.location.href)
 
-    const [connecting, setConnecting] = useState(false);
-    const [mnemonic, setMnemonic] = useState(window.cookiesObj.mnemonic || "");
+    const [connecting, setConnecting] = useState(false)
+    const [mnemonic, setMnemonic] = useState(window.cookiesObj.mnemonic || "")
     const [uuid, setUuid] = useState(
         url.searchParams.get("uuid") || window.cookiesObj.uuid || ""
-    );
+    )
 
     const [endpoint, setEndpoint] = useState(
         url.searchParams.get("endpoint") ||
             window.cookiesObj.endpoint ||
             config[0].endpoint
-    );
+    )
     const [chainid, setChainid] = useState(
         url.searchParams.get("chainid") ||
             window.cookiesObj.chainid ||
             config[0].chainid
-    );
+    )
 
     useEffect(() => {
-        document.cookie = "save=" + save;
+        document.cookie = "save=" + save
         if (!save) {
-            document.cookie = "mnemonic=";
+            document.cookie = "mnemonic="
         } else {
-            document.cookie = "mnemonic=" + mnemonic;
+            document.cookie = "mnemonic=" + mnemonic
         }
 
-        document.cookie = "uuid=" + uuid;
-        document.cookie = "chainid=" + chainid;
-        document.cookie = "endpoint=" + endpoint;
-    }, [endpoint, uuid, chainid, save, mnemonic]);
+        document.cookie = "uuid=" + uuid
+        document.cookie = "chainid=" + chainid
+        document.cookie = "endpoint=" + endpoint
+    }, [endpoint, uuid, chainid, save, mnemonic])
 
     const go = () => {
         if (!mnemonic) {
-            alert("Please upload Bluzelle key.");
-            return;
+            alert("Please upload Bluzelle key.")
+            return
         }
 
-        const new_url_params = location.pathname + "?" + url_params.toString();
+        const new_url_params = location.pathname + "?" + url_params.toString()
 
-        window.history.pushState("", "", new_url_params);
+        window.history.pushState("", "", new_url_params)
 
-        setConnecting(true);
+        setConnecting(true)
 
         props.go(endpoint, uuid, chainid, mnemonic).catch((e) => {
-            console.error(e);
-            setConnecting(false);
-        });
-    };
+            console.error(e)
+            setConnecting(false)
+        })
+    }
 
     const checkEnterKey = (ev) => {
-        ev.keyCode === 13 && go();
-    };
+        ev.keyCode === 13 && go()
+    }
 
-    const toggleModal = () => setShowModal(!showModal);
+    const toggleModal = () => setShowModal(!showModal)
 
     return (
         <CenterMiddle>
@@ -85,20 +84,35 @@ const DaemonSelector = (props) => {
 
                         <BS.Form>
                             <BS.FormGroup row>
-                                <BS.Label sm={3} for='priv_file'>
+                                <BS.Label sm={3} for='mnemonic'>
                                     Mnemonic:
                                 </BS.Label>
                                 <BS.Col sm={9}>
                                     <BS.InputGroup>
                                         <BS.Input
-                                            type='text'
-                                            name='priv_file'
+                                            type={
+                                                showMnemonic
+                                                    ? "text"
+                                                    : "password"
+                                            }
+                                            name='mnemonic'
                                             value={mnemonic}
                                             onChange={(e) =>
                                                 setMnemonic(e.target.value)
                                             }
                                         />
                                         <BS.InputGroupAddon addonType='append'>
+                                            <BS.Button
+                                                outline={showMnemonic}
+                                                color='secondary'
+                                                type='button'
+                                                onClick={() =>
+                                                    setShowMnemonic(
+                                                        !showMnemonic
+                                                    )
+                                                }>
+                                                <i className='far fa-eye'></i>
+                                            </BS.Button>
                                             <BS.Button
                                                 outline={!save}
                                                 color='warning'
@@ -107,13 +121,13 @@ const DaemonSelector = (props) => {
                                                 onClick={() => setSave(!save)}>
                                                 <i className='fas fa-thumbtack'></i>
                                             </BS.Button>
-                                            <BS.Button
+                                            {/* <BS.Button
                                                 outline
                                                 color='secondary'
                                                 type='button'
                                                 onClick={toggleModal}>
                                                 <i className='far fa-question-circle'></i>
-                                            </BS.Button>
+                                            </BS.Button> */}
                                         </BS.InputGroupAddon>
 
                                         <BS.UncontrolledTooltip
@@ -215,7 +229,7 @@ const DaemonSelector = (props) => {
                 </BS.Card>
             </div>
         </CenterMiddle>
-    );
-};
+    )
+}
 
-export default DaemonSelector;
+export default DaemonSelector

@@ -46,7 +46,7 @@ function createWindow() {
 
     win.loadURL(
         url.format({
-            pathname: __dirname + "/index.html",
+            pathname: __dirname + "/dist/index.html",
             protocol: "file:",
             slashes: true,
         })

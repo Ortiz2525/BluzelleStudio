@@ -1,10 +1,10 @@
-const path = require("path");
-const webpack = require("webpack");
-const BeepPlugin = require("webpack-beep-plugin");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require("path")
+const webpack = require("webpack")
+const BeepPlugin = require("webpack-beep-plugin")
+const HtmlWebPackPlugin = require("html-webpack-plugin")
 
-const PROD = process.env.NODE_ENV === "production";
-PROD && console.log("----------- Compiling for production ----------");
+const PROD = process.env.NODE_ENV === "production"
+PROD && console.log("----------- Compiling for production ----------")
 
 module.exports = {
     entry: {
@@ -118,4 +118,4 @@ module.exports = {
         new BeepPlugin(),
         new webpack.NamedModulesPlugin(),
     ],
-};
+}

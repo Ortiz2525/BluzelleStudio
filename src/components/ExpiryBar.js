@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import loadingBar from "./loadingBar";
-import useBluzelle from "../services/BluzelleService";
+import loadingBar from "./loadingBar"
+import useBluzelle from "../services/BluzelleService"
 
-import useData from "./DataContext/useData";
+import useData from "./DataContext/useData"
 
 const ExpiryBar = () => {
-    const [expiry, setExpiry] = useState("");
-    const { getClient } = useBluzelle();
+    const [expiry, setExpiry] = useState("")
+    const { getClient } = useBluzelle()
 
     const {
         selectedKey,
@@ -15,63 +15,63 @@ const ExpiryBar = () => {
         loadingTTL,
         setLoadingTTL,
         reloadTTL,
-    } = useData();
+    } = useData()
 
     const expire = () => {
-        const v = sanitizeExpiry(expiry);
+        const v = sanitizeExpiry(expiry)
 
-        setExpiry("");
+        setExpiry("")
 
-        setLoadingTTL(true);
+        setLoadingTTL(true)
 
         getClient()
             .expire(selectedKey, v)
             .catch((e) => {
-                alert("Failure to set expiry. See console.");
+                alert("Failure to set expiry. See console.")
 
-                console.error(e);
+                console.error(e)
             })
-            .finally(reloadTTL);
-    };
+            .finally(reloadTTL)
+    }
 
     const persist = () => {
-        setLoadingTTL(true);
+        setLoadingTTL(true)
 
-        setExpiry("");
+        setExpiry("")
 
         getClient()
             .persist(selectedKey)
             .catch((e) => {
-                alert("Failure to persist key. See console.");
+                alert("Failure to persist key. See console.")
 
-                console.error(e);
+                console.error(e)
             })
-            .finally(reloadTTL);
-    };
+            .finally(reloadTTL)
+    }
 
-    const renderTTL = (ttl) => (ttl === 0 ? "0 (indefinite)" : ttl);
+    const renderTTL = (ttl) => (ttl === 0 ? "0 (indefinite)" : ttl)
 
     const sanitizeExpiry = (s) => {
         if (s === "") {
-            return false;
+            return false
         }
 
-        s = Number(s);
+        s = Number(s)
 
         if (s === NaN) {
-            return false;
+            return false
         }
 
         if (s <= 0) {
-            return false;
+            return false
         }
 
         if (!Number.isInteger(s)) {
-            return false;
+            return false
         }
 
-        return s;
-    };
+        return s
+    }
 
     return (
         <div
@@ -86,9 +86,10 @@ const ExpiryBar = () => {
                         </div>
                     )}
                     {!loadingTTL && (
-                        <BS.InputGroup>
+                        <BS.InputGroup
+                            style={{ display: "flex", alignItems: "center" }}>
                             <BS.InputGroupAddon addonType='prepend'>
-                                Expiry (s):{" "}
+                                Expiry (s) :
                             </BS.InputGroupAddon>
                             <BS.Input
                                 placeholder={renderTTL(activeTTL)}
@@ -119,7 +120,7 @@ const ExpiryBar = () => {
                 </BS.CardBody>
             </BS.Card>
         </div>
-    );
-};
+    )
+}
 
-export default ExpiryBar;
+export default ExpiryBar

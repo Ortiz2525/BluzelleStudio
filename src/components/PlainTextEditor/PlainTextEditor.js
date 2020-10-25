@@ -28,15 +28,14 @@ const PlainTextEditor = () => {
     }
 
     return (
-        <div style={{ flex: "auto" }}>
+        <div style={{ flex: "auto", marginLeft: 10, marginRight: 10 }}>
             <BS.Form style={{ height: "100%" }}>
                 <BS.Input
                     style={{
                         fontFamily: "monospace",
                         height: "100%",
+                        minHeight: "80px",
                         resize: "none",
-                        border: "none",
-                        borderRadius: 0,
                         borderLeft: "2px solid #007bff",
                     }}
                     spellCheck='false'
