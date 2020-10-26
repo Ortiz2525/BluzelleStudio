@@ -1,5 +1,6 @@
 import "@babel/polyfill"
 import React, { useState } from "react"
+import axios from "axios"
 
 import Main from "components/Main"
 import DaemonSelector from "./DaemonSelector"
@@ -23,7 +24,7 @@ expiryDate.setMonth(expiryDate.getMonth() + 1)
 document.cookie = "expires=" + expiryDate.toGMTString()
 
 const App = () => {
-    const { setMnemonic, setWriters, setMetaStatus, setMetaSize } = useData()
+    const { setMnemonic, setNodeInfo, setAccountInfo } = useData()
     const [connected, setConnected] = useState(false)
     const { createClient } = useBluzelle()
 
@@ -89,13 +90,41 @@ const App = () => {
             }
         }
 
+        const getNodeInfo = () => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get(endpoint + "/node_info")
+                    .then((response) => response.data)
+                    .then((data) => resolve(data))
+                    .catch((e) => reject(e))
+            })
+        }
+
         Promise.resolve()
-            // .then(() => client.owner)
-            .then(() => setConnected(true))
+            .then(() => client.account())
+            .then((info) => {
+                setAccountInfo(info)
+                return getNodeInfo()
+            })
+            .then((nodeInfo) => {
+                console.log("~~~~11", nodeInfo)
+                const node = {
+                    ...nodeInfo.node_info,
+                    ...nodeInfo.node_info.other,
+                    // ...nodeInfo.node_info.protocol_version,
+                }
+                setNodeInfo(node)
+
+                setConnected(true)
+            })
+            .catch((e) => {
+                setConnected(true)
+                // throw e;
+            })
         // Promise.resolve()
         //     .then(() => client.status())
         //     .then((s) => {
-        //         setMetaStatus(s);
+        //         setNodeInfo(s);
         //         return client._getWriters();
         //     })
         //     .then((w) => {
@@ -103,7 +132,7 @@ const App = () => {
         //     })
         //     .then(() => client.size())
         //     .then((s) => {
-        //         setMetaSize(s);
+        //         setAccountInfo(s);
         //         setConnected(true);
         //     })
         //     .catch((e) => {

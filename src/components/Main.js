@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import Editor from "./Editor"
 import KeyList from "./KeyList"
@@ -10,7 +10,17 @@ import CollapsibleCard from "./CollapsibleCard"
 import useData from "./DataContext/useData"
 
 const Main = () => {
-    const { config } = useData()
+    const { config, accountInfo } = useData()
+    const [balance, setBalance] = useState(0)
+
+    useEffect(() => {
+        if (accountInfo && accountInfo.coins && accountInfo.coins.length) {
+            const ubntBalance = accountInfo.coins.find(
+                (coin) => coin.denom === "ubnt"
+            )
+            if (ubntBalance) setBalance(ubntBalance.amount / 1000000)
+        }
+    }, [accountInfo])
 
     return (
         <div
@@ -27,10 +37,19 @@ const Main = () => {
                     <tbody style={{ display: "inline-table" }}>
                         <tr style={{ display: "inline-table" }}>
                             <th scope='row' style={{ border: 0 }}>
-                                uuid
+                                Uuid
                             </th>
                             <td style={{ border: 0 }}>
                                 <code>{config.uuid}</code>
+                            </td>
+                        </tr>
+
+                        <tr style={{ display: "inline-table" }}>
+                            <th scope='row' style={{ border: 0 }}>
+                                Balance
+                            </th>
+                            <td style={{ border: 0 }}>
+                                <code>{balance} BLZ</code>
                             </td>
                         </tr>
                     </tbody>
@@ -44,45 +63,51 @@ const Main = () => {
                     alignItems: "flex-start",
                     justifyContent: "flex-start",
                     flex: 1,
+                    overflowY: "auto",
                 }}>
                 <div style={{ flex: 0.3 }}>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{ padding: 10, flex: 0.5 }}>
-                            {/* Disabling these for now. Too many variables to have a reliable undo/redo.
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            padding: 10,
+                        }}>
+                        {/* Disabling these for now. Too many variables to have a reliable undo/redo.
 
-                                <CommandControls/>
+                            <CommandControls/>
 
-                                <hr style={{border: 'none'}}/>*/}
+                            <hr style={{border: 'none'}}/>*/}
 
-                            <CollapsibleCard title='Database Fields'>
-                                <KeyList />
-                            </CollapsibleCard>
+                        <CollapsibleCard title='Database Fields'>
+                            <KeyList />
+                        </CollapsibleCard>
+                    </div>
+                </div>
 
-                            {/* <div style={{ height: 20 }}></div>
+                <div style={{ flex: 0.4, padding: 10 }}>
+                    <Editor />
+                </div>
+
+                <div style={{ flex: 0.3, padding: 10 }}>
+                    {/* <div style={{ height: 20 }}></div>
 
                             <CollapsibleCard title='Permissioning'>
                                 <Permissioning />
                             </CollapsibleCard> */}
 
-                            <div style={{ height: 20 }}></div>
+                    {/* <div style={{ height: 20 }}></div> */}
 
-                            <CollapsibleCard collapsed={true} title='Metadata'>
-                                <Metadata />
-                            </CollapsibleCard>
+                    <CollapsibleCard collapsed={true} title='Metadata'>
+                        <Metadata />
+                    </CollapsibleCard>
 
-                            {/*<div style={{height: 20}}></div>
-                                
-                                <CollapsibleCard collapsed={true} title="Log">
-                                    <Log/>
-                                </CollapsibleCard>*/}
+                    {/*<div style={{height: 20}}></div>
+    
+                    <CollapsibleCard collapsed={true} title="Log">
+                        <Log/>
+                    </CollapsibleCard>*/}
 
-                            <div style={{ height: 20 }}></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style={{ flex: 0.7 }}>
-                    <Editor />
+                    {/* <div style={{ height: 20 }}></div> */}
                 </div>
             </div>
         </div>

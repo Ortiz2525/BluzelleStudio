@@ -179,12 +179,12 @@ const useData = () => {
         setState((state) => ({ ...state, log }))
     }
 
-    const setMetaStatus = (metaStatus) => {
-        setState((state) => ({ ...state, metaStatus }))
+    const setNodeInfo = (nodeInfo) => {
+        setState((state) => ({ ...state, nodeInfo }))
     }
 
-    const setMetaSize = (metaSize) => {
-        setState((state) => ({ ...state, metaSize }))
+    const setAccountInfo = (accountInfo) => {
+        setState((state) => ({ ...state, accountInfo }))
     }
 
     const setCommandQueue = (commandQueue) => {
@@ -219,8 +219,8 @@ const useData = () => {
         setKeys,
         setTempKeys,
         setLog,
-        setMetaStatus,
-        setMetaSize,
+        setNodeInfo,
+        setAccountInfo,
         setCommandQueue,
         setCurrentPosition,
         setGasPrice,
@@ -244,8 +244,8 @@ const useData = () => {
         keys: state.keys,
         tempKeys: state.tempKeys,
         log: state.log,
-        metaStatus: state.metaStatus,
-        metaSize: state.metaSize,
+        nodeInfo: state.nodeInfo,
+        accountInfo: state.accountInfo,
         commandQueue: state.commandQueue,
         currentPosition: state.currentPosition,
         gasPrice: state.gas_price,
