@@ -199,6 +199,10 @@ const useData = () => {
         setState((state) => ({ ...state, gas_price }))
     }
 
+    const setMaxGas = (max_gas) => {
+        setState((state) => ({ ...state, max_gas }))
+    }
+
     const setValue = (key, value) => {
         setState((state) => ({ ...state, [key]: value }))
     }
@@ -224,6 +228,7 @@ const useData = () => {
         setCommandQueue,
         setCurrentPosition,
         setGasPrice,
+        setMaxGas,
         setValue,
 
         refreshKeys,
@@ -249,6 +254,7 @@ const useData = () => {
         commandQueue: state.commandQueue,
         currentPosition: state.currentPosition,
         gasPrice: state.gas_price,
+        maxGas: state.max_gas,
     }
 }
 

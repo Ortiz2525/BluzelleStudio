@@ -97,7 +97,7 @@ const Main = () => {
 
                     {/* <div style={{ height: 20 }}></div> */}
 
-                    <CollapsibleCard collapsed={true} title='Metadata'>
+                    <CollapsibleCard title='Metadata'>
                         <Metadata />
                     </CollapsibleCard>
 

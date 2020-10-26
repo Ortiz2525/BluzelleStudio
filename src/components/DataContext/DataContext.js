@@ -24,6 +24,7 @@ const DataProvider = (props) => {
         commandQueue: undefined,
         currentPosition: 0,
         gas_price: 0.002,
+        max_gas: 1000000,
     })
 
     return (

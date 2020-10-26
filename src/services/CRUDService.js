@@ -13,12 +13,13 @@ const useCRUDService = () => {
         setTempKeys,
         reload,
         gasPrice,
+        maxGas,
     } = useData()
     const { getClient } = useBluzelle()
 
     const gas_info = {
         gas_price: gasPrice,
-        max_gas: 100000000,
+        max_gas: maxGas,
     }
 
     const save = () => {

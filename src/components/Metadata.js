@@ -11,10 +11,13 @@ const Metadata = () => {
         accountInfo,
         gasPrice,
         setGasPrice,
+        maxGas,
+        setMaxGas,
     } = useData()
     const [version, setVersion] = useState(0)
     const [showMnemonic, setShowMnemonic] = useState(false)
     const [gasP, setGasP] = useState(0)
+    const [maxG, setMaxG] = useState(0)
     const { getClient } = useBluzelle()
 
     useEffect(() => {
@@ -24,8 +27,11 @@ const Metadata = () => {
     }, [])
 
     useEffect(() => {
-        setGasP(gasPrice)
-    }, [gasPrice])
+        if (gasPrice && maxGas) {
+            setGasP(gasPrice)
+            setMaxG(maxGas)
+        }
+    }, [gasPrice, maxGas])
 
     const formatKey = (key) => {
         key = key.split("_").join(" ").split("-").join(" ")
@@ -72,25 +78,62 @@ const Metadata = () => {
                         <th scope='row' style={{ verticalAlign: "middle" }}>
                             Gas Price
                         </th>
-                        <td
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                            }}>
-                            <BS.Input
-                                type='number'
-                                name='gas_price'
-                                value={gasP}
-                                onChange={(e) => setGasP(e.target.value)}
-                                placeholder='Gas Price'
-                            />
-                            <BS.Button
-                                color='primary'
-                                type='button'
-                                onClick={() => setGasPrice(parseFloat(gasP))}>
-                                <i className='fa fa-check'></i>
-                            </BS.Button>
+                        <td>
+                            <BS.InputGroup
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}>
+                                <BS.Input
+                                    type='number'
+                                    name='gas_price'
+                                    value={gasP}
+                                    onChange={(e) => setGasP(e.target.value)}
+                                    placeholder='Gas Price'
+                                />
+                                <BS.InputGroupAddon addonType='append'>
+                                    <BS.Button
+                                        color='primary'
+                                        type='button'
+                                        disabled={gasPrice == gasP}
+                                        onClick={() =>
+                                            setGasPrice(parseFloat(gasP))
+                                        }>
+                                        <i className='fa fa-check'></i>
+                                    </BS.Button>
+                                </BS.InputGroupAddon>
+                            </BS.InputGroup>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope='row' style={{ verticalAlign: "middle" }}>
+                            Max Gas
+                        </th>
+                        <td>
+                            <BS.InputGroup
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}>
+                                <BS.Input
+                                    type='number'
+                                    name='max_gas'
+                                    value={maxG}
+                                    onChange={(e) => setMaxG(e.target.value)}
+                                    placeholder='Max Gas'
+                                />
+                                <BS.InputGroupAddon addonType='append'>
+                                    <BS.Button
+                                        color='primary'
+                                        type='button'
+                                        disabled={maxGas == maxG}
+                                        onClick={() =>
+                                            setMaxGas(parseFloat(maxG))
+                                        }>
+                                        <i className='fa fa-check'></i>
+                                    </BS.Button>
+                                </BS.InputGroupAddon>
+                            </BS.InputGroup>
                         </td>
                     </tr>
 

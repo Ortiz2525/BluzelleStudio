@@ -105,51 +105,15 @@ const KeyList = () => {
     }
 
     const executeReload = () => {
-        reload()
+        setIsLoading(true)
 
-        removePreviousHistory()
-        updateHistoryMessage("Reload")
+        reload().then(() => {
+            setIsLoading(false)
+
+            removePreviousHistory()
+            updateHistoryMessage("Reload")
+        })
     }
-
-    const AddButton = ({ onClick }) => (
-        <>
-            <BS.Button outline color='success' onClick={onClick} id='addButton'>
-                <i className='fas fa-plus'></i>
-            </BS.Button>
-
-            <BS.UncontrolledTooltip placement='top' target='addButton'>
-                Add Key
-            </BS.UncontrolledTooltip>
-        </>
-    )
-
-    const SaveReloadRemove = ({ keyname }) => (
-        <>
-            <BS.Button
-                outline
-                color='info'
-                onClick={executeReload}
-                id='refreshButton'>
-                <i className='fas fa-sync'></i>
-            </BS.Button>
-
-            <BS.UncontrolledTooltip placement='top' target='refreshButton'>
-                Reload Keys
-            </BS.UncontrolledTooltip>
-
-            {activeValue !== undefined && isWriter !== "read-only" && (
-                <>
-                    <BS.Button color='success' onClick={save} id='saveButton'>
-                        <i className='fas fa-save'></i>
-                    </BS.Button>
-
-                    <BS.UncontrolledTooltip placement='top' target='saveButton'>
-                        Save Value
-                    </BS.UncontrolledTooltip>
-                </>
-            )}
-        </>
-    )
 
     const keyList = keys.sort().map((keyname) => {
         if (filter !== "" && !keyname.includes(filter)) return null
@@ -207,11 +171,21 @@ const KeyList = () => {
                 <BS.ButtonToolbar
                     style={{ display: "flex", flexDirection: "column" }}>
                     <BS.ButtonGroup>
-                        {isWriter !== "read-only" && (
-                            <AddButton onClick={() => setShowNewKey(true)} />
-                        )}
+                        <BS.Button
+                            outline
+                            color='success'
+                            onClick={() => setShowNewKey(true)}
+                            id='addButton'>
+                            <i className='fas fa-plus'></i>
+                        </BS.Button>
 
-                        {activeValue !== undefined && isWriter !== "read-only" && (
+                        <BS.UncontrolledTooltip
+                            placement='top'
+                            target='addButton'>
+                            Add Key
+                        </BS.UncontrolledTooltip>
+
+                        {activeValue !== undefined && (
                             <>
                                 <BS.Button
                                     outline
@@ -229,7 +203,7 @@ const KeyList = () => {
                             </>
                         )}
 
-                        {activeValue !== undefined && isWriter !== "read-only" && (
+                        {activeValue !== undefined && (
                             <>
                                 <BS.Button
                                     outline
@@ -247,7 +221,36 @@ const KeyList = () => {
                             </>
                         )}
 
-                        <SaveReloadRemove />
+                        <BS.Button
+                            outline
+                            color='info'
+                            onClick={executeReload}
+                            id='refreshButton'>
+                            <i className='fas fa-sync'></i>
+                        </BS.Button>
+
+                        <BS.UncontrolledTooltip
+                            placement='top'
+                            target='refreshButton'>
+                            Reload Keys
+                        </BS.UncontrolledTooltip>
+
+                        {activeValue !== undefined && (
+                            <>
+                                <BS.Button
+                                    color='success'
+                                    onClick={save}
+                                    id='saveButton'>
+                                    <i className='fas fa-save'></i>
+                                </BS.Button>
+
+                                <BS.UncontrolledTooltip
+                                    placement='top'
+                                    target='saveButton'>
+                                    Save Value
+                                </BS.UncontrolledTooltip>
+                            </>
+                        )}
                     </BS.ButtonGroup>
 
                     <BS.ButtonGroup style={{ paddingTop: 10 }}>

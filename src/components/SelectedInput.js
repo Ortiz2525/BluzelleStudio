@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 
 const SelectedInput = (props) => {
-    const [inputRef, setInputRef] = useState();
+    const [inputRef, setInputRef] = useState()
 
     useEffect(() => {
         if (inputRef) {
-            inputRef.focus();
+            inputRef.focus()
         }
-    }, [inputRef]);
+    }, [inputRef])
 
     return (
         <BS.Input
@@ -15,8 +15,9 @@ const SelectedInput = (props) => {
             {...props}
             innerRef={(ref) => setInputRef(ref)}
             style={{ width: "100%" }}
+            onBlur={() => props.onBlur()}
         />
-    );
-};
+    )
+}
 
-export default SelectedInput;
+export default SelectedInput

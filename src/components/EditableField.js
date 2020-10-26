@@ -1,46 +1,48 @@
-import React, { useEffect, useState } from "react";
-import SelectedInput from "./SelectedInput";
+import React, { useEffect, useState } from "react"
+import SelectedInput from "./SelectedInput"
 
 const EditableField = (props) => {
-    const [formValue, setFormValue] = useState(props.val);
-    const [formActive, setFormActive] = useState(false);
-    const [hovering, setHovering] = useState(false);
+    const [formValue, setFormValue] = useState(props.val)
+    const [formActive, setFormActive] = useState(false)
+    const [hovering, setHovering] = useState(false)
 
     useEffect(() => {
-        props.active && setFormActive(true);
-    }, [props.active]);
+        props.active && setFormActive(true)
+    }, [props.active])
 
     const handleChange = (event) => {
-        setFormValue(event.target.value);
-    };
+        setFormValue(event.target.value)
+    }
 
     const handleSubmit = (event) => {
-        const { onChange } = props;
-        event.preventDefault();
+        if (formValue && formValue != "") {
+            const { onChange } = props
+            // event.preventDefault();
 
-        setFormActive(false);
+            setFormActive(false)
 
-        onChange(formValue);
-    };
+            onChange(formValue)
+        }
+    }
 
     const validationState = () => {
         try {
-            JSON.parse(formValue);
-            return "success";
+            JSON.parse(formValue)
+            return "success"
         } catch (e) {
-            return "error";
+            return "error"
         }
-    };
+    }
 
-    const { val, renderVal, validateJSON } = props;
-    const renderValWithDefault = renderVal || ((i) => i);
+    const { val, renderVal, validateJSON } = props
+    const renderValWithDefault = renderVal || ((i) => i)
 
     return (
         <span
             onClick={(e) => {
-                e.stopPropagation();
-                setFormActive(true);
-                setHovering(false);
+                e.stopPropagation()
+                setFormActive(true)
+                setHovering(false)
             }}>
             {formActive ? (
                 <BS.Form
@@ -66,7 +68,7 @@ const EditableField = (props) => {
                 </span>
             )}
         </span>
-    );
-};
+    )
+}
 
-export default EditableField;
+export default EditableField

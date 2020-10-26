@@ -10,6 +10,7 @@ const NewKeyField = ({ onChange }) => {
     const onChangeKey = (key) => {
         setKeyField(key)
 
+        console.log("~~~~", key)
         if (key !== "") {
             exit()
 

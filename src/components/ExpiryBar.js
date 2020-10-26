@@ -15,7 +15,14 @@ const ExpiryBar = () => {
         loadingTTL,
         setLoadingTTL,
         reloadTTL,
+        gasPrice,
+        maxGas,
     } = useData()
+
+    const gas_info = {
+        gas_price: gasPrice,
+        max_gas: maxGas,
+    }
 
     const expire = () => {
         const v = sanitizeExpiry(expiry)
@@ -25,7 +32,7 @@ const ExpiryBar = () => {
         setLoadingTTL(true)
 
         getClient()
-            .expire(selectedKey, v)
+            .renewLease(selectedKey, gas_info, { seconds: v })
             .catch((e) => {
                 alert("Failure to set expiry. See console.")
 
@@ -106,14 +113,14 @@ const ExpiryBar = () => {
                                     onClick={expire}>
                                     <i className='fas fa-stopwatch'></i>
                                 </BS.Button>
-                                <BS.Button
+                                {/* <BS.Button
                                     outline
                                     color='danger'
                                     type='button'
                                     disabled={activeTTL === 0}
                                     onClick={persist}>
                                     <i className='fas fa-ban'></i>
-                                </BS.Button>
+                                </BS.Button> */}
                             </BS.InputGroupAddon>
                         </BS.InputGroup>
                     )}
