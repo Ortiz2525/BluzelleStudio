@@ -118,9 +118,33 @@ const useCRUDService = () => {
         await reload()
     }
 
+    const removeAll = async () => {
+        return new Promise((resolve) => {
+            const sk = selectedKey
+            setSelectedKey(undefined)
+
+            const newTempKeys = [...tempKeys]
+            newTempKeys.push(sk)
+            setTempKeys(newTempKeys)
+
+            return getClient()
+                .deleteAll(gas_info)
+                .then(() => {
+                    reload().then(resolve)
+                })
+                .catch(() => {
+                    newTempKeys.splice(newTempKeys.indexOf(sk), 1)
+                    setTempKeys(newTempKeys)
+                    setSelectedKey(sk)
+                    alert("Failed to remove due to bluzelle network error.")
+                })
+        })
+    }
+
     return {
         save,
         remove,
+        removeAll,
         create,
         rename,
     }

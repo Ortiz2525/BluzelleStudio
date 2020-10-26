@@ -107,7 +107,6 @@ const App = () => {
                 return getNodeInfo()
             })
             .then((nodeInfo) => {
-                console.log("~~~~11", nodeInfo)
                 const node = {
                     ...nodeInfo.node_info,
                     ...nodeInfo.node_info.other,

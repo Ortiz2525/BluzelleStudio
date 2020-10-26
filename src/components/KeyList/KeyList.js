@@ -17,6 +17,7 @@ const KeyList = () => {
     const [showNewKey, setShowNewKey] = useState(false)
     const [renameKey, setRenameKey] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const [filter, setFilter] = useState("")
     const {
         execute,
         removePreviousHistory,
@@ -24,7 +25,7 @@ const KeyList = () => {
         revert,
     } = useCommandQueueService()
     const { getClient } = useBluzelle()
-    const { save, remove } = useCRUDService()
+    const { save, remove, removeAll } = useCRUDService()
     const importCSV = useImportCSV()
     const exportCSV = useExportCSV()
 
@@ -95,6 +96,14 @@ const KeyList = () => {
         })
     }
 
+    const doRemoveAll = () => {
+        setIsLoading(true)
+
+        removeAll().then(() => {
+            setIsLoading(false)
+        })
+    }
+
     const executeReload = () => {
         reload()
 
@@ -103,41 +112,73 @@ const KeyList = () => {
     }
 
     const AddButton = ({ onClick }) => (
-        <BS.Button outline color='success' onClick={onClick}>
-            <i className='fas fa-plus'></i>
-        </BS.Button>
+        <>
+            <BS.Button outline color='success' onClick={onClick} id='addButton'>
+                <i className='fas fa-plus'></i>
+            </BS.Button>
+
+            <BS.UncontrolledTooltip placement='top' target='addButton'>
+                Add Key
+            </BS.UncontrolledTooltip>
+        </>
     )
 
     const SaveReloadRemove = ({ keyname }) => (
         <>
-            <BS.Button outline color='info' onClick={executeReload}>
+            <BS.Button
+                outline
+                color='info'
+                onClick={executeReload}
+                id='refreshButton'>
                 <i className='fas fa-sync'></i>
             </BS.Button>
 
+            <BS.UncontrolledTooltip placement='top' target='refreshButton'>
+                Reload Keys
+            </BS.UncontrolledTooltip>
+
             {activeValue !== undefined && isWriter !== "read-only" && (
-                <BS.Button color='success' onClick={save}>
-                    <i className='fas fa-save'></i>
-                </BS.Button>
+                <>
+                    <BS.Button color='success' onClick={save} id='saveButton'>
+                        <i className='fas fa-save'></i>
+                    </BS.Button>
+
+                    <BS.UncontrolledTooltip placement='top' target='saveButton'>
+                        Save Value
+                    </BS.UncontrolledTooltip>
+                </>
             )}
         </>
     )
 
-    const keyList = keys
-        .sort()
-        .map((keyname) =>
-            keyname !== renameKey ? (
-                <KeyListItem key={keyname} keyname={keyname} />
-            ) : (
-                <RenameKeyField
-                    key={keyname}
-                    keyname={keyname}
-                    onChange={() => setRenameKey("")}
-                />
-            )
+    const keyList = keys.sort().map((keyname) => {
+        if (filter !== "" && !keyname.includes(filter)) return null
+
+        return keyname !== renameKey ? (
+            <KeyListItem key={keyname} keyname={keyname} />
+        ) : (
+            <RenameKeyField
+                key={keyname}
+                keyname={keyname}
+                onChange={() => setRenameKey("")}
+            />
         )
+    })
 
     const actualKeysList = (
         <BS.ListGroup>
+            <BS.InputGroup>
+                <BS.Input
+                    type='text'
+                    name='key_prefix'
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    placeholder='Start typing to filter keys...'
+                />
+            </BS.InputGroup>
+
+            <br />
+
             {keyList}
 
             {keyList.length === 0 && !showNewKey && (
@@ -163,31 +204,53 @@ const KeyList = () => {
             </div>
             <hr />
             <div style={{ padding: 10 }}>
-                <BS.ButtonToolbar>
+                <BS.ButtonToolbar
+                    style={{ display: "flex", flexDirection: "column" }}>
                     <BS.ButtonGroup>
                         {isWriter !== "read-only" && (
                             <AddButton onClick={() => setShowNewKey(true)} />
                         )}
 
                         {activeValue !== undefined && isWriter !== "read-only" && (
-                            <BS.Button
-                                outline
-                                color='danger'
-                                onClick={executeRemove}>
-                                <i className='fas fa-times'></i>
-                            </BS.Button>
+                            <>
+                                <BS.Button
+                                    outline
+                                    color='danger'
+                                    id='removeButton'
+                                    onClick={executeRemove}>
+                                    <i className='fas fa-times'></i>
+                                </BS.Button>
+
+                                <BS.UncontrolledTooltip
+                                    placement='top'
+                                    target='removeButton'>
+                                    Remove Key
+                                </BS.UncontrolledTooltip>
+                            </>
                         )}
 
                         {activeValue !== undefined && isWriter !== "read-only" && (
-                            <BS.Button outline color='warning' onClick={rename}>
-                                <i className='fas fa-i-cursor'></i>
-                            </BS.Button>
+                            <>
+                                <BS.Button
+                                    outline
+                                    color='warning'
+                                    onClick={rename}
+                                    id='renameButton'>
+                                    <i className='fas fa-i-cursor'></i>
+                                </BS.Button>
+
+                                <BS.UncontrolledTooltip
+                                    placement='top'
+                                    target='renameButton'>
+                                    Rename Key
+                                </BS.UncontrolledTooltip>
+                            </>
                         )}
 
                         <SaveReloadRemove />
                     </BS.ButtonGroup>
 
-                    <BS.ButtonGroup style={{ paddingLeft: 10 }}>
+                    <BS.ButtonGroup style={{ paddingTop: 10 }}>
                         <BS.Button
                             outline
                             id='importButton'
@@ -216,6 +279,20 @@ const KeyList = () => {
                             placement='top'
                             target='exportButton'>
                             Export CSV file
+                        </BS.UncontrolledTooltip>
+
+                        <BS.Button
+                            outline
+                            id='clearButton'
+                            color='danger'
+                            onClick={doRemoveAll}>
+                            <i className='fas fa-ban'></i>
+                        </BS.Button>
+
+                        <BS.UncontrolledTooltip
+                            placement='top'
+                            target='clearButton'>
+                            Clear List
                         </BS.UncontrolledTooltip>
                     </BS.ButtonGroup>
                 </BS.ButtonToolbar>

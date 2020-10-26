@@ -4,9 +4,17 @@ import useData from "./DataContext/useData"
 import useBluzelle from "services/BluzelleService"
 
 const Metadata = () => {
-    const { mnemonic, config, nodeInfo, accountInfo } = useData()
+    const {
+        mnemonic,
+        config,
+        nodeInfo,
+        accountInfo,
+        gasPrice,
+        setGasPrice,
+    } = useData()
     const [version, setVersion] = useState(0)
     const [showMnemonic, setShowMnemonic] = useState(false)
+    const [gasP, setGasP] = useState(0)
     const { getClient } = useBluzelle()
 
     useEffect(() => {
@@ -14,6 +22,10 @@ const Metadata = () => {
             .version()
             .then((v) => setVersion(v))
     }, [])
+
+    useEffect(() => {
+        setGasP(gasPrice)
+    }, [gasPrice])
 
     const formatKey = (key) => {
         key = key.split("_").join(" ").split("-").join(" ")
@@ -30,7 +42,9 @@ const Metadata = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope='row'>Mnemonic</th>
+                        <th scope='row' style={{ verticalAlign: "middle" }}>
+                            Mnemonic
+                        </th>
                         <td>
                             {showMnemonic && <code>{mnemonic}</code>}
                             <BS.Button
@@ -52,6 +66,31 @@ const Metadata = () => {
                         <th scope='row'>Uuid</th>
                         <td>
                             <code>{config.uuid}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope='row' style={{ verticalAlign: "middle" }}>
+                            Gas Price
+                        </th>
+                        <td
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                            }}>
+                            <BS.Input
+                                type='number'
+                                name='gas_price'
+                                value={gasP}
+                                onChange={(e) => setGasP(e.target.value)}
+                                placeholder='Gas Price'
+                            />
+                            <BS.Button
+                                color='primary'
+                                type='button'
+                                onClick={() => setGasPrice(parseFloat(gasP))}>
+                                <i className='fa fa-check'></i>
+                            </BS.Button>
                         </td>
                     </tr>
 

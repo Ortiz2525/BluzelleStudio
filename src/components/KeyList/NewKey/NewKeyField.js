@@ -13,7 +13,7 @@ const NewKeyField = ({ onChange }) => {
         if (key !== "") {
             exit()
 
-            create(key, " ")
+            create(key, "")
         }
     }
 
