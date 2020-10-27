@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
 const CollapsibleCard = (props) => {
-    const [collapsed, setCollapsed] = useState(props.collapsed || false);
+    const [collapsed, setCollapsed] = useState(props.collapsed || false)
 
     const toggle = () => {
-        setCollapsed(!collapsed);
-    };
+        setCollapsed(!collapsed)
+    }
 
     return (
-        <BS.Card>
+        <BS.Card style={props.style}>
             <BS.CardBody>
                 <BS.CardTitle style={{ marginBottom: 0 }}>
                     <span
@@ -29,7 +29,7 @@ const CollapsibleCard = (props) => {
                 </BS.Collapse>
             </BS.CardBody>
         </BS.Card>
-    );
-};
+    )
+}
 
-export default CollapsibleCard;
+export default CollapsibleCard

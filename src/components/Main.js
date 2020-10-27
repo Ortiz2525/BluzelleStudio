@@ -63,7 +63,6 @@ const Main = () => {
                     alignItems: "flex-start",
                     justifyContent: "flex-start",
                     flex: 1,
-                    overflowY: "auto",
                 }}>
                 <div style={{ flex: 0.3 }}>
                     <div
@@ -78,7 +77,12 @@ const Main = () => {
 
                             <hr style={{border: 'none'}}/>*/}
 
-                        <CollapsibleCard title='Database Fields'>
+                        <CollapsibleCard
+                            title='Database Fields'
+                            style={{
+                                height: "calc(100vh - 160px",
+                                overflowY: "auto",
+                            }}>
                             <KeyList />
                         </CollapsibleCard>
                     </div>
@@ -88,7 +92,11 @@ const Main = () => {
                     <Editor />
                 </div>
 
-                <div style={{ flex: 0.3, padding: 10 }}>
+                <div
+                    style={{
+                        flex: 0.3,
+                        padding: 10,
+                    }}>
                     {/* <div style={{ height: 20 }}></div>
 
                             <CollapsibleCard title='Permissioning'>
@@ -97,7 +105,12 @@ const Main = () => {
 
                     {/* <div style={{ height: 20 }}></div> */}
 
-                    <CollapsibleCard title='Metadata'>
+                    <CollapsibleCard
+                        title='Metadata'
+                        style={{
+                            height: "calc(100vh - 160px",
+                            overflowY: "auto",
+                        }}>
                         <Metadata />
                     </CollapsibleCard>
 
