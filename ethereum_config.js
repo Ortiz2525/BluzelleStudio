@@ -19,7 +19,7 @@ const config = [
         color: "secondary",
 
         endpoint: "https://client.sentry.testnet.private.bluzelle.com:1317",
-        chainid: "bluzelleTestNetPrivate-18",
+        chainid: "bluzelleTestNetPrivate-19",
         gas_price: 0.002,
     },
 ]

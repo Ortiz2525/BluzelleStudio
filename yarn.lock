@@ -2711,10 +2711,10 @@ bluebird@^3.5.1, bluebird@^3.5.3, bluebird@^3.5.5:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
-bluzelle@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/bluzelle/-/bluzelle-2.1.2.tgz#5bade636e71cbde6241f8f58953fa00bc42fc98b"
-  integrity sha512-qGbaJIDClh/RchSSVbS8GT/Px6LDS200J8EarGPrarf/Jr73R2QHDFTIax3YzElYBnYS6nv/9rL/w8wWJSJnpA==
+bluzelle@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/bluzelle/-/bluzelle-2.1.4.tgz#c0cb87e9ceeffcb9f5a0197eab685094967f4e35"
+  integrity sha512-+ZiIljEV8l2OS13FSvoUiQakDOcFTBJGidm9CLXgCI7U7yCeWXfdTPbbJ91viQ8bY/VGpxAq+JaLwYx+TwOl7A==
   dependencies:
     "@cosmostation/cosmosjs" "^0.6.8"
     "@types/lodash" "^4.14.161"
