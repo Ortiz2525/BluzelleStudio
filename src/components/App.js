@@ -42,7 +42,6 @@ const App = () => {
         )
 
         uuid = uuid || Date.now().toString()
-
         let client
         // try to open a client normally
         try {
@@ -100,26 +99,28 @@ const App = () => {
             })
         }
 
-        Promise.resolve()
-            .then(() => client.account())
-            .then((info) => {
-                setAccountInfo(info)
-                return getNodeInfo()
-            })
-            .then((nodeInfo) => {
-                const node = {
-                    ...nodeInfo.node_info,
-                    ...nodeInfo.node_info.other,
-                    // ...nodeInfo.node_info.protocol_version,
-                }
-                setNodeInfo(node)
+        try {
+            const accountInfo = await client.account()
+            if (accountInfo.address == "" || accountInfo.public_key == "") {
+                throw new Error("Invalid Mnemonic!")
+            }
 
-                setConnected(true)
-            })
-            .catch((e) => {
-                setConnected(true)
-                // throw e;
-            })
+            setAccountInfo(accountInfo)
+
+            const nodeInfo = await getNodeInfo()
+            const node = {
+                ...nodeInfo.node_info,
+                ...nodeInfo.node_info.other,
+                // ...nodeInfo.node_info.protocol_version,
+            }
+            setNodeInfo(node)
+
+            setConnected(true)
+        } catch (e) {
+            setConnected(false)
+            throw e
+        }
+
         // Promise.resolve()
         //     .then(() => client.status())
         //     .then((s) => {

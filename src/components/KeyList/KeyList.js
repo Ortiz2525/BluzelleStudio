@@ -40,6 +40,8 @@ const KeyList = () => {
         setCommandQueue,
         reload,
         refreshKeys,
+        keyPrefix,
+        setKeyPrefix,
     } = useData()
 
     useEffect(() => {
@@ -116,8 +118,6 @@ const KeyList = () => {
     }
 
     const keyList = keys.sort().map((keyname) => {
-        if (filter !== "" && !keyname.includes(filter)) return null
-
         return keyname !== renameKey ? (
             <KeyListItem key={keyname} keyname={keyname} />
         ) : (
@@ -137,8 +137,25 @@ const KeyList = () => {
                     name='key_prefix'
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
-                    placeholder='Start typing to filter keys...'
+                    placeholder='Enter key prefix to filter...'
                 />
+                <BS.InputGroupAddon addonType='append'>
+                    <BS.Button
+                        outline
+                        color='primary'
+                        type='button'
+                        id='filterButton'
+                        disabled={!keyPrefix && filter === keyPrefix}
+                        onClick={() => setKeyPrefix(filter)}>
+                        <i className='fa fa-check'></i>
+                    </BS.Button>
+
+                    <BS.UncontrolledTooltip
+                        placement='top'
+                        target='filterButton'>
+                        Set filter
+                    </BS.UncontrolledTooltip>
+                </BS.InputGroupAddon>
             </BS.InputGroup>
 
             <br />

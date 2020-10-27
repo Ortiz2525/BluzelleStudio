@@ -17,6 +17,7 @@ const DataProvider = (props) => {
         activeTTL: undefined,
         loadingTTL: false,
         keys: [],
+        keyPrefix: undefined,
         tempKeys: [],
         log: undefined,
         nodeInfo: undefined,

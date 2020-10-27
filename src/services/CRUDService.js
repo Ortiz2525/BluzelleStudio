@@ -119,7 +119,7 @@ const useCRUDService = () => {
         await reload()
     }
 
-    const removeAll = async () => {
+    const removeAll = () => {
         return new Promise((resolve) => {
             const sk = selectedKey
             setSelectedKey(undefined)

@@ -130,20 +130,38 @@ const useData = () => {
         }
     }
 
-    const refreshKeys = () => {
+    const refreshKeys = (prefix = null) => {
         return new Promise((resolve) => {
-            state.client
-                .keys()
-                .then((k) => {
-                    setKeys(k)
+            if (
+                (prefix && prefix !== "") ||
+                (prefix === null && state.keyPrefix && state.keyPrefix !== "")
+            ) {
+                state.client
+                    .search(prefix && prefix !== "" ? prefix : state.keyPrefix)
+                    .then((k) => {
+                        setKeys(k.map((item) => item.key))
 
-                    resolve(k)
-                })
-                .catch((ex) => {
-                    // alert("Failed to fetch keys due to bluzelle network error.")
+                        resolve(k)
+                    })
+                    .catch((ex) => {
+                        // alert("Failed to fetch keys due to bluzelle network error.")
 
-                    resolve()
-                })
+                        resolve()
+                    })
+            } else {
+                state.client
+                    .keys()
+                    .then((k) => {
+                        setKeys(k)
+
+                        resolve(k)
+                    })
+                    .catch((ex) => {
+                        // alert("Failed to fetch keys due to bluzelle network error.")
+
+                        resolve()
+                    })
+            }
         })
     }
 
@@ -203,6 +221,12 @@ const useData = () => {
         setState((state) => ({ ...state, max_gas }))
     }
 
+    const setKeyPrefix = (keyPrefix) => {
+        setState((state) => ({ ...state, keyPrefix }))
+
+        refreshKeys(keyPrefix)
+    }
+
     const setValue = (key, value) => {
         setState((state) => ({ ...state, [key]: value }))
     }
@@ -229,6 +253,7 @@ const useData = () => {
         setCurrentPosition,
         setGasPrice,
         setMaxGas,
+        setKeyPrefix,
         setValue,
 
         refreshKeys,
@@ -255,6 +280,7 @@ const useData = () => {
         currentPosition: state.currentPosition,
         gasPrice: state.gas_price,
         maxGas: state.max_gas,
+        keyPrefix: state.keyPrefix,
     }
 }
 

@@ -46,7 +46,7 @@ const DaemonSelector = (props) => {
         document.cookie = "endpoint=" + endpoint
     }, [endpoint, uuid, chainid, save, mnemonic])
 
-    const go = () => {
+    const go = async () => {
         if (!mnemonic) {
             alert("Please upload Bluzelle key.")
             return
@@ -58,10 +58,13 @@ const DaemonSelector = (props) => {
 
         setConnecting(true)
 
-        props.go(endpoint, uuid, chainid, mnemonic).catch((e) => {
+        try {
+            await props.go(endpoint, uuid, chainid, mnemonic)
+        } catch (e) {
             console.error(e)
+            alert(e)
             setConnecting(false)
-        })
+        }
     }
 
     const checkEnterKey = (ev) => {

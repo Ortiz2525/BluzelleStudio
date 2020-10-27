@@ -14,6 +14,7 @@ const Metadata = () => {
         maxGas,
         setMaxGas,
     } = useData()
+
     const [version, setVersion] = useState(0)
     const [showMnemonic, setShowMnemonic] = useState(false)
     const [gasP, setGasP] = useState(0)

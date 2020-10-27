@@ -47,7 +47,7 @@ const ExpiryBar = () => {
         setExpiry("")
 
         getClient()
-            .persist(selectedKey)
+            .renewLease(selectedKey, gas_info, { days: 365 })
             .catch((e) => {
                 alert("Failure to persist key. See console.")
 
@@ -56,7 +56,20 @@ const ExpiryBar = () => {
             .finally(reloadTTL)
     }
 
-    const renderTTL = (ttl) => (ttl === 0 ? "0 (indefinite)" : ttl)
+    const renderTTL = (ttl) => {
+        var d = Math.floor(ttl / (3600 * 24))
+        var h = Math.floor((ttl % (3600 * 24)) / 3600)
+        var m = Math.floor((ttl % 3600) / 60)
+        var s = Math.floor((ttl % 3600) % 60)
+
+        var dDisplay = d > 0 ? d + "d " : ""
+        var hDisplay = h > 0 ? h + "h " : ""
+        var mDisplay = m > 0 ? m + "m " : ""
+        var sDisplay = s > 0 ? s + "s" : ""
+
+        return dDisplay + hDisplay + mDisplay + sDisplay
+        // return (ttl === 0 ? "0 (indefinite)" : ttl)
+    }
 
     const sanitizeExpiry = (s) => {
         if (s === "") {
@@ -107,20 +120,37 @@ const ExpiryBar = () => {
                                     outline
                                     color='primary'
                                     type='button'
+                                    id='setExpiryButton'
                                     disabled={
                                         !(expiry && sanitizeExpiry(expiry))
                                     }
                                     onClick={expire}>
                                     <i className='fas fa-stopwatch'></i>
                                 </BS.Button>
-                                {/* <BS.Button
+
+                                <BS.UncontrolledTooltip
+                                    placement='top'
+                                    target='setExpiryButton'>
+                                    Set Expiry
+                                </BS.UncontrolledTooltip>
+
+                                <BS.Button
                                     outline
                                     color='danger'
                                     type='button'
+                                    id='permanentButton'
                                     disabled={activeTTL === 0}
                                     onClick={persist}>
                                     <i className='fas fa-ban'></i>
-                                </BS.Button> */}
+                                </BS.Button>
+
+                                <BS.UncontrolledTooltip
+                                    placement='top'
+                                    target='permanentButton'>
+                                    Make this field permanent (1 yr) <br />
+                                    Be careful when setting the key as permanent
+                                    as it requires a lot of gas!
+                                </BS.UncontrolledTooltip>
                             </BS.InputGroupAddon>
                         </BS.InputGroup>
                     )}
