@@ -42,6 +42,7 @@ const KeyList = () => {
         refreshKeys,
         keyPrefix,
         setKeyPrefix,
+        isBusy,
     } = useData()
 
     useEffect(() => {
@@ -192,6 +193,7 @@ const KeyList = () => {
                             outline
                             color='success'
                             onClick={() => setShowNewKey(true)}
+                            disabled={isBusy}
                             id='addButton'>
                             <i className='fas fa-plus'></i>
                         </BS.Button>
@@ -208,6 +210,7 @@ const KeyList = () => {
                                     outline
                                     color='danger'
                                     id='removeButton'
+                                    disabled={isBusy}
                                     onClick={executeRemove}>
                                     <i className='fas fa-times'></i>
                                 </BS.Button>
@@ -226,6 +229,7 @@ const KeyList = () => {
                                     outline
                                     color='warning'
                                     onClick={rename}
+                                    disabled={isBusy}
                                     id='renameButton'>
                                     <i className='fas fa-i-cursor'></i>
                                 </BS.Button>
@@ -242,6 +246,7 @@ const KeyList = () => {
                             outline
                             color='info'
                             onClick={executeReload}
+                            disabled={isBusy}
                             id='refreshButton'>
                             <i className='fas fa-sync'></i>
                         </BS.Button>
@@ -257,6 +262,7 @@ const KeyList = () => {
                                 <BS.Button
                                     color='success'
                                     onClick={save}
+                                    disabled={isBusy}
                                     id='saveButton'>
                                     <i className='fas fa-save'></i>
                                 </BS.Button>
@@ -275,6 +281,7 @@ const KeyList = () => {
                             outline
                             id='importButton'
                             color='primary'
+                            disabled={isBusy}
                             onClick={() => importCSV(setIsLoading, setKeys)}>
                             <i className='fas fa-file-import'></i>
                         </BS.Button>
@@ -288,6 +295,7 @@ const KeyList = () => {
                         <BS.Button
                             outline
                             id='exportButton'
+                            disabled={isBusy}
                             color='secondary'
                             onClick={() =>
                                 exportCSV(isLoading, setIsLoading, keys)
@@ -305,6 +313,7 @@ const KeyList = () => {
                             outline
                             id='clearButton'
                             color='danger'
+                            disabled={isBusy}
                             onClick={doRemoveAll}>
                             <i className='fas fa-ban'></i>
                         </BS.Button>

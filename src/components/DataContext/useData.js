@@ -187,9 +187,12 @@ const useData = () => {
 
     const reload = () =>
         new Promise((resolve) => {
+            setIsBusy(true)
+
             refreshKeys().then((k) => {
                 reloadKey(k)
 
+                setIsBusy(false)
                 resolve()
             })
         })
@@ -236,6 +239,10 @@ const useData = () => {
         refreshKeys(keyPrefix)
     }
 
+    const setIsBusy = (isBusy) => {
+        setState((state) => ({ ...state, isBusy }))
+    }
+
     const setValue = (key, value) => {
         setState((state) => ({ ...state, [key]: value }))
     }
@@ -262,6 +269,7 @@ const useData = () => {
         setGasPrice,
         setMaxGas,
         setKeyPrefix,
+        setIsBusy,
         setValue,
 
         refreshKeys,
@@ -288,6 +296,7 @@ const useData = () => {
         gasPrice: state.gas_price,
         maxGas: state.max_gas,
         keyPrefix: state.keyPrefix,
+        isBusy: state.isBusy,
     }
 }
 
