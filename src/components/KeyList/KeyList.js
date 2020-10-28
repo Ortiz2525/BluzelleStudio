@@ -146,7 +146,9 @@ const KeyList = () => {
                         color='primary'
                         type='button'
                         id='filterButton'
-                        disabled={!keyPrefix && filter === keyPrefix}
+                        disabled={
+                            isBusy || (!keyPrefix && filter === keyPrefix)
+                        }
                         onClick={() => setKeyPrefix(filter)}>
                         <i className='fa fa-check'></i>
                     </BS.Button>

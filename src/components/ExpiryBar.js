@@ -17,6 +17,7 @@ const ExpiryBar = () => {
         reloadTTL,
         gasPrice,
         maxGas,
+        isBusy,
     } = useData()
 
     const gas_info = {
@@ -122,6 +123,7 @@ const ExpiryBar = () => {
                                     type='button'
                                     id='setExpiryButton'
                                     disabled={
+                                        isBusy ||
                                         !(expiry && sanitizeExpiry(expiry))
                                     }
                                     onClick={expire}>
@@ -139,7 +141,7 @@ const ExpiryBar = () => {
                                     color='danger'
                                     type='button'
                                     id='permanentButton'
-                                    disabled={activeTTL === 0}
+                                    disabled={isBusy || activeTTL === 0}
                                     onClick={persist}>
                                     <i className='fas fa-ban'></i>
                                 </BS.Button>
