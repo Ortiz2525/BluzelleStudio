@@ -14,7 +14,10 @@
     "coverage": "nyc --instrument=false --reporter=cobertura  --report-dir=coverage yarn test",
     "coverage-text": "nyc --instrument=false yarn test",
     "dev": "webpack-dev-server --config ./webpack.config.js --mode=development --open --hot",
-    "build": "webpack --config ./webpack.config.js --mode=production"
+    "build": "webpack --config ./webpack.config.js --mode=production",
+    "build-mac": "NODE_ENV=electron yarn build && cd desktop && yarn package-mac",
+    "build-windows": "NODE_ENV=electron yarn build && cd desktop && yarn package-windows",
+    "build-linux": "NODE_ENV=electron yarn build && cd desktop && yarn package-linux"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
@@ -26,7 +29,7 @@
     "command-line-args": "^5.1.1",
     "css-loader": "^4.3.0",
     "downloadjs": "^1.4.7",
-    "electron-installer-debian": "^3.1.0",
+    "electron-builder": "^22.9.1",
     "elliptic": "^6.5.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
@@ -88,8 +91,6 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "electron": "^10.1.4",
-    "electron-builder": "^22.9.1",
     "html-webpack-plugin": "^4.5.0",
     "style-loader": "^1.3.0",
     "webpack": "4.44.2",
@@ -97,16 +98,5 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-shell-plugin": "^0.5.0"
-  },
-  "build": {
-    "asar": false,
-    "files": [
-      "dist",
-      "desktop/main.js",
-      "desktop/ApplicationMenu.js"
-    ],
-    "directories": {
-      "output": "release"
-    }
   }
 }

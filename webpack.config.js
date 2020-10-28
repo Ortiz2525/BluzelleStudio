@@ -4,6 +4,7 @@ const BeepPlugin = require("webpack-beep-plugin")
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 
 const PROD = process.env.NODE_ENV === "production"
+const ELECTRON = process.env.NODE_ENV === "electron"
 PROD && console.log("----------- Compiling for production ----------")
 
 module.exports = {
@@ -11,10 +12,12 @@ module.exports = {
         index: path.resolve("./src/index.js"),
     },
     output: {
-        path: path.resolve("./dist/generated/js"),
+        path: ELECTRON
+            ? path.resolve("./desktop/dist/generated/js")
+            : path.resolve("./dist/generated/js"),
         filename: "[name].js",
     },
-    devtool: PROD ? "" : "inline-source-map",
+    devtool: PROD || ELECTRON ? "" : "inline-source-map",
     module: {
         rules: [
             {

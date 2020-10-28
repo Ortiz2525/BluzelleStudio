@@ -55,10 +55,9 @@ We use `Electron` to bundle the web app for desktop.
 
 ### Bundling desktop executables
 
-Note that the commands given below can cross-compile for different platforms (verified on Mac). The binaries are placed in the `dist` folder.
+Note that the commands given below can cross-compile for different platforms (verified on Mac). The binaries are placed in the `desktop/release` folder.
 
 ```
 1. Ensure you can run the app (see above)
-2. cd desktop
-3. yarn package-mac|package-linux|package-windows
+2. yarn build-mac|build-linux|build-windows
 ```
