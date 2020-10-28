@@ -44,13 +44,13 @@ const KeyList = () => {
         setKeyPrefix,
     } = useData()
 
-    // useEffect(() => {
-    //     setIsLoading(true)
+    useEffect(() => {
+        setIsLoading(true)
 
-    //     refreshKeys().then(() => {
-    //         setIsLoading(false)
-    //     })
-    // }, [])
+        refreshKeys().then(() => {
+            setIsLoading(false)
+        })
+    }, [])
 
     useEffect(() => {
         if (commandQueue === undefined) {
