@@ -20,12 +20,8 @@ const useData = () => {
         setState((state) => ({ ...state, config }))
     }
 
-    const setIsWriter = (isWriter) => {
-        setState((state) => ({ ...state, isWriter }))
-    }
-
-    const setWriters = (writers) => {
-        setState((state) => ({ ...state, writers }))
+    const setIsOwner = (isOwner) => {
+        setState((state) => ({ ...state, isOwner }))
     }
 
     const setActiveValue = (activeValue) => {
@@ -123,6 +119,19 @@ const useData = () => {
                     }
 
                     setLoadingValue(false)
+                    console.error(e)
+                })
+
+            setIsOwner(false)
+
+            state.client
+                .owner(selectedKey)
+                .then((owner) => {
+                    if (owner == state.accountInfo.address) {
+                        setIsOwner(true)
+                    }
+                })
+                .catch((e) => {
                     console.error(e)
                 })
 
@@ -236,8 +245,7 @@ const useData = () => {
         setMnemonic,
         setConfig,
         setSelectedKey,
-        setIsWriter,
-        setWriters,
+        setIsOwner,
         setActiveValue,
         setActiveMap,
         setLoadingValue,
@@ -264,8 +272,7 @@ const useData = () => {
         mnemonic: state.mnemonic,
         config: state.config,
         selectedKey: state.selectedKey,
-        isWriter: state.isWriter,
-        writers: state.writers,
+        isOwner: state.isOwner,
         activeValue: state.activeValue,
         activeMap: state.activeMap,
         loadingValue: state.loadingValue,

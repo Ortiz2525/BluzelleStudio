@@ -120,25 +120,6 @@ const App = () => {
             setConnected(false)
             throw e
         }
-
-        // Promise.resolve()
-        //     .then(() => client.status())
-        //     .then((s) => {
-        //         setNodeInfo(s);
-        //         return client._getWriters();
-        //     })
-        //     .then((w) => {
-        //         setWriters(w);
-        //     })
-        //     .then(() => client.size())
-        //     .then((s) => {
-        //         setAccountInfo(s);
-        //         setConnected(true);
-        //     })
-        //     .catch((e) => {
-        //         alert("Error initializing database connection: " + e.message);
-        //         throw e;
-        //     });
     }
 
     return (

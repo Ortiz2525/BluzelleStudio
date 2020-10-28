@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import useData from "components/DataContext/useData"
 
 const PlainTextEditor = () => {
-    const { isWriter, activeValue, setActiveValue } = useData()
+    const { isOwner, activeValue, setActiveValue } = useData()
 
     const [value, setValue] = useState(activeValue)
 
@@ -40,12 +40,8 @@ const PlainTextEditor = () => {
                     }}
                     spellCheck='false'
                     type='textarea'
-                    disabled={isWriter === "read-only"}
-                    placeholder={
-                        isWriter === "read-only"
-                            ? "No value"
-                            : "Enter value here"
-                    }
+                    disabled={!isOwner}
+                    placeholder={!isOwner ? "No value" : "Enter value here"}
                     value={value}
                     onChange={onChange}
                     onBlur={onSubmit}

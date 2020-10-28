@@ -9,8 +9,7 @@ const DataProvider = (props) => {
         mnemonic: undefined,
         config: {},
         selectedKey: undefined,
-        isWriter: false,
-        writers: { owner: undefined, writers: [] },
+        isOwner: false,
         activeValue: undefined,
         activeMap: undefined,
         loadingValue: false,
@@ -25,7 +24,7 @@ const DataProvider = (props) => {
         commandQueue: undefined,
         currentPosition: 0,
         gas_price: 0.002,
-        max_gas: 1000000,
+        max_gas: 100000000,
     })
 
     return (

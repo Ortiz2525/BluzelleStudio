@@ -32,7 +32,7 @@ const KeyList = () => {
     const {
         selectedKey,
         setSelectedKey,
-        isWriter,
+        isOwner,
         keys,
         setKeys,
         activeValue,
@@ -202,7 +202,7 @@ const KeyList = () => {
                             Add Key
                         </BS.UncontrolledTooltip>
 
-                        {activeValue !== undefined && (
+                        {isOwner && activeValue !== undefined && (
                             <>
                                 <BS.Button
                                     outline
@@ -220,7 +220,7 @@ const KeyList = () => {
                             </>
                         )}
 
-                        {activeValue !== undefined && (
+                        {isOwner && activeValue !== undefined && (
                             <>
                                 <BS.Button
                                     outline
@@ -252,7 +252,7 @@ const KeyList = () => {
                             Reload Keys
                         </BS.UncontrolledTooltip>
 
-                        {activeValue !== undefined && (
+                        {isOwner && activeValue !== undefined && (
                             <>
                                 <BS.Button
                                     color='success'
