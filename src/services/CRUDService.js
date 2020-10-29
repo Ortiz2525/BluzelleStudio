@@ -36,7 +36,9 @@ const useCRUDService = () => {
                 newTempKeys.splice(newTempKeys.indexOf(selectedKey), 1)
                 setTempKeys(newTempKeys)
 
-                setIsBusy(false)
+                reload().then(() => {
+                    setIsBusy(false)
+                })
             })
             .catch(() => {
                 alert("Failed to save due to bluzelle network error.")
@@ -77,39 +79,46 @@ const useCRUDService = () => {
     }
 
     const create = (key, value) => {
-        setIsBusy(true)
+        return new Promise((resolve) => {
+            setIsBusy(true)
 
-        const newKeys = [...keys],
-            newTempKeys = [...tempKeys]
-        newKeys.push(key)
-        newTempKeys.push(key)
+            const newKeys = [...keys],
+                newTempKeys = [...tempKeys]
+            newKeys.push(key)
+            newTempKeys.push(key)
 
-        setKeys(newKeys)
-        setTempKeys(newTempKeys)
+            setKeys(newKeys)
+            setTempKeys(newTempKeys)
 
-        getClient()
-            .create(key, value, gas_info)
-            .then(() => {
-                while (newTempKeys.includes(key)) {
-                    newTempKeys.splice(newTempKeys.indexOf(key), 1)
-                }
-                setTempKeys(newTempKeys)
+            getClient()
+                .create(key, value, gas_info)
+                .then(() => {
+                    while (newTempKeys.includes(key)) {
+                        newTempKeys.splice(newTempKeys.indexOf(key), 1)
+                    }
+                    setTempKeys(newTempKeys)
 
-                setIsBusy(false)
-            })
-            .catch((e) => {
-                while (newTempKeys.includes(key)) {
-                    newTempKeys.splice(newTempKeys.indexOf(key), 1)
-                }
-                setTempKeys(newTempKeys)
+                    reload().then(() => {
+                        setIsBusy(false)
 
-                newKeys.splice(newKeys.indexOf(key), 1)
-                setKeys(newKeys)
+                        resolve()
+                    })
+                })
+                .catch((e) => {
+                    while (newTempKeys.includes(key)) {
+                        newTempKeys.splice(newTempKeys.indexOf(key), 1)
+                    }
+                    setTempKeys(newTempKeys)
 
-                alert("Failed to create key due to bluzelle network error.")
+                    newKeys.splice(newKeys.indexOf(key), 1)
+                    setKeys(newKeys)
 
-                setIsBusy(false)
-            })
+                    alert("Failed to create key due to bluzelle network error.")
+
+                    setIsBusy(false)
+                    resolve()
+                })
+        })
     }
 
     const rename = async (oldKey, newKey) => {

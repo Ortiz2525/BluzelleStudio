@@ -53,7 +53,6 @@ const Metadata = () => {
                             Mnemonic
                         </th>
                         <td>
-                            {showMnemonic && <code>{mnemonic}</code>}
                             <BS.Button
                                 outline={showMnemonic}
                                 color='secondary'
@@ -61,6 +60,7 @@ const Metadata = () => {
                                 onClick={() => setShowMnemonic(!showMnemonic)}>
                                 <i className='far fa-eye'></i>
                             </BS.Button>
+                            <div>{showMnemonic && <code>{mnemonic}</code>}</div>
                         </td>
                     </tr>
                     <tr>
@@ -77,7 +77,7 @@ const Metadata = () => {
                     </tr>
                     <tr>
                         <th scope='row' style={{ verticalAlign: "middle" }}>
-                            Gas Price
+                            Gas Price (UBLZ)
                         </th>
                         <td>
                             <BS.InputGroup

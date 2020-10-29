@@ -138,20 +138,19 @@ const ExpiryBar = () => {
 
                                 <BS.Button
                                     outline
-                                    color='danger'
+                                    color='success'
                                     type='button'
                                     id='permanentButton'
                                     disabled={isBusy || activeTTL === 0}
                                     onClick={persist}>
-                                    <i className='fas fa-ban'></i>
+                                    <i className='fa fa-clock'></i>
                                 </BS.Button>
 
                                 <BS.UncontrolledTooltip
                                     placement='top'
                                     target='permanentButton'>
-                                    Make this field permanent (1 yr) <br />
-                                    Be careful when setting the key as permanent
-                                    as it requires a lot of gas!
+                                    Make permanent (1 yr) <br />
+                                    Requires a lot of gas!
                                 </BS.UncontrolledTooltip>
                             </BS.InputGroupAddon>
                         </BS.InputGroup>

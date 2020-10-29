@@ -126,6 +126,23 @@ const App = () => {
         <div style={{ height: "100%" }}>
             <ColorSelector />
 
+            {connected && (
+                <div
+                    style={{
+                        position: "absolute",
+                        top: 15,
+                        right: 60,
+                        zIndex: 100,
+                    }}>
+                    <BS.Button
+                        outline
+                        color='primary'
+                        onClick={() => setConnected(false)}>
+                        <i className='fa fa-sign-out-alt'></i>
+                    </BS.Button>
+                </div>
+            )}
+
             {connected ? <Main /> : <DaemonSelector go={go} />}
         </div>
     )

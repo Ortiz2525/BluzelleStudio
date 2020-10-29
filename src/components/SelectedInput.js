@@ -10,13 +10,20 @@ const SelectedInput = (props) => {
     }, [inputRef])
 
     return (
-        <BS.Input
-            type='text'
-            {...props}
-            innerRef={(ref) => setInputRef(ref)}
-            style={{ width: "100%" }}
-            onBlur={() => props.onBlur()}
-        />
+        <BS.InputGroup style={{ width: "100%" }}>
+            <BS.Input
+                type='text'
+                {...props}
+                innerRef={(ref) => setInputRef(ref)}
+                onBlur={() => props.onBlur()}
+            />
+
+            <BS.InputGroupAddon addonType='append'>
+                <BS.Button color='primary' type='button' onClick={props.onBlur}>
+                    <i className='fa fa-check'></i>
+                </BS.Button>
+            </BS.InputGroupAddon>
+        </BS.InputGroup>
     )
 }
 

@@ -189,8 +189,13 @@ const useData = () => {
         new Promise((resolve) => {
             setIsBusy(true)
 
-            refreshKeys().then((k) => {
+            refreshKeys().then(async (k) => {
                 reloadKey(k)
+
+                const accountInfo = await state.client.account()
+                if (accountInfo.address != "" && accountInfo.public_key != "") {
+                    setAccountInfo(accountInfo)
+                }
 
                 setIsBusy(false)
                 resolve()

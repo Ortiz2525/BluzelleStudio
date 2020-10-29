@@ -1,5 +1,5 @@
-import React from "react";
-import logo from "./logo.png";
+import React from "react"
+import logo from "./logo.png"
 
 const Header = () => (
     <div
@@ -9,6 +9,6 @@ const Header = () => (
         }}>
         <img width='320px' src={logo} />
     </div>
-);
+)
 
-export default Header;
+export default Header

@@ -1,74 +1,78 @@
-import useBluzelle from "../../services/BluzelleService";
-import Papa from "papaparse";
-import useCRUDService from "../../services/CRUDService";
+import useBluzelle from "../../services/BluzelleService"
+import Papa from "papaparse"
+import useCRUDService from "../../services/CRUDService"
+import useData from "components/DataContext/useData"
 
 const useImportCSV = () => {
-    const { getClient } = useBluzelle();
-    const { create } = useCRUDService();
+    const { getClient } = useBluzelle()
+    const { create } = useCRUDService()
+    const { gasPrice, maxGas, reload } = useData()
+
+    const gas_info = {
+        gas_price: gasPrice,
+        max_gas: maxGas,
+    }
 
     const importCSV = (setIsLoading, setKeys) => {
         const createFields = async (fields) => {
-            setIsLoading(true);
+            setIsLoading(true)
 
-            const keys = await getClient().keys();
+            const keys = await getClient().keys()
 
-            setKeys(keys);
-            setIsLoading(false);
+            setKeys(keys)
 
             const promises = fields.map(({ key, value }) => {
                 if (!keys.includes(key)) {
-                    create(key, value);
+                    return create(key, value)
                 } else {
-                    getClient().update(key, value);
+                    return getClient().update(key, value, gas_info)
                 }
-            });
-        };
+            })
 
-        const input = document.createElement("input");
+            Promise.all(promises).then((results) => {
+                console.log("```", results)
+                reload()
+                setIsLoading(false)
+            })
+        }
 
-        input.type = "file";
+        const input = document.createElement("input")
+
+        input.type = "file"
 
         input.onchange = () => {
             if (input.files.length === 0) {
-                return;
+                return
             }
 
             if (input.files.length > 1) {
-                alert("Please select only one file.");
-                return;
+                alert("Please select only one file.")
+                return
             }
 
             Papa.parse(input.files[0], {
                 complete: function (results) {
-                    console.log("Errors from CSV input", results.errors);
-                    console.log("CSV metadata", results.meta);
+                    console.log("Errors from CSV input", results.errors)
+                    console.log("CSV metadata", results.meta)
 
-                    const table = results.data;
+                    const table = results.data
 
-                    const notEmpty = (cell) => cell.length;
-
-                    const filteredTable = table.map((row) =>
-                        row.filter(notEmpty)
-                    );
-
-                    const goodRows = filteredTable.filter(
-                        (row) => row.length >= 2
-                    );
+                    const goodRows = table.filter((row) => row.length >= 2)
 
                     const fields = goodRows.map((row) => ({
                         key: row[0],
                         value: row[1],
-                    }));
+                    }))
 
-                    createFields(fields);
+                    createFields(fields)
                 },
-            });
-        };
+            })
+        }
 
-        input.click();
-    };
+        input.click()
+    }
 
-    return importCSV;
-};
+    return importCSV
+}
 
-export default useImportCSV;
+export default useImportCSV

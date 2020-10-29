@@ -49,7 +49,7 @@ const Main = () => {
                                 Balance
                             </th>
                             <td style={{ border: 0 }}>
-                                <code>{balance} BLZ</code>
+                                <code>{balance.toLocaleString()} BLZ</code>
                             </td>
                         </tr>
                     </tbody>

@@ -143,6 +143,16 @@ const KeyList = () => {
                 <BS.InputGroupAddon addonType='append'>
                     <BS.Button
                         outline
+                        color='danger'
+                        type='button'
+                        id='clearButton'
+                        disabled={filter == ""}
+                        onClick={() => setFilter("")}>
+                        <i className='fa fa-times-circle'></i>
+                    </BS.Button>
+
+                    <BS.Button
+                        outline
                         color='primary'
                         type='button'
                         id='filterButton'
@@ -150,7 +160,7 @@ const KeyList = () => {
                             isBusy || (!keyPrefix && filter === keyPrefix)
                         }
                         onClick={() => setKeyPrefix(filter)}>
-                        <i className='fa fa-check'></i>
+                        <i className='fa fa-filter'></i>
                     </BS.Button>
 
                     <BS.UncontrolledTooltip
@@ -189,13 +199,17 @@ const KeyList = () => {
             <hr />
             <div style={{ padding: 10 }}>
                 <BS.ButtonToolbar
-                    style={{ display: "flex", flexDirection: "column" }}>
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                    }}>
                     <BS.ButtonGroup>
                         <BS.Button
                             outline
                             color='success'
                             onClick={() => setShowNewKey(true)}
-                            disabled={isBusy}
+                            disabled={isBusy || isLoading}
                             id='addButton'>
                             <i className='fas fa-plus'></i>
                         </BS.Button>
@@ -212,7 +226,7 @@ const KeyList = () => {
                                     outline
                                     color='danger'
                                     id='removeButton'
-                                    disabled={isBusy}
+                                    disabled={isBusy || isLoading}
                                     onClick={executeRemove}>
                                     <i className='fas fa-times'></i>
                                 </BS.Button>
@@ -231,7 +245,7 @@ const KeyList = () => {
                                     outline
                                     color='warning'
                                     onClick={rename}
-                                    disabled={isBusy}
+                                    disabled={isBusy || isLoading}
                                     id='renameButton'>
                                     <i className='fas fa-i-cursor'></i>
                                 </BS.Button>
@@ -248,7 +262,7 @@ const KeyList = () => {
                             outline
                             color='info'
                             onClick={executeReload}
-                            disabled={isBusy}
+                            disabled={isBusy || isLoading}
                             id='refreshButton'>
                             <i className='fas fa-sync'></i>
                         </BS.Button>
@@ -262,9 +276,10 @@ const KeyList = () => {
                         {isOwner && activeValue !== undefined && (
                             <>
                                 <BS.Button
+                                    outline
                                     color='success'
                                     onClick={save}
-                                    disabled={isBusy}
+                                    disabled={isBusy || isLoading}
                                     id='saveButton'>
                                     <i className='fas fa-save'></i>
                                 </BS.Button>
@@ -283,7 +298,7 @@ const KeyList = () => {
                             outline
                             id='importButton'
                             color='primary'
-                            disabled={isBusy}
+                            disabled={isBusy || isLoading}
                             onClick={() => importCSV(setIsLoading, setKeys)}>
                             <i className='fas fa-file-import'></i>
                         </BS.Button>
@@ -297,7 +312,7 @@ const KeyList = () => {
                         <BS.Button
                             outline
                             id='exportButton'
-                            disabled={isBusy}
+                            disabled={isBusy || isLoading}
                             color='secondary'
                             onClick={() =>
                                 exportCSV(isLoading, setIsLoading, keys)
@@ -315,7 +330,7 @@ const KeyList = () => {
                             outline
                             id='clearButton'
                             color='danger'
-                            disabled={isBusy}
+                            disabled={isBusy || isLoading}
                             onClick={doRemoveAll}>
                             <i className='fas fa-ban'></i>
                         </BS.Button>

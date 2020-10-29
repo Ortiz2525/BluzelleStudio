@@ -7,7 +7,7 @@ const config = [
         chainid: "Bluzelle-Soft-Mainnet",
     },
     {
-        name: "Test Public",
+        name: "TestNet Public",
         color: "danger",
 
         endpoint: "https://client.sentry.testnet.public.bluzelle.com:1319",
@@ -15,7 +15,7 @@ const config = [
         gas_price: 10,
     },
     {
-        name: "Test Private",
+        name: "TestNet Private",
         color: "secondary",
 
         endpoint: "https://client.sentry.testnet.private.bluzelle.com:1317",
