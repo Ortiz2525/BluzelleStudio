@@ -157,7 +157,7 @@ const Metadata = () => {
                                     <td>
                                         <code
                                             style={{ whiteSpace: "pre-wrap" }}>
-                                            {key === "public_key"
+                                            {key === "public_key" && value
                                                 ? value.value
                                                 : value.toString()}
                                         </code>

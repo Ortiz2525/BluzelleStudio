@@ -105,7 +105,12 @@ const App = () => {
 
         try {
             const accountInfo = await client.account()
-            if (accountInfo.address == "" || accountInfo.public_key == "") {
+            if (
+                accountInfo.address == "" ||
+                !accountInfo.address ||
+                accountInfo.public_key == "" ||
+                !accountInfo.public_key
+            ) {
                 throw new Error("Invalid Mnemonic!")
             }
 
