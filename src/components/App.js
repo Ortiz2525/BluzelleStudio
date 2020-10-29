@@ -82,11 +82,15 @@ const App = () => {
                 })
             } catch (e2) {
                 if (e2.message.includes("ACCESS_DENIED")) {
-                    alert(e.message)
+                    alert(
+                        "Error occured while connecting! Please make sure that the information is correct!"
+                    )
                     console.error(e)
                     throw e
                 } else {
-                    alert(e2.message)
+                    alert(
+                        "Error occured while connecting! Please make sure that the information is correct!"
+                    )
                     console.error(e2)
                     throw e2
                 }
@@ -111,7 +115,7 @@ const App = () => {
                 accountInfo.public_key == "" ||
                 !accountInfo.public_key
             ) {
-                throw new Error("Invalid Mnemonic!")
+                throw new Error("Invalid Mnemonic or Chain ID!")
             }
 
             setAccountInfo(accountInfo)

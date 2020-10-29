@@ -62,7 +62,9 @@ const DaemonSelector = (props) => {
             await props.go(endpoint, uuid, chainid, mnemonic)
         } catch (e) {
             console.error(e)
-            alert(e)
+            alert(
+                "Error occured while connecting! Please make sure that the information is correct!"
+            )
             setConnecting(false)
         }
     }
