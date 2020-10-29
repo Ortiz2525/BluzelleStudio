@@ -4,7 +4,7 @@ const config = [
         color: "primary", // primary, secondary, success, info, danger, warning, light, dark
 
         endpoint: "https://client.sentry.bluzellenet.bluzelle.com:1319",
-        chainid: "Bluzelle-Soft-Mainnet",
+        chainid: "bluzelleSoftMainNet-2",
     },
     {
         name: "TestNet Public",
