@@ -132,47 +132,6 @@ const KeyList = () => {
 
     const actualKeysList = (
         <BS.ListGroup>
-            <BS.InputGroup>
-                <BS.Input
-                    type='text'
-                    name='key_prefix'
-                    value={filter}
-                    onChange={(e) => setFilter(e.target.value)}
-                    placeholder='Enter key prefix to filter...'
-                />
-                <BS.InputGroupAddon addonType='append'>
-                    <BS.Button
-                        outline
-                        color='danger'
-                        type='button'
-                        id='clearButton'
-                        disabled={filter == ""}
-                        onClick={() => setFilter("")}>
-                        <i className='fa fa-times-circle'></i>
-                    </BS.Button>
-
-                    <BS.Button
-                        outline
-                        color='primary'
-                        type='button'
-                        id='filterButton'
-                        disabled={
-                            isBusy || (!keyPrefix && filter === keyPrefix)
-                        }
-                        onClick={() => setKeyPrefix(filter)}>
-                        <i className='fa fa-filter'></i>
-                    </BS.Button>
-
-                    <BS.UncontrolledTooltip
-                        placement='top'
-                        target='filterButton'>
-                        Set filter
-                    </BS.UncontrolledTooltip>
-                </BS.InputGroupAddon>
-            </BS.InputGroup>
-
-            <br />
-
             {keyList}
 
             {keyList.length === 0 && !showNewKey && (
@@ -194,17 +153,54 @@ const KeyList = () => {
     return (
         <Fragment>
             <div style={{ padding: 10 }}>
-                {isLoading ? loadingBar : actualKeysList}
+                <BS.InputGroup>
+                    <BS.Input
+                        type='text'
+                        name='key_prefix'
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                        placeholder='Enter key prefix to filter...'
+                    />
+                    <BS.InputGroupAddon addonType='append'>
+                        <BS.Button
+                            outline
+                            color='danger'
+                            type='button'
+                            id='clearButton'
+                            disabled={filter == ""}
+                            onClick={() => setFilter("")}>
+                            <i className='fa fa-times-circle'></i>
+                        </BS.Button>
+
+                        <BS.Button
+                            outline
+                            color='primary'
+                            type='button'
+                            id='filterButton'
+                            disabled={
+                                isBusy || (!keyPrefix && filter === keyPrefix)
+                            }
+                            onClick={() => setKeyPrefix(filter)}>
+                            <i className='fa fa-filter'></i>
+                        </BS.Button>
+
+                        <BS.UncontrolledTooltip
+                            placement='top'
+                            target='filterButton'>
+                            Set filter
+                        </BS.UncontrolledTooltip>
+                    </BS.InputGroupAddon>
+                </BS.InputGroup>
             </div>
-            <hr />
             <div style={{ padding: 10 }}>
                 <BS.ButtonToolbar
                     style={{
                         display: "flex",
-                        flexDirection: "column",
+                        flexDirection: "row",
                         alignItems: "flex-start",
                     }}>
-                    <BS.ButtonGroup>
+                    <BS.ButtonGroup
+                        style={{ paddingRight: 5, paddingBottom: 5 }}>
                         <BS.Button
                             outline
                             color='success'
@@ -293,7 +289,7 @@ const KeyList = () => {
                         )}
                     </BS.ButtonGroup>
 
-                    <BS.ButtonGroup style={{ paddingTop: 10 }}>
+                    <BS.ButtonGroup style={{ paddingLeft: 5 }}>
                         <BS.Button
                             outline
                             id='importButton'
@@ -342,6 +338,10 @@ const KeyList = () => {
                         </BS.UncontrolledTooltip>
                     </BS.ButtonGroup>
                 </BS.ButtonToolbar>
+            </div>
+            <hr />
+            <div style={{ padding: 10 }}>
+                {isLoading ? loadingBar : actualKeysList}
             </div>
         </Fragment>
     )
