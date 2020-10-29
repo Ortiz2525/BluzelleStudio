@@ -21,6 +21,7 @@ const DataProvider = (props) => {
         log: undefined,
         nodeInfo: undefined,
         accountInfo: undefined,
+        txInfo: undefined,
         commandQueue: undefined,
         currentPosition: 0,
         gas_price: 0.002,

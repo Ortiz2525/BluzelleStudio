@@ -222,6 +222,10 @@ const useData = () => {
         setState((state) => ({ ...state, accountInfo }))
     }
 
+    const setTxInfo = (txInfo) => {
+        setState((state) => ({ ...state, txInfo }))
+    }
+
     const setCommandQueue = (commandQueue) => {
         setState((state) => ({ ...state, commandQueue }))
     }
@@ -269,6 +273,7 @@ const useData = () => {
         setLog,
         setNodeInfo,
         setAccountInfo,
+        setTxInfo,
         setCommandQueue,
         setCurrentPosition,
         setGasPrice,
@@ -296,6 +301,7 @@ const useData = () => {
         log: state.log,
         nodeInfo: state.nodeInfo,
         accountInfo: state.accountInfo,
+        txInfo: state.txInfo,
         commandQueue: state.commandQueue,
         currentPosition: state.currentPosition,
         gasPrice: state.gas_price,

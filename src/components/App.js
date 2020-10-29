@@ -41,7 +41,11 @@ const App = () => {
             `${window.location.pathname}?${params}`
         )
 
-        uuid = uuid || Date.now().toString()
+        if (!uuid) {
+            const randomUuid = require("uuid")
+            uuid = randomUuid.v4()
+        }
+
         let client
         // try to open a client normally
         try {

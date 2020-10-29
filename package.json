@@ -71,7 +71,7 @@
     "source-map-support": "0.5.19",
     "text-encoding": "^0.6.4",
     "url-loader": "^4.1.0",
-    "uuid": "^8.3.0",
+    "uuid": "^8.3.1",
     "websocket": "^1.0.32"
   },
   "author": "",

@@ -15,6 +15,7 @@ const useCRUDService = () => {
         gasPrice,
         maxGas,
         setIsBusy,
+        setTxInfo,
     } = useData()
     const { getClient } = useBluzelle()
 
@@ -32,7 +33,9 @@ const useCRUDService = () => {
 
         getClient()
             .update(selectedKey, activeValue, gas_info)
-            .then(() => {
+            .then((result) => {
+                console.log("~~~", result)
+
                 newTempKeys.splice(newTempKeys.indexOf(selectedKey), 1)
                 setTempKeys(newTempKeys)
 
@@ -60,7 +63,8 @@ const useCRUDService = () => {
 
             return getClient()
                 .delete(sk, gas_info)
-                .then(() => {
+                .then((result) => {
+                    console.log("~~~", result)
                     reload().then(() => {
                         setIsBusy(false)
 
@@ -92,7 +96,8 @@ const useCRUDService = () => {
 
             getClient()
                 .create(key, value, gas_info)
-                .then(() => {
+                .then((result) => {
+                    console.log("~~~", result)
                     while (newTempKeys.includes(key)) {
                         newTempKeys.splice(newTempKeys.indexOf(key), 1)
                     }
@@ -128,15 +133,17 @@ const useCRUDService = () => {
         newTempKeys.push(oldKey)
         setTempKeys(newTempKeys)
 
+        let result = {}
+
         try {
             const v = await getClient().read(oldKey)
 
-            await getClient().delete(oldKey, gas_info)
+            result = await getClient().delete(oldKey, gas_info)
 
             if (await getClient().has(newKey)) {
-                await getClient().update(newKey, v, gas_info)
+                result = await getClient().update(newKey, v, gas_info)
             } else {
-                await getClient().create(newKey, v, gas_info)
+                result = await getClient().create(newKey, v, gas_info)
             }
 
             if (selectedKey === oldKey) {
@@ -149,6 +156,7 @@ const useCRUDService = () => {
 
         newTempKeys.splice(newTempKeys.indexOf(oldKey), 1)
         setTempKeys(newTempKeys)
+        console.log("~~~~", result)
 
         await reload()
 
@@ -168,7 +176,8 @@ const useCRUDService = () => {
 
             return getClient()
                 .deleteAll(gas_info)
-                .then(() => {
+                .then((result) => {
+                    console.log("~~~~", result)
                     reload().then(() => {
                         resolve()
 
