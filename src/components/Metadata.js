@@ -162,28 +162,28 @@ const Metadata = () => {
                         </th>
                     </tr>
 
-                    <tr>
-                        <th scope='row'>Address</th>
-                        <td>
-                            <code style={{ whiteSpace: "pre-wrap" }}>
-                                {accountInfo && accountInfo["address"]
-                                    ? accountInfo["address"]
-                                    : ""}
-                            </code>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope='row'>Public Key</th>
-                        <td>
-                            <code style={{ whiteSpace: "pre-wrap" }}>
-                                {isExistingAccount &&
-                                accountInfo &&
-                                accountInfo["public_key"]
-                                    ? accountInfo["public_key"].value
-                                    : ""}
-                            </code>
-                        </td>
-                    </tr>
+                    {accountInfo && accountInfo["address"] && (
+                        <tr>
+                            <th scope='row'>Address</th>
+                            <td>
+                                <code style={{ whiteSpace: "pre-wrap" }}>
+                                    {accountInfo["address"]}
+                                </code>
+                            </td>
+                        </tr>
+                    )}
+                    {isExistingAccount &&
+                        accountInfo &&
+                        accountInfo["public_key"] && (
+                            <tr>
+                                <th scope='row'>Public Key</th>
+                                <td>
+                                    <code style={{ whiteSpace: "pre-wrap" }}>
+                                        {accountInfo["public_key"].value}
+                                    </code>
+                                </td>
+                            </tr>
+                        )}
                     <tr>
                         <th scope='row'>Sequence</th>
                         <td>
