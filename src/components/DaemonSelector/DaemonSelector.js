@@ -27,11 +27,6 @@ const DaemonSelector = (props) => {
             window.cookiesObj.endpoint ||
             config[0].endpoint
     )
-    const [chainid, setChainid] = useState(
-        url.searchParams.get("chainid") ||
-            window.cookiesObj.chainid ||
-            config[0].chainid
-    )
 
     useEffect(() => {
         document.cookie = "save=" + save
@@ -42,9 +37,8 @@ const DaemonSelector = (props) => {
         }
 
         document.cookie = "uuid=" + uuid
-        document.cookie = "chainid=" + chainid
         document.cookie = "endpoint=" + endpoint
-    }, [endpoint, uuid, chainid, save, mnemonic])
+    }, [endpoint, uuid, save, mnemonic])
 
     const go = async () => {
         if (!mnemonic) {
@@ -59,7 +53,7 @@ const DaemonSelector = (props) => {
         setConnecting(true)
 
         try {
-            await props.go(endpoint, uuid, chainid, mnemonic)
+            await props.go(endpoint, uuid, mnemonic)
         } catch (e) {
             console.error(e)
             alert(
@@ -147,10 +141,8 @@ const DaemonSelector = (props) => {
                             <hr />
                             <EthereumConfig
                                 endpoint={endpoint}
-                                chainid={chainid}
                                 uuid={uuid}
                                 setEndpoint={setEndpoint}
-                                setChainid={setChainid}
                                 setUuid={setUuid}
                             />
                             <hr />

@@ -13,6 +13,7 @@ const Metadata = () => {
         setGasPrice,
         maxGas,
         setMaxGas,
+        isExistingAccount,
     } = useData()
 
     const [version, setVersion] = useState(0)
@@ -75,69 +76,82 @@ const Metadata = () => {
                             <code>{config.uuid}</code>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope='row' style={{ verticalAlign: "middle" }}>
-                            Gas Price (UBLZ)
-                        </th>
-                        <td>
-                            <BS.InputGroup
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}>
-                                <BS.Input
-                                    type='number'
-                                    name='gas_price'
-                                    value={gasP}
-                                    onChange={(e) => setGasP(e.target.value)}
-                                    placeholder='Gas Price'
-                                />
-                                <BS.InputGroupAddon addonType='append'>
-                                    <BS.Button
-                                        color='primary'
-                                        type='button'
-                                        disabled={gasPrice == gasP}
-                                        onClick={() =>
-                                            setGasPrice(parseFloat(gasP))
-                                        }>
-                                        <i className='fa fa-check'></i>
-                                    </BS.Button>
-                                </BS.InputGroupAddon>
-                            </BS.InputGroup>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope='row' style={{ verticalAlign: "middle" }}>
-                            Max Gas
-                        </th>
-                        <td>
-                            <BS.InputGroup
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}>
-                                <BS.Input
-                                    type='number'
-                                    name='max_gas'
-                                    value={maxG}
-                                    onChange={(e) => setMaxG(e.target.value)}
-                                    placeholder='Max Gas'
-                                />
-                                <BS.InputGroupAddon addonType='append'>
-                                    <BS.Button
-                                        color='primary'
-                                        type='button'
-                                        disabled={maxGas == maxG}
-                                        onClick={() =>
-                                            setMaxGas(parseFloat(maxG))
-                                        }>
-                                        <i className='fa fa-check'></i>
-                                    </BS.Button>
-                                </BS.InputGroupAddon>
-                            </BS.InputGroup>
-                        </td>
-                    </tr>
-
+                    {isExistingAccount && (
+                        <>
+                            <tr>
+                                <th
+                                    scope='row'
+                                    style={{ verticalAlign: "middle" }}>
+                                    Gas Price (UBLZ)
+                                </th>
+                                <td>
+                                    <BS.InputGroup
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}>
+                                        <BS.Input
+                                            type='number'
+                                            name='gas_price'
+                                            value={gasP}
+                                            onChange={(e) =>
+                                                setGasP(e.target.value)
+                                            }
+                                            placeholder='Gas Price'
+                                        />
+                                        <BS.InputGroupAddon addonType='append'>
+                                            <BS.Button
+                                                color='primary'
+                                                type='button'
+                                                disabled={gasPrice == gasP}
+                                                onClick={() =>
+                                                    setGasPrice(
+                                                        parseFloat(gasP)
+                                                    )
+                                                }>
+                                                <i className='fa fa-check'></i>
+                                            </BS.Button>
+                                        </BS.InputGroupAddon>
+                                    </BS.InputGroup>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th
+                                    scope='row'
+                                    style={{ verticalAlign: "middle" }}>
+                                    Max Gas
+                                </th>
+                                <td>
+                                    <BS.InputGroup
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}>
+                                        <BS.Input
+                                            type='number'
+                                            name='max_gas'
+                                            value={maxG}
+                                            onChange={(e) =>
+                                                setMaxG(e.target.value)
+                                            }
+                                            placeholder='Max Gas'
+                                        />
+                                        <BS.InputGroupAddon addonType='append'>
+                                            <BS.Button
+                                                color='primary'
+                                                type='button'
+                                                disabled={maxGas == maxG}
+                                                onClick={() =>
+                                                    setMaxGas(parseFloat(maxG))
+                                                }>
+                                                <i className='fa fa-check'></i>
+                                            </BS.Button>
+                                        </BS.InputGroupAddon>
+                                    </BS.InputGroup>
+                                </td>
+                            </tr>
+                        </>
+                    )}
                     <tr>
                         <th colSpan={2} scope='row'></th>
                     </tr>
@@ -148,23 +162,52 @@ const Metadata = () => {
                         </th>
                     </tr>
 
-                    {accountInfo &&
-                        Object.entries(accountInfo).map(([key, value]) => {
-                            if (key === "coins") return null
-                            return (
-                                <tr key={key}>
-                                    <th scope='row'>{formatKey(key)}</th>
-                                    <td>
-                                        <code
-                                            style={{ whiteSpace: "pre-wrap" }}>
-                                            {key === "public_key" && value
-                                                ? value.value
-                                                : value.toString()}
-                                        </code>
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                    <tr>
+                        <th scope='row'>Address</th>
+                        <td>
+                            <code style={{ whiteSpace: "pre-wrap" }}>
+                                {accountInfo && accountInfo["address"]
+                                    ? accountInfo["address"]
+                                    : ""}
+                            </code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>Public Key</th>
+                        <td>
+                            <code style={{ whiteSpace: "pre-wrap" }}>
+                                {isExistingAccount &&
+                                accountInfo &&
+                                accountInfo["public_key"]
+                                    ? accountInfo["public_key"].value
+                                    : ""}
+                            </code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>Sequence</th>
+                        <td>
+                            <code style={{ whiteSpace: "pre-wrap" }}>
+                                {isExistingAccount &&
+                                accountInfo &&
+                                accountInfo["sequence"]
+                                    ? accountInfo["sequence"]
+                                    : "0"}
+                            </code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope='row'>Account Number</th>
+                        <td>
+                            <code style={{ whiteSpace: "pre-wrap" }}>
+                                {isExistingAccount &&
+                                accountInfo &&
+                                accountInfo["account_number"]
+                                    ? accountInfo["account_number"]
+                                    : "0"}
+                            </code>
+                        </td>
+                    </tr>
 
                     <tr>
                         <th colSpan={2} scope='row'></th>

@@ -24,17 +24,21 @@ expiryDate.setMonth(expiryDate.getMonth() + 1)
 document.cookie = "expires=" + expiryDate.toGMTString()
 
 const App = () => {
-    const { setMnemonic, setNodeInfo, setAccountInfo } = useData()
+    const {
+        setMnemonic,
+        setNodeInfo,
+        setAccountInfo,
+        setIsExistingAccount,
+    } = useData()
     const [connected, setConnected] = useState(false)
     const { createClient } = useBluzelle()
 
-    const go = async (endpoint, uuid, chainid, mnemonic) => {
+    const go = async (endpoint, uuid, mnemonic) => {
         setMnemonic(mnemonic)
 
         const params = new URLSearchParams()
         params.set("endpoint", endpoint)
         params.set("uuid", uuid)
-        params.set("chainid", chainid)
         window.history.replaceState(
             {},
             "",
@@ -52,7 +56,6 @@ const App = () => {
             client = await createClient({
                 mnemonic,
                 endpoint: endpoint,
-                chain_id: chainid,
                 uuid,
             })
         } catch (e) {
@@ -61,7 +64,6 @@ const App = () => {
                 const apis = await createClient({
                     mnemonic,
                     endpoint: endpoint,
-                    chain_id: chainid,
                     uuid,
                     _connect_to_all: true,
                 })
@@ -77,7 +79,6 @@ const App = () => {
                 client = await createClient({
                     mnemonic,
                     endpoint: endpoint,
-                    chain_id: chainid,
                     uuid,
                 })
             } catch (e2) {
@@ -108,14 +109,12 @@ const App = () => {
         }
 
         try {
-            const accountInfo = await client.account()
-            if (
-                accountInfo.address == "" ||
-                !accountInfo.address ||
-                accountInfo.public_key == "" ||
-                !accountInfo.public_key
-            ) {
-                throw new Error("Invalid Mnemonic or Chain ID!")
+            const isExisting = await client.isExistingAccount()
+            setIsExistingAccount(isExisting)
+
+            let accountInfo = await client.account()
+            if (!isExisting) {
+                accountInfo.address = client.getAddress()
             }
 
             setAccountInfo(accountInfo)

@@ -2,14 +2,7 @@ import useData from "components/DataContext/useData"
 import React, { useEffect, useState } from "react"
 import config from "../../../ethereum_config"
 
-const EthereumConfig = ({
-    endpoint,
-    chainid,
-    uuid,
-    setEndpoint,
-    setChainid,
-    setUuid,
-}) => {
+const EthereumConfig = ({ endpoint, uuid, setEndpoint, setUuid }) => {
     const [toggle, setToggle] = useState(
         window.cookiesObj.toggle === "true" || false
     )
@@ -71,30 +64,10 @@ const EthereumConfig = ({
                         </BS.Col>
                     </BS.FormGroup>
 
-                    <BS.FormGroup row>
-                        <BS.Label sm={3} for='port'>
-                            Chain ID:
-                        </BS.Label>
-                        <BS.Col sm={9}>
-                            <BS.Input
-                                type='text'
-                                name='chainid'
-                                value={chainid}
-                                onChange={(e) => setChainid(e.target.value)}
-                            />
-                        </BS.Col>
-                    </BS.FormGroup>
-
                     <div style={{ marginTop: 10, textAlign: "center" }}>
                         <BS.ButtonGroup style={{ width: "100%" }}>
                             {config.map(
-                                ({
-                                    name,
-                                    color,
-                                    endpoint,
-                                    chainid,
-                                    gas_price,
-                                }) => (
+                                ({ name, color, endpoint, gas_price }) => (
                                     <BS.Button
                                         style={{ flex: 1 }}
                                         outline={true}
@@ -103,7 +76,6 @@ const EthereumConfig = ({
                                         onClick={() => {
                                             setActive(name)
                                             setEndpoint(endpoint)
-                                            setChainid(chainid)
                                             setGasPrice(gas_price)
                                         }}>
                                         {name}

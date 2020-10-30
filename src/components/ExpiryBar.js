@@ -18,6 +18,7 @@ const ExpiryBar = () => {
         gasPrice,
         maxGas,
         isBusy,
+        isExistingAccount,
     } = useData()
 
     const gas_info = {
@@ -116,43 +117,45 @@ const ExpiryBar = () => {
                                 placeholder={renderTTL(activeTTL)}
                                 onChange={(e) => setExpiry(e.target.value)}
                             />
-                            <BS.InputGroupAddon addonType='append'>
-                                <BS.Button
-                                    outline
-                                    color='primary'
-                                    type='button'
-                                    id='setExpiryButton'
-                                    disabled={
-                                        isBusy ||
-                                        !(expiry && sanitizeExpiry(expiry))
-                                    }
-                                    onClick={expire}>
-                                    <i className='fas fa-stopwatch'></i>
-                                </BS.Button>
+                            {isExistingAccount && (
+                                <BS.InputGroupAddon addonType='append'>
+                                    <BS.Button
+                                        outline
+                                        color='primary'
+                                        type='button'
+                                        id='setExpiryButton'
+                                        disabled={
+                                            isBusy ||
+                                            !(expiry && sanitizeExpiry(expiry))
+                                        }
+                                        onClick={expire}>
+                                        <i className='fas fa-stopwatch'></i>
+                                    </BS.Button>
 
-                                <BS.UncontrolledTooltip
-                                    placement='top'
-                                    target='setExpiryButton'>
-                                    Set Expiry
-                                </BS.UncontrolledTooltip>
+                                    <BS.UncontrolledTooltip
+                                        placement='top'
+                                        target='setExpiryButton'>
+                                        Set Expiry
+                                    </BS.UncontrolledTooltip>
 
-                                <BS.Button
-                                    outline
-                                    color='success'
-                                    type='button'
-                                    id='permanentButton'
-                                    disabled={isBusy || activeTTL === 0}
-                                    onClick={persist}>
-                                    <i className='fa fa-clock'></i>
-                                </BS.Button>
+                                    <BS.Button
+                                        outline
+                                        color='success'
+                                        type='button'
+                                        id='permanentButton'
+                                        disabled={isBusy || activeTTL === 0}
+                                        onClick={persist}>
+                                        <i className='fa fa-clock'></i>
+                                    </BS.Button>
 
-                                <BS.UncontrolledTooltip
-                                    placement='top'
-                                    target='permanentButton'>
-                                    Make permanent (1 yr) <br />
-                                    Requires a lot of gas!
-                                </BS.UncontrolledTooltip>
-                            </BS.InputGroupAddon>
+                                    <BS.UncontrolledTooltip
+                                        placement='top'
+                                        target='permanentButton'>
+                                        Make permanent (1 yr) <br />
+                                        Requires a lot of gas!
+                                    </BS.UncontrolledTooltip>
+                                </BS.InputGroupAddon>
+                            )}
                         </BS.InputGroup>
                     )}
                 </BS.CardBody>

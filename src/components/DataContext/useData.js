@@ -252,6 +252,10 @@ const useData = () => {
         setState((state) => ({ ...state, isBusy }))
     }
 
+    const setIsExistingAccount = (isExistingAccount) => {
+        setState((state) => ({ ...state, isExistingAccount }))
+    }
+
     const setValue = (key, value) => {
         setState((state) => ({ ...state, [key]: value }))
     }
@@ -280,6 +284,7 @@ const useData = () => {
         setMaxGas,
         setKeyPrefix,
         setIsBusy,
+        setIsExistingAccount,
         setValue,
 
         refreshKeys,
@@ -308,6 +313,7 @@ const useData = () => {
         maxGas: state.max_gas,
         keyPrefix: state.keyPrefix,
         isBusy: state.isBusy,
+        isExistingAccount: state.isExistingAccount,
     }
 }
 

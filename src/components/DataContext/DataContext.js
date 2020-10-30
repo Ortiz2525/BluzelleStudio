@@ -27,6 +27,7 @@ const DataProvider = (props) => {
         gas_price: 0.002,
         max_gas: 10000000,
         isBusy: false,
+        isExistingAccount: false,
     })
 
     return (
