@@ -25,18 +25,27 @@ const useImportCSV = () => {
                 return getClient().upsert(key, value, gas_info)
             })
 
-            getClient()
-                .withTransaction(() => Promise.all(promises))
-                .then((results) => {
-                    reload()
-                    setIsLoading(false)
-                })
-                .catch((ex) => {
-                    alert(
-                        ex.error ? ex.error : "Error due to bluzelle network!"
+            let i = 0
+            while (i < promises.length) {
+                getClient()
+                    .withTransaction(() =>
+                        Promise.all(promises.slice(i, 500000))
                     )
-                    setIsLoading(false)
-                })
+                    .then((results) => {
+                        reload()
+                        setIsLoading(false)
+                    })
+                    .catch((ex) => {
+                        alert(
+                            ex.error
+                                ? ex.error
+                                : "Error due to bluzelle network!"
+                        )
+                        setIsLoading(false)
+                    })
+
+                i += 500000
+            }
         }
 
         const input = document.createElement("input")
