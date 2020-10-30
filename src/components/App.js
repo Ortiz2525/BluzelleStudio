@@ -29,6 +29,7 @@ const App = () => {
         setNodeInfo,
         setAccountInfo,
         setIsExistingAccount,
+        setConfig,
     } = useData()
     const [connected, setConnected] = useState(false)
     const { createClient } = useBluzelle()
@@ -109,15 +110,20 @@ const App = () => {
         }
 
         try {
-            const isExisting = await client.isExistingAccount()
-            setIsExistingAccount(isExisting)
+            if (mnemonic && mnemonic != "") {
+                const isExisting = await client.isExistingAccount()
+                setIsExistingAccount(isExisting)
 
-            let accountInfo = await client.account()
-            if (!isExisting) {
-                accountInfo.address = client.getAddress()
+                let accountInfo
+                if (isExisting) {
+                    accountInfo = await client.account()
+                } else {
+                    accountInfo = {
+                        address: client.getAddress(),
+                    }
+                }
+                setAccountInfo(accountInfo)
             }
-
-            setAccountInfo(accountInfo)
 
             const nodeInfo = await getNodeInfo()
             const node = {
@@ -134,6 +140,13 @@ const App = () => {
         }
     }
 
+    const signout = () => {
+        setConnected(false)
+        setAccountInfo({})
+        setNodeInfo({})
+        setConfig({})
+    }
+
     return (
         <div style={{ height: "100%" }}>
             <ColorSelector />
@@ -146,10 +159,7 @@ const App = () => {
                         right: 60,
                         zIndex: 100,
                     }}>
-                    <BS.Button
-                        outline
-                        color='primary'
-                        onClick={() => setConnected(false)}>
+                    <BS.Button outline color='primary' onClick={signout}>
                         <i className='fa fa-sign-out-alt'></i>
                     </BS.Button>
                 </div>

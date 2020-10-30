@@ -41,11 +41,6 @@ const DaemonSelector = (props) => {
     }, [endpoint, uuid, save, mnemonic])
 
     const go = async () => {
-        if (!mnemonic) {
-            alert("Please upload Bluzelle key.")
-            return
-        }
-
         const new_url_params = location.pathname + "?" + url_params.toString()
 
         window.history.pushState("", "", new_url_params)
@@ -53,7 +48,7 @@ const DaemonSelector = (props) => {
         setConnecting(true)
 
         try {
-            await props.go(endpoint, uuid, mnemonic)
+            await props.go(endpoint, uuid, mnemonic || "")
         } catch (e) {
             console.error(e)
             alert(
