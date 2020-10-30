@@ -19,6 +19,7 @@ const ExpiryBar = () => {
         maxGas,
         isBusy,
         isExistingAccount,
+        setTxInfo,
     } = useData()
 
     const gas_info = {
@@ -35,10 +36,17 @@ const ExpiryBar = () => {
 
         getClient()
             .renewLease(selectedKey, gas_info, { seconds: v })
-            .catch((e) => {
-                alert("Failure to set expiry. See console.")
+            .then((result) => {
+                setTxInfo(result)
+            })
+            .catch((ex) => {
+                alert(
+                    ex.error
+                        ? ex.error
+                        : "Failed due to bluzelle network error."
+                )
 
-                console.error(e)
+                console.error(ex)
             })
             .finally(reloadTTL)
     }
@@ -50,10 +58,17 @@ const ExpiryBar = () => {
 
         getClient()
             .renewLease(selectedKey, gas_info, { days: 365 })
-            .catch((e) => {
-                alert("Failure to persist key. See console.")
+            .then((result) => {
+                setTxInfo(result)
+            })
+            .catch((ex) => {
+                alert(
+                    ex.error
+                        ? ex.error
+                        : "Failed due to bluzelle network error."
+                )
 
-                console.error(e)
+                console.error(ex)
             })
             .finally(reloadTTL)
     }

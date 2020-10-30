@@ -12,32 +12,35 @@ const DaemonSelector = (props) => {
     const [showConfigLoader, setShowConfigLoader] = useState(false)
     const [showMnemonic, setShowMnemonic] = useState(false)
     const [showModal, setShowModal] = useState(false)
-    const [save, setSave] = useState(window.cookiesObj.save === "true" || false)
+    const [save, setSave] = useState(
+        localStorage.getItem("save") === "true" || false
+    )
 
     const url = new URL(window.location.href)
 
     const [connecting, setConnecting] = useState(false)
-    const [mnemonic, setMnemonic] = useState(window.cookiesObj.mnemonic || "")
+    const [mnemonic, setMnemonic] = useState(
+        localStorage.getItem("mnemonic") || ""
+    )
     const [uuid, setUuid] = useState(
-        url.searchParams.get("uuid") || window.cookiesObj.uuid || ""
+        url.searchParams.get("uuid") || localStorage.getItem("uuid") || ""
     )
 
     const [endpoint, setEndpoint] = useState(
         url.searchParams.get("endpoint") ||
-            window.cookiesObj.endpoint ||
+            localStorage.getItem("endpoint") ||
             config[0].endpoint
     )
 
     useEffect(() => {
-        document.cookie = "save=" + save
-        if (!save) {
-            document.cookie = "mnemonic="
+        localStorage.setItem("save", save.toString())
+        localStorage.setItem("uuid", uuid)
+        localStorage.setItem("endpoint", endpoint)
+        if (save) {
+            localStorage.setItem("mnemonic", mnemonic)
         } else {
-            document.cookie = "mnemonic=" + mnemonic
+            localStorage.setItem("mnemonic", "")
         }
-
-        document.cookie = "uuid=" + uuid
-        document.cookie = "endpoint=" + endpoint
     }, [endpoint, uuid, save, mnemonic])
 
     const go = async () => {

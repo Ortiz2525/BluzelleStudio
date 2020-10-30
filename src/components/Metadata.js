@@ -14,6 +14,7 @@ const Metadata = () => {
         maxGas,
         setMaxGas,
         isExistingAccount,
+        txInfo,
     } = useData()
 
     const [version, setVersion] = useState(0)
@@ -192,7 +193,7 @@ const Metadata = () => {
                                 accountInfo &&
                                 accountInfo["sequence"]
                                     ? accountInfo["sequence"]
-                                    : "0"}
+                                    : "<null>"}
                             </code>
                         </td>
                     </tr>
@@ -204,7 +205,7 @@ const Metadata = () => {
                                 accountInfo &&
                                 accountInfo["account_number"]
                                     ? accountInfo["account_number"]
-                                    : "0"}
+                                    : "<null>"}
                             </code>
                         </td>
                     </tr>
@@ -243,6 +244,54 @@ const Metadata = () => {
                                 </tr>
                             )
                         })}
+
+                    {txInfo && (
+                        <>
+                            <tr>
+                                <th colSpan={2} scope='row'></th>
+                            </tr>
+
+                            <tr>
+                                <th colSpan={2} scope='row'>
+                                    Last Transaction
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th scope='row'>Transaction Hash</th>
+                                <td>
+                                    {txInfo.txhash && (
+                                        <a
+                                            href={
+                                                "https://cosmos.bigdipper.live/transactions/" +
+                                                txInfo.txhash
+                                            }
+                                            target='_blank'
+                                            rel='noopener noreferer'
+                                            style={{ textDecoration: "none" }}>
+                                            <code
+                                                style={{
+                                                    whiteSpace: "pre-wrap",
+                                                }}>
+                                                {txInfo.txhash}
+                                            </code>
+                                        </a>
+                                    )}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th scope='row'>Time</th>
+                                <td>
+                                    <code style={{ whiteSpace: "pre-wrap" }}>
+                                        {new Date(
+                                            txInfo.timestamp
+                                        ).toLocaleString()}
+                                    </code>
+                                </td>
+                            </tr>
+                        </>
+                    )}
                 </tbody>
             </BS.Table>
         </Fragment>

@@ -223,6 +223,7 @@ const useData = () => {
     }
 
     const setTxInfo = (txInfo) => {
+        txInfo.timestamp = Date.now()
         setState((state) => ({ ...state, txInfo }))
     }
 
@@ -260,6 +261,34 @@ const useData = () => {
         setState((state) => ({ ...state, [key]: value }))
     }
 
+    const initApp = () => {
+        setState((state) => ({
+            client: undefined,
+            mnemonic: undefined,
+            config: {},
+            selectedKey: undefined,
+            isOwner: false,
+            activeValue: undefined,
+            activeMap: undefined,
+            loadingValue: false,
+            activeTTL: undefined,
+            loadingTTL: false,
+            keys: [],
+            keyPrefix: undefined,
+            tempKeys: [],
+            log: undefined,
+            nodeInfo: undefined,
+            accountInfo: undefined,
+            txInfo: undefined,
+            commandQueue: undefined,
+            currentPosition: 0,
+            gas_price: 0.002,
+            max_gas: 10000000,
+            isBusy: false,
+            isExistingAccount: false,
+        }))
+    }
+
     return {
         setClient,
         setMnemonic,
@@ -285,6 +314,7 @@ const useData = () => {
         setKeyPrefix,
         setIsBusy,
         setIsExistingAccount,
+        initApp,
         setValue,
 
         refreshKeys,

@@ -25,29 +25,37 @@ const useCRUDService = () => {
     }
 
     const save = () => {
-        setIsBusy(true)
+        return new Promise((resolve) => {
+            setIsBusy(true)
 
-        const newTempKeys = [...tempKeys]
-        newTempKeys.push(selectedKey)
-        setTempKeys(newTempKeys)
+            const newTempKeys = [...tempKeys]
+            newTempKeys.push(selectedKey)
+            setTempKeys(newTempKeys)
 
-        getClient()
-            .update(selectedKey, activeValue, gas_info)
-            .then((result) => {
-                console.log("~~~", result)
+            getClient()
+                .update(selectedKey, activeValue, gas_info)
+                .then((result) => {
+                    setTxInfo(result)
 
-                newTempKeys.splice(newTempKeys.indexOf(selectedKey), 1)
-                setTempKeys(newTempKeys)
+                    newTempKeys.splice(newTempKeys.indexOf(selectedKey), 1)
+                    setTempKeys(newTempKeys)
 
-                reload().then(() => {
-                    setIsBusy(false)
+                    reload().then(() => {
+                        setIsBusy(false)
+                        resolve()
+                    })
                 })
-            })
-            .catch(() => {
-                alert("Failed to save due to bluzelle network error.")
+                .catch((ex) => {
+                    alert(
+                        ex.error
+                            ? ex.error
+                            : "Failed due to bluzelle network error."
+                    )
 
-                setIsBusy(false)
-            })
+                    setIsBusy(false)
+                    resolve()
+                })
+        })
     }
 
     const remove = () => {
@@ -64,18 +72,24 @@ const useCRUDService = () => {
             return getClient()
                 .delete(sk, gas_info)
                 .then((result) => {
-                    console.log("~~~", result)
+                    setTxInfo(result)
+
                     reload().then(() => {
                         setIsBusy(false)
 
                         resolve()
                     })
                 })
-                .catch(() => {
+                .catch((ex) => {
+                    alert(
+                        ex.error
+                            ? ex.error
+                            : "Failed due to bluzelle network error."
+                    )
+
                     newTempKeys.splice(newTempKeys.indexOf(sk), 1)
                     setTempKeys(newTempKeys)
                     setSelectedKey(sk)
-                    alert("Failed to remove due to bluzelle network error.")
 
                     setIsBusy(false)
                 })
@@ -97,7 +111,8 @@ const useCRUDService = () => {
             getClient()
                 .create(key, value, gas_info)
                 .then((result) => {
-                    console.log("~~~", result)
+                    setTxInfo(result)
+
                     while (newTempKeys.includes(key)) {
                         newTempKeys.splice(newTempKeys.indexOf(key), 1)
                     }
@@ -109,7 +124,13 @@ const useCRUDService = () => {
                         resolve()
                     })
                 })
-                .catch((e) => {
+                .catch((ex) => {
+                    alert(
+                        ex.error
+                            ? ex.error
+                            : "Failed due to bluzelle network error."
+                    )
+
                     while (newTempKeys.includes(key)) {
                         newTempKeys.splice(newTempKeys.indexOf(key), 1)
                     }
@@ -117,8 +138,6 @@ const useCRUDService = () => {
 
                     newKeys.splice(newKeys.indexOf(key), 1)
                     setKeys(newKeys)
-
-                    alert("Failed to create key due to bluzelle network error.")
 
                     setIsBusy(false)
                     resolve()
@@ -149,14 +168,13 @@ const useCRUDService = () => {
             if (selectedKey === oldKey) {
                 setSelectedKey(newKey)
             }
-        } catch (e) {
-            console.error(e)
-            alert("Bluzelle network error.")
+        } catch (ex) {
+            alert(ex.error ? ex.error : "Failed due to bluzelle network error.")
         }
 
         newTempKeys.splice(newTempKeys.indexOf(oldKey), 1)
         setTempKeys(newTempKeys)
-        console.log("~~~~", result)
+        setTxInfo(result)
 
         await reload()
 
@@ -177,18 +195,24 @@ const useCRUDService = () => {
             return getClient()
                 .deleteAll(gas_info)
                 .then((result) => {
-                    console.log("~~~~", result)
+                    setTxInfo(result)
+
                     reload().then(() => {
                         resolve()
 
                         setIsBusy(false)
                     })
                 })
-                .catch(() => {
+                .catch((ex) => {
+                    alert(
+                        ex.error
+                            ? ex.error
+                            : "Failed due to bluzelle network error."
+                    )
+
                     newTempKeys.splice(newTempKeys.indexOf(sk), 1)
                     setTempKeys(newTempKeys)
                     setSelectedKey(sk)
-                    alert("Failed to remove due to bluzelle network error.")
 
                     setIsBusy(false)
                 })

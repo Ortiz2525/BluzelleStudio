@@ -22,18 +22,21 @@ const useImportCSV = () => {
             setKeys(keys)
 
             const promises = fields.map(({ key, value }) => {
-                if (!keys.includes(key)) {
-                    return create(key, value)
-                } else {
-                    return getClient().update(key, value, gas_info)
-                }
+                return getClient().upsert(key, value, gas_info)
             })
 
-            Promise.all(promises).then((results) => {
-                console.log("```", results)
-                reload()
-                setIsLoading(false)
-            })
+            getClient()
+                .withTransaction(() => Promise.all(promises))
+                .then((results) => {
+                    reload()
+                    setIsLoading(false)
+                })
+                .catch((ex) => {
+                    alert(
+                        ex.error ? ex.error : "Error due to bluzelle network!"
+                    )
+                    setIsLoading(false)
+                })
         }
 
         const input = document.createElement("input")

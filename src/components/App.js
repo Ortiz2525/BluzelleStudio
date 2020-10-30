@@ -29,7 +29,8 @@ const App = () => {
         setNodeInfo,
         setAccountInfo,
         setIsExistingAccount,
-        setConfig,
+        isExistingAccount,
+        initApp,
     } = useData()
     const [connected, setConnected] = useState(false)
     const { createClient } = useBluzelle()
@@ -142,9 +143,7 @@ const App = () => {
 
     const signout = () => {
         setConnected(false)
-        setAccountInfo({})
-        setNodeInfo({})
-        setConfig({})
+        initApp()
     }
 
     return (
@@ -162,6 +161,18 @@ const App = () => {
                     <BS.Button outline color='primary' onClick={signout}>
                         <i className='fa fa-sign-out-alt'></i>
                     </BS.Button>
+                </div>
+            )}
+
+            {connected && !isExistingAccount && (
+                <div
+                    style={{
+                        position: "absolute",
+                        top: 60,
+                        right: 15,
+                        zIndex: 100,
+                    }}>
+                    <code>Read-Only</code>
                 </div>
             )}
 

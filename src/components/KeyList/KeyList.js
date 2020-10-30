@@ -169,7 +169,10 @@ const KeyList = () => {
                             type='button'
                             id='clearButton'
                             disabled={filter == ""}
-                            onClick={() => setFilter("")}>
+                            onClick={() => {
+                                setFilter("")
+                                setKeyPrefix("")
+                            }}>
                             <i className='fa fa-times-circle'></i>
                         </BS.Button>
 
