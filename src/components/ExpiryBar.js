@@ -7,6 +7,12 @@ import useData from "./DataContext/useData"
 
 const ExpiryBar = () => {
     const [expiry, setExpiry] = useState("")
+
+    const [d, setD] = useState(0)
+    const [h, setH] = useState(0)
+    const [m, setM] = useState(0)
+    const [s, setS] = useState(0)
+
     const { getClient } = useBluzelle()
 
     const {
@@ -19,6 +25,7 @@ const ExpiryBar = () => {
         maxGas,
         isBusy,
         isExistingAccount,
+        isOwner,
         setTxInfo,
     } = useData()
 
@@ -34,8 +41,16 @@ const ExpiryBar = () => {
 
         setLoadingTTL(true)
 
+        const lease_info = {
+            days: d,
+            hours: h,
+            minutes: m,
+            seconds: s,
+        }
+        console.log(lease_info)
+
         getClient()
-            .renewLease(selectedKey, gas_info, { seconds: v })
+            .renewLease(selectedKey, gas_info, lease_info)
             .then((result) => {
                 setTxInfo(result)
             })
@@ -79,13 +94,7 @@ const ExpiryBar = () => {
         var m = Math.floor((ttl % 3600) / 60)
         var s = Math.floor((ttl % 3600) % 60)
 
-        var dDisplay = d > 0 ? d + "d " : ""
-        var hDisplay = h > 0 ? h + "h " : ""
-        var mDisplay = m > 0 ? m + "m " : ""
-        var sDisplay = s > 0 ? s + "s" : ""
-
-        return dDisplay + hDisplay + mDisplay + sDisplay
-        // return (ttl === 0 ? "0 (indefinite)" : ttl)
+        return { d, h, m, s }
     }
 
     const sanitizeExpiry = (s) => {
@@ -129,20 +138,37 @@ const ExpiryBar = () => {
                                 Expiry (s) :
                             </BS.InputGroupAddon>
                             <BS.Input
-                                placeholder={renderTTL(activeTTL)}
-                                onChange={(e) => setExpiry(e.target.value)}
+                                placeholder={renderTTL(activeTTL).d}
+                                disabled={!isOwner || !isExistingAccount}
+                                onChange={(e) => setD(parseInt(e.target.value))}
                             />
-                            {isExistingAccount && (
+                            <span>&nbsp;days &nbsp;</span>
+                            <BS.Input
+                                placeholder={renderTTL(activeTTL).h}
+                                disabled={!isOwner || !isExistingAccount}
+                                onChange={(e) => setH(parseInt(e.target.value))}
+                            />
+                            <span>&nbsp;hours &nbsp;</span>
+                            <BS.Input
+                                placeholder={renderTTL(activeTTL).m}
+                                disabled={!isOwner || !isExistingAccount}
+                                onChange={(e) => setM(parseInt(e.target.value))}
+                            />
+                            <span>&nbsp;minutes &nbsp;</span>
+                            <BS.Input
+                                placeholder={renderTTL(activeTTL).s}
+                                disabled={!isOwner || !isExistingAccount}
+                                onChange={(e) => setS(parseInt(e.target.value))}
+                            />
+                            <span>&nbsp;seconds &nbsp;</span>
+                            {isOwner && isExistingAccount && (
                                 <BS.InputGroupAddon addonType='append'>
                                     <BS.Button
                                         outline
                                         color='primary'
                                         type='button'
                                         id='setExpiryButton'
-                                        disabled={
-                                            isBusy ||
-                                            !(expiry && sanitizeExpiry(expiry))
-                                        }
+                                        disabled={isBusy}
                                         onClick={expire}>
                                         <i className='fas fa-stopwatch'></i>
                                     </BS.Button>
