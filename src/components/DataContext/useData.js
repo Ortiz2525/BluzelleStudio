@@ -16,6 +16,14 @@ const useData = () => {
         setState((state) => ({ ...state, mnemonic }))
     }
 
+    const setBigdipper = (bigdipper) => {
+        setState((state) => ({ ...state, bigdipper }))
+    }
+
+    const setRenameKey = (renameKey) => {
+        setState((state) => ({ ...state, renameKey }))
+    }
+
     const setConfig = (config) => {
         setState((state) => ({ ...state, config }))
     }
@@ -293,6 +301,8 @@ const useData = () => {
         setClient,
         setMnemonic,
         setConfig,
+        setRenameKey,
+        setBigdipper,
         setSelectedKey,
         setIsOwner,
         setActiveValue,
@@ -323,6 +333,8 @@ const useData = () => {
 
         client: state.client,
         mnemonic: state.mnemonic,
+        bigdipper: state.bigdipper,
+        renameKey: state.renameKey,
         config: state.config,
         selectedKey: state.selectedKey,
         isOwner: state.isOwner,

@@ -15,6 +15,7 @@ const Metadata = () => {
         setMaxGas,
         isExistingAccount,
         txInfo,
+        bigdipper,
     } = useData()
 
     const [version, setVersion] = useState(0)
@@ -262,10 +263,7 @@ const Metadata = () => {
                                 <td>
                                     {txInfo.txhash && (
                                         <a
-                                            href={
-                                                "https://cosmos.bigdipper.live/transactions/" +
-                                                txInfo.txhash
-                                            }
+                                            href={`${bigdipper}/transactions/${txInfo.txhash}`}
                                             target='_blank'
                                             rel='noopener noreferer'
                                             style={{ textDecoration: "none" }}>

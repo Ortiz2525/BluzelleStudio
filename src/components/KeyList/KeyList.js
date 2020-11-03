@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react"
 
 import useCRUDService from "../../services/CRUDService"
 import useCommandQueueService from "../../services/CommandQueueService"
-import useBluzelle from "../../services/BluzelleService"
 
 import KeyListItem from "./KeyListItem"
 import NewKeyField from "./NewKey/NewKeyField"
@@ -15,27 +14,21 @@ import useData from "components/DataContext/useData"
 
 const KeyList = () => {
     const [showNewKey, setShowNewKey] = useState(false)
-    const [renameKey, setRenameKey] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [filter, setFilter] = useState("")
     const {
-        execute,
         removePreviousHistory,
         updateHistoryMessage,
         revert,
     } = useCommandQueueService()
-    const { getClient } = useBluzelle()
-    const { save, remove, removeAll } = useCRUDService()
+    const { removeAll } = useCRUDService()
     const importCSV = useImportCSV()
     const exportCSV = useExportCSV()
 
     const {
         selectedKey,
-        setSelectedKey,
-        isOwner,
         keys,
         setKeys,
-        activeValue,
         commandQueue,
         setCommandQueue,
         reload,
@@ -44,6 +37,8 @@ const KeyList = () => {
         setKeyPrefix,
         isBusy,
         isExistingAccount,
+        renameKey,
+        setRenameKey,
     } = useData()
 
     useEffect(() => {
@@ -65,40 +60,6 @@ const KeyList = () => {
             setCommandQueue(newCommandQueue)
         }
     }, [commandQueue])
-
-    const rename = () => {
-        setRenameKey(selectedKey)
-    }
-
-    const executeRemove = () => {
-        const sk = selectedKey
-        const val = activeValue
-
-        execute({
-            doIt: () => remove(),
-
-            undoIt: () =>
-                new Promise((resolve) => {
-                    return getClient()
-                        .create(sk, val)
-                        .then(() =>
-                            reload().then(() => {
-                                setSelectedKey(sk)
-                                resolve()
-                            })
-                        )
-                        .catch(() =>
-                            alert("Undo failed due to bluzelle network error.")
-                        )
-                }),
-
-            message: (
-                <span>
-                    Removed key <code key={1}>{sk}</code>.
-                </span>
-            ),
-        })
-    }
 
     const doRemoveAll = () => {
         setIsLoading(true)
@@ -126,7 +87,7 @@ const KeyList = () => {
             <RenameKeyField
                 key={keyname}
                 keyname={keyname}
-                onChange={() => setRenameKey("")}
+                onChange={() => setRenameKey(undefined)}
             />
         )
     })
@@ -221,44 +182,6 @@ const KeyList = () => {
                                 Add Key
                             </BS.UncontrolledTooltip>
 
-                            {isOwner && activeValue !== undefined && (
-                                <>
-                                    <BS.Button
-                                        outline
-                                        color='danger'
-                                        id='removeButton'
-                                        disabled={isBusy || isLoading}
-                                        onClick={executeRemove}>
-                                        <i className='fas fa-times'></i>
-                                    </BS.Button>
-
-                                    <BS.UncontrolledTooltip
-                                        placement='top'
-                                        target='removeButton'>
-                                        Remove Key
-                                    </BS.UncontrolledTooltip>
-                                </>
-                            )}
-
-                            {isOwner && activeValue !== undefined && (
-                                <>
-                                    <BS.Button
-                                        outline
-                                        color='warning'
-                                        onClick={rename}
-                                        disabled={isBusy || isLoading}
-                                        id='renameButton'>
-                                        <i className='fas fa-i-cursor'></i>
-                                    </BS.Button>
-
-                                    <BS.UncontrolledTooltip
-                                        placement='top'
-                                        target='renameButton'>
-                                        Rename Key
-                                    </BS.UncontrolledTooltip>
-                                </>
-                            )}
-
                             <BS.Button
                                 outline
                                 color='info'
@@ -273,25 +196,6 @@ const KeyList = () => {
                                 target='refreshButton'>
                                 Reload Keys
                             </BS.UncontrolledTooltip>
-
-                            {isOwner && activeValue !== undefined && (
-                                <>
-                                    <BS.Button
-                                        outline
-                                        color='success'
-                                        onClick={save}
-                                        disabled={isBusy || isLoading}
-                                        id='saveButton'>
-                                        <i className='fas fa-save'></i>
-                                    </BS.Button>
-
-                                    <BS.UncontrolledTooltip
-                                        placement='top'
-                                        target='saveButton'>
-                                        Save Value
-                                    </BS.UncontrolledTooltip>
-                                </>
-                            )}
                         </BS.ButtonGroup>
 
                         <BS.ButtonGroup style={{ paddingLeft: 5 }}>

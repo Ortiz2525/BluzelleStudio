@@ -10,7 +10,7 @@ const EthereumConfig = ({ endpoint, uuid, setEndpoint, setUuid }) => {
         window.cookiesObj.active || config[0].name
     )
 
-    const { setGasPrice } = useData()
+    const { setGasPrice, setBigdipper } = useData()
 
     useEffect(() => {
         document.cookie = "toggle=" + toggle
@@ -67,7 +67,13 @@ const EthereumConfig = ({ endpoint, uuid, setEndpoint, setUuid }) => {
                     <div style={{ marginTop: 10, textAlign: "center" }}>
                         <BS.ButtonGroup style={{ width: "100%" }}>
                             {config.map(
-                                ({ name, color, endpoint, gas_price }) => (
+                                ({
+                                    name,
+                                    color,
+                                    endpoint,
+                                    gas_price,
+                                    bigdipper,
+                                }) => (
                                     <BS.Button
                                         style={{ flex: 1 }}
                                         outline={true}
@@ -77,6 +83,7 @@ const EthereumConfig = ({ endpoint, uuid, setEndpoint, setUuid }) => {
                                             setActive(name)
                                             setEndpoint(endpoint)
                                             setGasPrice(gas_price)
+                                            setBigdipper(bigdipper)
                                         }}>
                                         {name}
                                     </BS.Button>

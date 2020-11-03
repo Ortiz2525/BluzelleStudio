@@ -6,9 +6,11 @@ const DataContext = React.createContext([{}, () => {}])
 const DataProvider = (props) => {
     const [state, setState] = useState({
         client: undefined,
+        bigdipper: undefined,
         mnemonic: undefined,
         config: {},
         selectedKey: undefined,
+        renameKey: undefined,
         isOwner: false,
         activeValue: undefined,
         activeMap: undefined,
