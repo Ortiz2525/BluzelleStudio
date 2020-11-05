@@ -20,8 +20,6 @@ const Metadata = () => {
 
     const [version, setVersion] = useState(0)
     const [showMnemonic, setShowMnemonic] = useState(false)
-    const [gasP, setGasP] = useState(0)
-    const [maxG, setMaxG] = useState(0)
     const { getClient } = useBluzelle()
 
     useEffect(() => {
@@ -29,13 +27,6 @@ const Metadata = () => {
             .version()
             .then((v) => setVersion(v))
     }, [])
-
-    useEffect(() => {
-        if (gasPrice && maxGas) {
-            setGasP(gasPrice)
-            setMaxG(maxGas)
-        }
-    }, [gasPrice, maxGas])
 
     const formatKey = (key) => {
         key = key.split("_").join(" ").split("-").join(" ")
@@ -95,9 +86,11 @@ const Metadata = () => {
                                         <BS.Input
                                             type='number'
                                             name='gas_price'
-                                            value={gasP}
+                                            value={gasPrice}
                                             onChange={(e) =>
-                                                setGasP(e.target.value)
+                                                setGasPrice(
+                                                    parseFloat(e.target.value)
+                                                )
                                             }
                                             placeholder='Gas Price'
                                         />
@@ -105,10 +98,9 @@ const Metadata = () => {
                                             <BS.Button
                                                 color='primary'
                                                 type='button'
-                                                disabled={gasPrice == gasP}
                                                 onClick={() =>
                                                     setGasPrice(
-                                                        parseFloat(gasP)
+                                                        parseFloat(gasPrice)
                                                     )
                                                 }>
                                                 <i className='fa fa-check'></i>
@@ -132,9 +124,11 @@ const Metadata = () => {
                                         <BS.Input
                                             type='number'
                                             name='max_gas'
-                                            value={maxG}
+                                            value={maxGas}
                                             onChange={(e) =>
-                                                setMaxG(e.target.value)
+                                                setMaxGas(
+                                                    parseFloat(e.target.value)
+                                                )
                                             }
                                             placeholder='Max Gas'
                                         />
@@ -142,9 +136,10 @@ const Metadata = () => {
                                             <BS.Button
                                                 color='primary'
                                                 type='button'
-                                                disabled={maxGas == maxG}
                                                 onClick={() =>
-                                                    setMaxGas(parseFloat(maxG))
+                                                    setMaxGas(
+                                                        parseFloat(maxGas)
+                                                    )
                                                 }>
                                                 <i className='fa fa-check'></i>
                                             </BS.Button>

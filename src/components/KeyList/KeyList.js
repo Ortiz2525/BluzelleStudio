@@ -111,6 +111,12 @@ const KeyList = () => {
         </BS.ListGroup>
     )
 
+    const _handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            setKeyPrefix(filter)
+        }
+    }
+
     return (
         <Fragment>
             <div style={{ padding: 10 }}>
@@ -120,6 +126,7 @@ const KeyList = () => {
                         name='key_prefix'
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
+                        onKeyDown={_handleKeyDown}
                         placeholder='Enter key prefix to filter...'
                     />
                     <BS.InputGroupAddon addonType='append'>
