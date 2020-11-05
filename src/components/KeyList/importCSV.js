@@ -13,21 +13,23 @@ const useImportCSV = () => {
         max_gas: maxGas,
     }
 
-    const doImport = (promises) => {
+    const doImport = (fields) => {
         return new Promise((resolve) => {
             getClient()
-                .withTransaction(() => Promise.all(promises))
+                .withTransaction(() =>
+                    Promise.all(
+                        fields.map(({ key, value }) =>
+                            getClient().upsert(key, value, gas_info)
+                        )
+                    )
+                )
                 .then((results) => {
-                    reload()
-
-                    // setIsLoading(false)
                     resolve()
                 })
                 .catch((ex) => {
                     alert(
                         ex.error ? ex.error : "Error due to bluzelle network!"
                     )
-                    // setIsLoading(false)
                     resolve()
                 })
         })
@@ -41,15 +43,14 @@ const useImportCSV = () => {
 
             setKeys(keys)
 
-            const promises = fields.map(({ key, value }) => {
-                return getClient().upsert(key, value, gas_info)
-            })
-
             let i = 0
-            while (i < promises.length) {
-                await doImport(promises.slice(i, 500000))
-                i += 500000
+            while (i < fields.length) {
+                await doImport(fields.slice(i, 1000))
+                i += 1000
             }
+
+            setIsLoading(false)
+            reload()
         }
 
         const input = document.createElement("input")
