@@ -135,7 +135,7 @@ const ExpiryBar = () => {
                         <BS.InputGroup
                             style={{ display: "flex", alignItems: "center" }}>
                             <BS.InputGroupAddon addonType='prepend'>
-                                Expiry (s) :
+                                Expiry :
                             </BS.InputGroupAddon>
                             <BS.Input
                                 placeholder={renderTTL(activeTTL).d}

@@ -13,6 +13,26 @@ const useImportCSV = () => {
         max_gas: maxGas,
     }
 
+    const doImport = (promises) => {
+        return new Promise((resolve) => {
+            getClient()
+                .withTransaction(() => Promise.all(promises))
+                .then((results) => {
+                    reload()
+
+                    // setIsLoading(false)
+                    resolve()
+                })
+                .catch((ex) => {
+                    alert(
+                        ex.error ? ex.error : "Error due to bluzelle network!"
+                    )
+                    // setIsLoading(false)
+                    resolve()
+                })
+        })
+    }
+
     const importCSV = (setIsLoading, setKeys) => {
         const createFields = async (fields) => {
             setIsLoading(true)
@@ -27,23 +47,7 @@ const useImportCSV = () => {
 
             let i = 0
             while (i < promises.length) {
-                getClient()
-                    .withTransaction(() =>
-                        Promise.all(promises.slice(i, 500000))
-                    )
-                    .then((results) => {
-                        reload()
-                        setIsLoading(false)
-                    })
-                    .catch((ex) => {
-                        alert(
-                            ex.error
-                                ? ex.error
-                                : "Error due to bluzelle network!"
-                        )
-                        setIsLoading(false)
-                    })
-
+                await doImport(promises.slice(i, 500000))
                 i += 500000
             }
         }
