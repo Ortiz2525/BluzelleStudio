@@ -142,25 +142,25 @@ const ExpiryBar = () => {
                                 disabled={!isOwner || !isExistingAccount}
                                 onChange={(e) => setD(parseInt(e.target.value))}
                             />
-                            <span> days </span>
+                            <span> d&nbsp;</span>
                             <BS.Input
                                 placeholder={renderTTL(activeTTL).h}
                                 disabled={!isOwner || !isExistingAccount}
                                 onChange={(e) => setH(parseInt(e.target.value))}
                             />
-                            <span> hours </span>
+                            <span> h&nbsp; </span>
                             <BS.Input
                                 placeholder={renderTTL(activeTTL).m}
                                 disabled={!isOwner || !isExistingAccount}
                                 onChange={(e) => setM(parseInt(e.target.value))}
                             />
-                            <span> minutes </span>
+                            <span> m&nbsp; </span>
                             <BS.Input
                                 placeholder={renderTTL(activeTTL).s}
                                 disabled={!isOwner || !isExistingAccount}
                                 onChange={(e) => setS(parseInt(e.target.value))}
                             />
-                            <span> seconds </span>
+                            <span> s&nbsp; </span>
                             {isOwner && isExistingAccount && (
                                 <BS.InputGroupAddon addonType='append'>
                                     <BS.Button

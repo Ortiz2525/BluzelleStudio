@@ -26,7 +26,6 @@ const KeyList = () => {
     const exportCSV = useExportCSV()
 
     const {
-        selectedKey,
         keys,
         setKeys,
         commandQueue,
@@ -157,100 +156,110 @@ const KeyList = () => {
                     </BS.InputGroupAddon>
                 </BS.InputGroup>
             </div>
-            {isExistingAccount && (
-                <div style={{ padding: 10 }}>
-                    <BS.ButtonToolbar
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "flex-start",
-                        }}>
-                        <BS.ButtonGroup
-                            style={{ paddingRight: 5, paddingBottom: 5 }}>
-                            <BS.Button
-                                outline
-                                color='success'
-                                onClick={() => setShowNewKey(true)}
-                                disabled={isBusy || isLoading}
-                                id='addButton'>
-                                <i className='fas fa-plus'></i>
-                            </BS.Button>
+            <div style={{ padding: 10 }}>
+                <BS.ButtonToolbar
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "flex-start",
+                    }}>
+                    <BS.ButtonGroup
+                        style={{ paddingRight: 5, paddingBottom: 5 }}>
+                        {isExistingAccount && (
+                            <>
+                                <BS.Button
+                                    outline
+                                    color='success'
+                                    onClick={() => setShowNewKey(true)}
+                                    disabled={isBusy || isLoading}
+                                    id='addButton'>
+                                    <i className='fas fa-plus'></i>
+                                </BS.Button>
 
-                            <BS.UncontrolledTooltip
-                                placement='top'
-                                target='addButton'>
-                                Add Key
-                            </BS.UncontrolledTooltip>
+                                <BS.UncontrolledTooltip
+                                    placement='top'
+                                    target='addButton'>
+                                    Add Key
+                                </BS.UncontrolledTooltip>
+                            </>
+                        )}
 
-                            <BS.Button
-                                outline
-                                color='info'
-                                onClick={executeReload}
-                                disabled={isBusy || isLoading}
-                                id='refreshButton'>
-                                <i className='fas fa-sync'></i>
-                            </BS.Button>
+                        <BS.Button
+                            outline
+                            color='info'
+                            onClick={executeReload}
+                            disabled={isBusy || isLoading}
+                            id='refreshButton'>
+                            <i className='fas fa-sync'></i>
+                        </BS.Button>
 
-                            <BS.UncontrolledTooltip
-                                placement='top'
-                                target='refreshButton'>
-                                Reload Keys
-                            </BS.UncontrolledTooltip>
-                        </BS.ButtonGroup>
+                        <BS.UncontrolledTooltip
+                            placement='top'
+                            target='refreshButton'>
+                            Reload Keys
+                        </BS.UncontrolledTooltip>
+                    </BS.ButtonGroup>
 
-                        <BS.ButtonGroup style={{ paddingLeft: 5 }}>
-                            <BS.Button
-                                outline
-                                id='importButton'
-                                color='primary'
-                                disabled={isBusy || isLoading}
-                                onClick={() =>
-                                    importCSV(setIsLoading, setKeys)
-                                }>
-                                <i className='fas fa-file-import'></i>
-                            </BS.Button>
+                    <BS.ButtonGroup style={{ paddingLeft: 5 }}>
+                        {isExistingAccount && (
+                            <>
+                                <BS.Button
+                                    outline
+                                    id='importButton'
+                                    color='primary'
+                                    disabled={isBusy || isLoading}
+                                    onClick={() =>
+                                        importCSV(setIsLoading, setKeys)
+                                    }>
+                                    <i className='fas fa-file-import'></i>
+                                </BS.Button>
 
-                            <BS.UncontrolledTooltip
-                                placement='top'
-                                target='importButton'>
-                                Import CSV file
-                            </BS.UncontrolledTooltip>
+                                <BS.UncontrolledTooltip
+                                    placement='top'
+                                    target='importButton'>
+                                    Import CSV file
+                                </BS.UncontrolledTooltip>
+                            </>
+                        )}
 
-                            <BS.Button
-                                outline
-                                id='exportButton'
-                                disabled={isBusy || isLoading}
-                                color='secondary'
-                                onClick={() =>
-                                    exportCSV(isLoading, setIsLoading, keys)
-                                }>
-                                <i className='fas fa-file-export'></i>
-                            </BS.Button>
+                        <BS.Button
+                            outline
+                            id='exportButton'
+                            disabled={isBusy || isLoading}
+                            color='secondary'
+                            onClick={() =>
+                                exportCSV(isLoading, setIsLoading, keys)
+                            }>
+                            <i className='fas fa-file-export'></i>
+                        </BS.Button>
 
-                            <BS.UncontrolledTooltip
-                                placement='top'
-                                target='exportButton'>
-                                Export CSV file
-                            </BS.UncontrolledTooltip>
+                        <BS.UncontrolledTooltip
+                            placement='top'
+                            target='exportButton'>
+                            Export CSV file
+                        </BS.UncontrolledTooltip>
 
-                            <BS.Button
-                                outline
-                                id='clearButton'
-                                color='danger'
-                                disabled={isBusy || isLoading}
-                                onClick={doRemoveAll}>
-                                <i className='fas fa-ban'></i>
-                            </BS.Button>
+                        {isExistingAccount && (
+                            <>
+                                <BS.Button
+                                    outline
+                                    id='clearButton'
+                                    color='danger'
+                                    disabled={isBusy || isLoading}
+                                    onClick={doRemoveAll}>
+                                    <i className='fas fa-ban'></i>
+                                </BS.Button>
 
-                            <BS.UncontrolledTooltip
-                                placement='top'
-                                target='clearButton'>
-                                Clear List
-                            </BS.UncontrolledTooltip>
-                        </BS.ButtonGroup>
-                    </BS.ButtonToolbar>
-                </div>
-            )}
+                                <BS.UncontrolledTooltip
+                                    placement='top'
+                                    target='clearButton'>
+                                    Clear List
+                                </BS.UncontrolledTooltip>
+                            </>
+                        )}
+                    </BS.ButtonGroup>
+                </BS.ButtonToolbar>
+            </div>
             <hr />
             <div style={{ padding: 10 }}>
                 {isLoading ? loadingBar : actualKeysList}

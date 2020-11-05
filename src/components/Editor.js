@@ -64,67 +64,78 @@ const Editor = () => {
     }
 
     return (
-        <div style={{ display: "flex", flexFlow: "column", height: "100%" }}>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+            }}>
             {showExpiryBar && <ExpiryBar />}
 
-            <BS.ButtonGroup style={{ paddingLeft: 10, paddingBottom: 10 }}>
-                {isOwner && activeValue !== undefined && (
-                    <>
-                        <BS.Button
-                            outline
-                            color='danger'
-                            id='removeButton'
-                            disabled={isBusy}
-                            onClick={executeRemove}>
-                            <i className='fas fa-times'></i>
-                        </BS.Button>
+            <div>
+                <BS.ButtonGroup
+                    style={{
+                        paddingLeft: 10,
+                        paddingBottom: 10,
+                    }}>
+                    {isOwner && activeValue !== undefined && (
+                        <>
+                            <BS.Button
+                                outline
+                                color='danger'
+                                id='removeButton'
+                                disabled={isBusy}
+                                onClick={executeRemove}>
+                                <i className='fas fa-times'></i>
+                            </BS.Button>
 
-                        <BS.UncontrolledTooltip
-                            placement='top'
-                            target='removeButton'>
-                            Remove Key
-                        </BS.UncontrolledTooltip>
-                    </>
-                )}
+                            <BS.UncontrolledTooltip
+                                placement='top'
+                                target='removeButton'>
+                                Remove Key
+                            </BS.UncontrolledTooltip>
+                        </>
+                    )}
 
-                {isOwner && activeValue !== undefined && (
-                    <>
-                        <BS.Button
-                            outline
-                            color='warning'
-                            onClick={rename}
-                            disabled={isBusy}
-                            id='renameButton'>
-                            <i className='fas fa-i-cursor'></i>
-                        </BS.Button>
+                    {isOwner && activeValue !== undefined && (
+                        <>
+                            <BS.Button
+                                outline
+                                color='warning'
+                                onClick={rename}
+                                disabled={isBusy}
+                                id='renameButton'>
+                                <i className='fas fa-i-cursor'></i>
+                            </BS.Button>
 
-                        <BS.UncontrolledTooltip
-                            placement='top'
-                            target='renameButton'>
-                            Rename Key
-                        </BS.UncontrolledTooltip>
-                    </>
-                )}
+                            <BS.UncontrolledTooltip
+                                placement='top'
+                                target='renameButton'>
+                                Rename Key
+                            </BS.UncontrolledTooltip>
+                        </>
+                    )}
 
-                {isOwner && activeValue !== undefined && (
-                    <>
-                        <BS.Button
-                            outline
-                            color='success'
-                            onClick={save}
-                            disabled={isBusy}
-                            id='saveButton'>
-                            <i className='fas fa-save'></i>
-                        </BS.Button>
+                    {isOwner && activeValue !== undefined && (
+                        <>
+                            <BS.Button
+                                outline
+                                color='success'
+                                onClick={save}
+                                disabled={isBusy}
+                                id='saveButton'>
+                                <i className='fas fa-save'></i>
+                            </BS.Button>
 
-                        <BS.UncontrolledTooltip
-                            placement='top'
-                            target='saveButton'>
-                            Save Value
-                        </BS.UncontrolledTooltip>
-                    </>
-                )}
-            </BS.ButtonGroup>
+                            <BS.UncontrolledTooltip
+                                placement='top'
+                                target='saveButton'>
+                                Save Value
+                            </BS.UncontrolledTooltip>
+                        </>
+                    )}
+                </BS.ButtonGroup>
+            </div>
             <Body />
             {showExpiryBar && (
                 <div
