@@ -18,15 +18,16 @@ const useImportCSV = () => {
             getClient()
                 .withTransaction(() =>
                     Promise.all(
-                        fields.map(({ key, value }) =>
-                            getClient().upsert(key, value, gas_info)
-                        )
+                        fields.map(({ key, value }) => {
+                            return getClient().upsert(key, value, gas_info)
+                        })
                     )
                 )
                 .then((results) => {
                     resolve()
                 })
                 .catch((ex) => {
+                    console.error(ex)
                     alert(
                         ex.error ? ex.error : "Error due to bluzelle network!"
                     )
@@ -45,7 +46,7 @@ const useImportCSV = () => {
 
             let i = 0
             while (i < fields.length) {
-                await doImport(fields.slice(i, 1000))
+                await doImport(fields.slice(i, i + 1000))
                 i += 1000
             }
 

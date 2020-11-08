@@ -34,7 +34,7 @@ const DaemonSelector = (props) => {
 
     useEffect(() => {
         localStorage.setItem("save", save.toString())
-        localStorage.setItem("uuid", uuid)
+        localStorage.setItem("uuid", mnemonic)
         localStorage.setItem("endpoint", endpoint)
         if (save) {
             localStorage.setItem("mnemonic", mnemonic)

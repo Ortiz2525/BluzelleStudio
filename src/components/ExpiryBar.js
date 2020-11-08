@@ -141,28 +141,34 @@ const ExpiryBar = () => {
                                 placeholder={renderTTL(activeTTL).d}
                                 disabled={!isOwner || !isExistingAccount}
                                 onChange={(e) => setD(parseInt(e.target.value))}
+                                style={{ minWidth: "50px" }}
                             />
-                            <span> d&nbsp;</span>
+                            <span>{" d  "}</span>
                             <BS.Input
                                 placeholder={renderTTL(activeTTL).h}
                                 disabled={!isOwner || !isExistingAccount}
                                 onChange={(e) => setH(parseInt(e.target.value))}
+                                style={{ minWidth: "50px" }}
                             />
-                            <span> h&nbsp; </span>
+                            <span>{" h  "}</span>
                             <BS.Input
                                 placeholder={renderTTL(activeTTL).m}
                                 disabled={!isOwner || !isExistingAccount}
                                 onChange={(e) => setM(parseInt(e.target.value))}
+                                style={{ minWidth: "50px" }}
                             />
-                            <span> m&nbsp; </span>
+                            <span>{" m  "}</span>
                             <BS.Input
                                 placeholder={renderTTL(activeTTL).s}
                                 disabled={!isOwner || !isExistingAccount}
                                 onChange={(e) => setS(parseInt(e.target.value))}
+                                style={{ minWidth: "50px" }}
                             />
-                            <span> s&nbsp; </span>
+                            <span>{" s  "}</span>
                             {isOwner && isExistingAccount && (
-                                <BS.InputGroupAddon addonType='append'>
+                                <BS.InputGroupAddon
+                                    addonType='append'
+                                    style={{ marginLeft: "10px" }}>
                                     <BS.Button
                                         outline
                                         color='primary'

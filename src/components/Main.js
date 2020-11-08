@@ -64,12 +64,13 @@ const Main = () => {
                     justifyContent: "flex-start",
                     flex: 1,
                 }}>
-                <div style={{ flex: 0.3 }}>
+                <div style={{ flex: 0.3, maxWidth: "400px", flexGrow: 1 }}>
                     <div
                         style={{
                             display: "flex",
                             flexDirection: "column",
                             padding: 10,
+                            flexGrow: 1,
                         }}>
                         {/* Disabling these for now. Too many variables to have a reliable undo/redo.
 
@@ -88,7 +89,7 @@ const Main = () => {
                     </div>
                 </div>
 
-                <div style={{ flex: 0.4, padding: 10 }}>
+                <div style={{ flex: 0.4, padding: 10, flexGrow: 1 }}>
                     <Editor />
                 </div>
 
@@ -96,6 +97,8 @@ const Main = () => {
                     style={{
                         flex: 0.3,
                         padding: 10,
+                        maxWidth: "400px",
+                        flexGrow: 1,
                     }}>
                     {/* <div style={{ height: 20 }}></div>
 

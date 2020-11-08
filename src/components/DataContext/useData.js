@@ -135,7 +135,10 @@ const useData = () => {
             state.client
                 .owner(selectedKey)
                 .then((owner) => {
-                    if (owner == state.accountInfo.address) {
+                    if (
+                        state.accountInfo &&
+                        owner == state.accountInfo.address
+                    ) {
                         setIsOwner(true)
                     }
                 })
@@ -200,9 +203,15 @@ const useData = () => {
             refreshKeys().then(async (k) => {
                 reloadKey(k)
 
-                const accountInfo = await state.client.account()
-                if (accountInfo.address != "" && accountInfo.public_key != "") {
-                    setAccountInfo(accountInfo)
+                if (state.mnemonic && state.mnemonic != "") {
+                    const accountInfo = await state.client.account()
+                    if (
+                        accountInfo &&
+                        accountInfo.address != "" &&
+                        accountInfo.public_key != ""
+                    ) {
+                        setAccountInfo(accountInfo)
+                    }
                 }
 
                 setIsBusy(false)
