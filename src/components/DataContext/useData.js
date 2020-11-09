@@ -116,9 +116,31 @@ const useData = () => {
                 .then((value) => {
                     setActiveValue(value)
                     setLoadingValue(false)
+
+                    setIsOwner(false)
+
+                    state.client
+                        .owner(selectedKey)
+                        .then((owner) => {
+                            if (
+                                state.accountInfo &&
+                                owner == state.accountInfo.address
+                            ) {
+                                setIsOwner(true)
+                            }
+                        })
+                        .catch((e) => {
+                            console.error(e)
+                        })
+
+                    reloadTTL(selectedKey)
                 })
                 .catch((e) => {
                     if (e.message.includes("DELETE_PENDING")) {
+                        reload()
+                    } else if (e.message.includes("not found")) {
+                        alert("The key is expired or removed by other user!")
+                        setSelectedKey(undefined)
                         reload()
                     } else {
                         alert(
@@ -129,24 +151,6 @@ const useData = () => {
                     setLoadingValue(false)
                     console.error(e)
                 })
-
-            setIsOwner(false)
-
-            state.client
-                .owner(selectedKey)
-                .then((owner) => {
-                    if (
-                        state.accountInfo &&
-                        owner == state.accountInfo.address
-                    ) {
-                        setIsOwner(true)
-                    }
-                })
-                .catch((e) => {
-                    console.error(e)
-                })
-
-            reloadTTL(selectedKey)
         }
     }
 
