@@ -132,78 +132,113 @@ const ExpiryBar = () => {
                         </div>
                     )}
                     {!loadingTTL && (
-                        <BS.InputGroup
-                            style={{ display: "flex", alignItems: "center" }}>
-                            <BS.InputGroupAddon addonType='prepend'>
-                                Expiry :
-                            </BS.InputGroupAddon>
-                            <BS.Input
-                                placeholder={renderTTL(activeTTL).d}
-                                disabled={!isOwner || !isExistingAccount}
-                                onChange={(e) => setD(parseInt(e.target.value))}
-                                style={{ minWidth: "50px" }}
-                            />
-                            <span>{" d  "}</span>
-                            <BS.Input
-                                placeholder={renderTTL(activeTTL).h}
-                                disabled={!isOwner || !isExistingAccount}
-                                onChange={(e) => setH(parseInt(e.target.value))}
-                                style={{ minWidth: "50px" }}
-                            />
-                            <span>{" h  "}</span>
-                            <BS.Input
-                                placeholder={renderTTL(activeTTL).m}
-                                disabled={!isOwner || !isExistingAccount}
-                                onChange={(e) => setM(parseInt(e.target.value))}
-                                style={{ minWidth: "50px" }}
-                            />
-                            <span>{" m  "}</span>
-                            <BS.Input
-                                placeholder={renderTTL(activeTTL).s}
-                                disabled={!isOwner || !isExistingAccount}
-                                onChange={(e) => setS(parseInt(e.target.value))}
-                                style={{ minWidth: "50px" }}
-                            />
-                            <span>{" s  "}</span>
+                        <>
+                            <div>
+                                Current expiry: {renderTTL(activeTTL).d} days{" "}
+                                {renderTTL(activeTTL).h} hours{" "}
+                                {renderTTL(activeTTL).m} minutes{" "}
+                                {renderTTL(activeTTL).s} seconds
+                            </div>
                             {isOwner && isExistingAccount && (
-                                <BS.InputGroupAddon
-                                    addonType='append'
-                                    style={{ marginLeft: "10px" }}>
-                                    <BS.Button
-                                        outline
-                                        color='primary'
-                                        type='button'
-                                        id='setExpiryButton'
-                                        disabled={isBusy}
-                                        onClick={expire}>
-                                        <i className='fas fa-stopwatch'></i>
-                                    </BS.Button>
+                                <BS.InputGroup
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        marginTop: "10px",
+                                    }}>
+                                    <BS.InputGroupAddon addonType='prepend'>
+                                        Expiry :
+                                    </BS.InputGroupAddon>
+                                    <BS.Input
+                                        placeholder={0}
+                                        disabled={
+                                            !isOwner || !isExistingAccount
+                                        }
+                                        onChange={(e) =>
+                                            setD(parseInt(e.target.value))
+                                        }
+                                        style={{ minWidth: "50px" }}
+                                    />
+                                    <span>{" d  "}</span>
+                                    <BS.Input
+                                        placeholder={0}
+                                        disabled={
+                                            !isOwner || !isExistingAccount
+                                        }
+                                        onChange={(e) =>
+                                            setH(parseInt(e.target.value))
+                                        }
+                                        style={{ minWidth: "50px" }}
+                                    />
+                                    <span>{" h  "}</span>
+                                    <BS.Input
+                                        placeholder={0}
+                                        disabled={
+                                            !isOwner || !isExistingAccount
+                                        }
+                                        onChange={(e) =>
+                                            setM(parseInt(e.target.value))
+                                        }
+                                        style={{ minWidth: "50px" }}
+                                    />
+                                    <span>{" m  "}</span>
+                                    <BS.Input
+                                        placeholder={0}
+                                        disabled={
+                                            !isOwner || !isExistingAccount
+                                        }
+                                        onChange={(e) =>
+                                            setS(parseInt(e.target.value))
+                                        }
+                                        style={{ minWidth: "50px" }}
+                                    />
+                                    <span>{" s  "}</span>
+                                    {isOwner && isExistingAccount && (
+                                        <BS.InputGroupAddon
+                                            addonType='append'
+                                            style={{ marginLeft: "10px" }}>
+                                            <BS.Button
+                                                outline
+                                                color='primary'
+                                                type='button'
+                                                id='setExpiryButton'
+                                                disabled={
+                                                    isBusy ||
+                                                    (!d && !h && !m && !s)
+                                                }
+                                                onClick={expire}>
+                                                <i className='fas fa-stopwatch'></i>
+                                            </BS.Button>
 
-                                    <BS.UncontrolledTooltip
-                                        placement='top'
-                                        target='setExpiryButton'>
-                                        Set Expiry
-                                    </BS.UncontrolledTooltip>
+                                            <BS.UncontrolledTooltip
+                                                placement='top'
+                                                target='setExpiryButton'>
+                                                Set Expiry
+                                            </BS.UncontrolledTooltip>
 
-                                    <BS.Button
-                                        outline
-                                        color='success'
-                                        type='button'
-                                        id='permanentButton'
-                                        disabled={isBusy || activeTTL === 0}
-                                        onClick={persist}>
-                                        <i className='fa fa-clock'></i>
-                                    </BS.Button>
+                                            <BS.Button
+                                                outline
+                                                color='success'
+                                                type='button'
+                                                id='permanentButton'
+                                                disabled={
+                                                    isBusy || activeTTL === 0
+                                                }
+                                                onClick={persist}>
+                                                <i className='fa fa-clock'></i>
+                                            </BS.Button>
 
-                                    <BS.UncontrolledTooltip
-                                        placement='top'
-                                        target='permanentButton'>
-                                        Make permanent (1 yr) <br />
-                                        Requires a lot of gas!
-                                    </BS.UncontrolledTooltip>
-                                </BS.InputGroupAddon>
+                                            <BS.UncontrolledTooltip
+                                                placement='top'
+                                                target='permanentButton'>
+                                                Make permanent (1 yr) <br />
+                                                Requires a lot of gas!
+                                            </BS.UncontrolledTooltip>
+                                        </BS.InputGroupAddon>
+                                    )}
+                                </BS.InputGroup>
                             )}
-                        </BS.InputGroup>
+                        </>
                     )}
                 </BS.CardBody>
             </BS.Card>
