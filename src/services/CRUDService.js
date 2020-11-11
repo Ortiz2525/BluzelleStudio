@@ -146,39 +146,40 @@ const useCRUDService = () => {
     }
 
     const rename = async (oldKey, newKey) => {
-        setIsBusy(true)
+        return new Promise((resolve) => {
+            setIsBusy(true)
 
-        const newTempKeys = [...tempKeys]
-        newTempKeys.push(oldKey)
-        setTempKeys(newTempKeys)
+            setSelectedKey(undefined)
 
-        let result = {}
+            const newTempKeys = [...tempKeys]
+            newTempKeys.push(oldKey)
+            setTempKeys(newTempKeys)
 
-        try {
-            const v = await getClient().read(oldKey)
+            return getClient()
+                .rename(oldKey, newKey, gas_info)
+                .then((result) => {
+                    setTxInfo(result)
 
-            result = await getClient().delete(oldKey, gas_info)
+                    reload().then(() => {
+                        setIsBusy(false)
 
-            if (await getClient().has(newKey)) {
-                result = await getClient().update(newKey, v, gas_info)
-            } else {
-                result = await getClient().create(newKey, v, gas_info)
-            }
+                        resolve()
+                    })
+                })
+                .catch((ex) => {
+                    alert(
+                        ex.error
+                            ? ex.error
+                            : "Failed due to bluzelle network error."
+                    )
 
-            if (selectedKey === oldKey) {
-                setSelectedKey(newKey)
-            }
-        } catch (ex) {
-            alert(ex.error ? ex.error : "Failed due to bluzelle network error.")
-        }
+                    newTempKeys.splice(newTempKeys.indexOf(sk), 1)
+                    setTempKeys(newTempKeys)
+                    setSelectedKey(sk)
 
-        newTempKeys.splice(newTempKeys.indexOf(oldKey), 1)
-        setTempKeys(newTempKeys)
-        setTxInfo(result)
-
-        await reload()
-
-        setIsBusy(false)
+                    setIsBusy(false)
+                })
+        })
     }
 
     const removeAll = () => {
