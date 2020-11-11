@@ -10,7 +10,7 @@ import CollapsibleCard from "./CollapsibleCard"
 import useData from "./DataContext/useData"
 
 const Main = () => {
-    const { config, accountInfo } = useData()
+    const { config, accountInfo, isExistingAccount } = useData()
     const [balance, setBalance] = useState(0)
 
     useEffect(() => {
@@ -49,7 +49,11 @@ const Main = () => {
                                 Balance
                             </th>
                             <td style={{ border: 0 }}>
-                                <code>{balance.toLocaleString()} BLZ</code>
+                                <code>
+                                    {isExistingAccount
+                                        ? `${balance.toLocaleString()} BLZ`
+                                        : "<N/A>"}
+                                </code>
                             </td>
                         </tr>
                     </tbody>
