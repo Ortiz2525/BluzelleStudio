@@ -1,36 +1,36 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import FileName from "./FileName";
-import FileSize from "./FileSize";
+import FileName from "./FileName"
+import FileSize from "./FileSize"
 
-import useData from "components/DataContext/useData";
+import useData from "components/DataContext/useData"
 
 const FileEditor = () => {
-    const [uploaded, setUploaded] = useState(false);
-    const [uploadedFilename, setUploadedFilename] = useState("");
+    const [uploaded, setUploaded] = useState(false)
+    const [uploadedFilename, setUploadedFilename] = useState("")
 
-    const { selectedKey, activeValue, setActiveValue } = useData();
+    const { selectedKey, activeValue, setActiveValue } = useData()
 
-    let fileSelector = null;
+    let fileSelector = null
 
     const onSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        if (!fileSelector) return;
-        if (!fileSelector.files[0]) return;
+        if (!fileSelector) return
+        if (!fileSelector.files[0]) return
 
-        const file = fileSelector.files[0];
+        const file = fileSelector.files[0]
 
-        const reader = new FileReader();
+        const reader = new FileReader()
 
         reader.onload = () => {
             // const oldBytearray = props.keyData.get('bytearray'),
             ///    oldFilename = props.keyData.get('filename');
 
-            setActiveValue(new Uint8Array(reader.result));
+            setActiveValue(new Uint8Array(reader.result))
 
-            setUploaded(true);
-            setUploadedFilename(file.name);
+            setUploaded(true)
+            setUploadedFilename(file.name)
 
             // execute({
             //     doIt: () => {
@@ -43,23 +43,23 @@ const FileEditor = () => {
             //     },
             //     message: <span>Uploaded <code key={1}>{file.name}</code> to <code key={2}>{props.keyName}</code>.</span>
             // });
-        };
+        }
 
-        reader.readAsArrayBuffer(file);
-    };
+        reader.readAsArrayBuffer(file)
+    }
 
     const download = () => {
-        const arr = activeValue;
+        const arr = activeValue
 
-        const blob = new Blob([arr.buffer]);
-        const link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
+        const blob = new Blob([arr.buffer])
+        const link = document.createElement("a")
+        link.href = window.URL.createObjectURL(blob)
 
-        const fileName = selectedKey;
+        const fileName = selectedKey
 
-        link.download = fileName;
-        link.click();
-    };
+        link.download = fileName
+        link.click()
+    }
 
     return (
         <div style={{ padding: 15 }}>
@@ -104,7 +104,7 @@ const FileEditor = () => {
                 </BS.Panel.Body>
             </BS.Panel>
         </div>
-    );
-};
+    )
+}
 
-export default FileEditor;
+export default FileEditor

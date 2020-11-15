@@ -1,5 +1,5 @@
-import React from "react";
-import RenderTree from "../Trees/RenderTree";
+import React from "react"
+import RenderTree from "../Trees/RenderTree"
 
 const RenderTreeWithEditableKey = ({ ...props }) => {
     // Not sure how to get this working...
@@ -35,7 +35,7 @@ const RenderTreeWithEditableKey = ({ ...props }) => {
     // });
     //       }}/>;
 
-    return <RenderTree {...props} />;
-};
+    return <RenderTree {...props} />
+}
 
-export default RenderTreeWithEditableKey;
+export default RenderTreeWithEditableKey

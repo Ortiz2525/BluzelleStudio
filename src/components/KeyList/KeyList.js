@@ -11,6 +11,7 @@ import useExportCSV from "./exportCSV"
 import loadingBar from "../loadingBar"
 
 import useData from "components/DataContext/useData"
+import RenderObject from "components/JSONEditor/Objects/RenderObject"
 
 const KeyList = () => {
     const [showNewKey, setShowNewKey] = useState(false)
@@ -268,6 +269,7 @@ const KeyList = () => {
                 </BS.ButtonToolbar>
             </div>
             <hr />
+
             <div style={{ padding: 10 }}>
                 {isLoading ? loadingBar : actualKeysList}
             </div>

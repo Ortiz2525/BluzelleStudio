@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import RenderTree from "../Trees/RenderTree";
-import Collapsible from "../Collapsible";
-import { Plus, Edit, Delete } from "../Buttons";
-import Hoverable from "../Hoverable";
-import NewField from "./NewField";
+import RenderTree from "../Trees/RenderTree"
+import Collapsible from "../Collapsible"
+import { Plus, Edit, Delete } from "../Buttons"
+import Hoverable from "../Hoverable"
+import NewField from "./NewField"
 
-import { mapRecursive } from "../JSONEditor";
+import { mapRecursive } from "../JSONEditor"
 
-import useCommandQueueService from "../../../services/CommandQueueService";
+import useCommandQueueService from "../../../services/CommandQueueService"
 
 const RenderArray = (props) => {
-    const [showNewField, setShowNewField] = useState(false);
-    const { execute } = useCommandQueueService();
+    const [showNewField, setShowNewField] = useState(false)
+    const { execute } = useCommandQueueService()
 
-    const { val, set, del, preamble, hovering, onEdit } = props;
+    const { val, set, del, preamble, hovering, onEdit } = props
 
     const buttons = hovering && (
         <React.Fragment>
@@ -22,16 +22,16 @@ const RenderArray = (props) => {
             {del && <Delete onClick={del} />}
             <Edit onClick={onEdit} />
         </React.Fragment>
-    );
+    )
 
     const newField = showNewField && (
         <Hoverable>
             <NewField
                 preamble={val.length}
                 onChange={(newObj) => {
-                    setShowNewField(false);
+                    setShowNewField(false)
 
-                    const v2 = mapRecursive(newObj);
+                    const v2 = mapRecursive(newObj)
 
                     execute({
                         doIt: () => Promise.resolve(val.push(v2)),
@@ -42,12 +42,12 @@ const RenderArray = (props) => {
                                 <code key={1}>{JSON.stringify(newObj)}</code>.
                             </span>
                         ),
-                    });
+                    })
                 }}
                 onError={() => setShowNewField(false)}
             />
         </Hoverable>
-    );
+    )
 
     const fieldList = val.map((value, index) => (
         <RenderTree
@@ -63,7 +63,7 @@ const RenderArray = (props) => {
                             <code key={2}>{JSON.stringify(v)}</code>.
                         </span>
                     ),
-                });
+                })
             }}
             del={() => {
                 execute({
@@ -74,11 +74,11 @@ const RenderArray = (props) => {
                             Deleted index <code key={1}>{index}</code>.
                         </span>
                     ),
-                });
+                })
             }}
             preamble={<span>{index}</span>}
         />
-    ));
+    ))
 
     return (
         <Collapsible
@@ -88,7 +88,7 @@ const RenderArray = (props) => {
             {fieldList}
             {newField}
         </Collapsible>
-    );
-};
+    )
+}
 
-export default RenderArray;
+export default RenderArray

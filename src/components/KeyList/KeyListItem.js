@@ -1,18 +1,18 @@
-import React from "react";
+import React from "react"
 
-import useCRUDService from "../../services/CRUDService";
-import useCommandQueueService from "../../services/CommandQueueService";
+import useCRUDService from "../../services/CRUDService"
+import useCommandQueueService from "../../services/CommandQueueService"
 
-import loadingBar from "../loadingBar";
-import useData from "components/DataContext/useData";
+import loadingBar from "../loadingBar"
+import useData from "components/DataContext/useData"
 
 const KeyListItem = ({ keyname }) => {
-    const { selectedKey, setSelectedKey, tempKeys } = useData();
-    const { execute } = useCommandQueueService();
-    const { rename } = useCRUDService();
+    const { selectedKey, setSelectedKey, tempKeys } = useData()
+    const { execute } = useCommandQueueService()
+    const { rename } = useCRUDService()
 
     const select = (target) => {
-        const old = selectedKey;
+        const old = selectedKey
 
         execute({
             doIt: () => Promise.resolve(setSelectedKey(target)),
@@ -22,8 +22,8 @@ const KeyListItem = ({ keyname }) => {
                     Selected <code key={1}>{target}</code>.
                 </span>
             ),
-        });
-    };
+        })
+    }
 
     const renameKey = (newKey) => {
         execute({
@@ -35,15 +35,15 @@ const KeyListItem = ({ keyname }) => {
                     <code key={2}>{newKey}</code>.
                 </span>
             ),
-        });
-    };
+        })
+    }
 
     return (
         <BS.ListGroupItem
             onClick={() => {
-                if (tempKeys.includes(keyname)) return;
+                if (tempKeys.includes(keyname)) return
 
-                selectedKey === keyname ? select(undefined) : select(keyname);
+                selectedKey === keyname ? select(undefined) : select(keyname)
             }}
             active={selectedKey === keyname}>
             <span style={{ marginLeft: 15 }}>{keyname}</span>
@@ -59,7 +59,7 @@ const KeyListItem = ({ keyname }) => {
                     className='fas fa-chevron-right'></i>
             )}
         </BS.ListGroupItem>
-    );
-};
+    )
+}
 
-export default KeyListItem;
+export default KeyListItem

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
 const Hoverable = ({ children }) => {
-    const [hovering, setHovering] = useState(false);
+    const [hovering, setHovering] = useState(false)
 
     return (
         <div
@@ -17,7 +17,7 @@ const Hoverable = ({ children }) => {
                 React.cloneElement(children, { hovering })
             }
         </div>
-    );
-};
+    )
+}
 
-export default Hoverable;
+export default Hoverable

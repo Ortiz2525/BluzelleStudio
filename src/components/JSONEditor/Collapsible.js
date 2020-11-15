@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
 const Collapsible = (props) => {
-    const [collapsed, setCollapsed] = useState(props.collapsed || false);
+    console.log("~~~~", props)
+    const [collapsed, setCollapsed] = useState(props.collapsed || false)
 
     const toggleCollapse = () => {
-        setCollapsed(!collapsed);
-    };
+        setCollapsed(!collapsed)
+    }
 
     const collapseTriangle = () => {
-        return collapsed ? "chevron-right" : "chevron-down";
-    };
+        return collapsed ? "chevron-right" : "chevron-down"
+    }
 
     return (
         <React.Fragment>
@@ -31,7 +32,7 @@ const Collapsible = (props) => {
                 {collapsed || props.children}
             </div>
         </React.Fragment>
-    );
-};
+    )
+}
 
-export default Collapsible;
+export default Collapsible

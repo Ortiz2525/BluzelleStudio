@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 
 const common = {
     border: 0,
     background: "none",
-};
+}
 
 export const Delete = ({ onClick }) => (
     <BS.Button
@@ -16,7 +16,7 @@ export const Delete = ({ onClick }) => (
         onClick={onClick}>
         <BS.Glyphicon glyph='remove' />
     </BS.Button>
-);
+)
 
 export const Edit = ({ onClick }) => (
     <BS.Button
@@ -29,7 +29,7 @@ export const Edit = ({ onClick }) => (
         onClick={onClick}>
         <BS.Glyphicon glyph='pencil' />
     </BS.Button>
-);
+)
 
 export const Plus = ({ onClick }) => (
     <BS.Button
@@ -41,4 +41,4 @@ export const Plus = ({ onClick }) => (
         onClick={onClick}>
         <BS.Glyphicon glyph='plus' />
     </BS.Button>
-);
+)

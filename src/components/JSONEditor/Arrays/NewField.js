@@ -1,5 +1,5 @@
-import React from "react";
-import EditableField from "../../EditableField";
+import React from "react"
+import EditableField from "../../EditableField"
 
 const NewField = ({ preamble, onChange, onError }) => (
     <div>
@@ -10,14 +10,14 @@ const NewField = ({ preamble, onChange, onError }) => (
             validateJSON={true}
             onChange={(val) => {
                 try {
-                    const obj = JSON.parse(val);
-                    onChange(obj);
+                    const obj = JSON.parse(val)
+                    onChange(obj)
                 } catch (e) {
-                    onError();
+                    onError()
                 }
             }}
         />
     </div>
-);
+)
 
-export default NewField;
+export default NewField

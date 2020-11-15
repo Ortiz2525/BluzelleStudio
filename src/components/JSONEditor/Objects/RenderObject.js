@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import Collapsible from "../Collapsible";
-import { Plus, Edit, Delete } from "../Buttons";
-import Hoverable from "../Hoverable.js";
-import RenderTreeWithEditableKey from "./RenderTreeWithEditableKey";
-import NewField from "./NewField";
-import { mapRecursive } from "../JSONEditor";
-import useCommandQueueService from "../../../services/CommandQueueService";
+import Collapsible from "../Collapsible"
+import { Plus, Edit, Delete } from "../Buttons"
+import Hoverable from "../Hoverable.js"
+import RenderTreeWithEditableKey from "./RenderTreeWithEditableKey"
+import NewField from "./NewField"
+import { mapRecursive } from "../JSONEditor"
+import useCommandQueueService from "../../../services/CommandQueueService"
 
 const RenderObject = (props) => {
-    const [showNewField, setShowNewField] = useState(false);
-    const { execute } = useCommandQueueService();
+    const [showNewField, setShowNewField] = useState(false)
+    const { execute } = useCommandQueueService()
 
-    const { val, set, del, preamble, hovering, onEdit } = props;
+    const { val, set, del, preamble, hovering, onEdit } = props
 
     const buttons = hovering && (
         <React.Fragment>
@@ -20,20 +20,20 @@ const RenderObject = (props) => {
             {del && <Delete onClick={del} />}
             <Edit onClick={onEdit} />
         </React.Fragment>
-    );
+    )
 
     const newField = showNewField && (
         <Hoverable>
             <NewField
                 onChange={(key, v) => {
-                    setShowNewField(false);
+                    setShowNewField(false)
 
                     if (val[key]) {
-                        alert("Key already exists in object.");
-                        return;
+                        alert("Key already exists in object.")
+                        return
                     }
 
-                    const v2 = mapRecursive(v);
+                    const v2 = mapRecursive(v)
 
                     execute({
                         doIt: () => Promise.resolve((val[key] = v2)),
@@ -44,15 +44,14 @@ const RenderObject = (props) => {
                                 <code key={2}>{JSON.stringify(v)}</code>.
                             </span>
                         ),
-                    });
+                    })
                 }}
                 onError={() => setShowNewField(false)}
             />
         </Hoverable>
-    );
+    )
 
-    const fieldList = val
-        .keys()
+    const fieldList = Object.keys(val)
         .sort()
         .map((subkey) => (
             <RenderTreeWithEditableKey
@@ -60,8 +59,8 @@ const RenderObject = (props) => {
                 preamble={subkey}
                 val={val[subkey]}
                 set={(v) => {
-                    const v2 = omr(v);
-                    const old = val[subkey];
+                    const v2 = omr(v)
+                    const old = val[subkey]
 
                     execute({
                         doIt: () => Promise.resolve((val[subkey] = v2)),
@@ -72,10 +71,10 @@ const RenderObject = (props) => {
                                 <code key={2}>{JSON.stringify(v)}</code>.
                             </span>
                         ),
-                    });
+                    })
                 }}
                 del={() => {
-                    const old = val[subkey];
+                    const old = val[subkey]
 
                     execute({
                         doIt: () => Promise.resolve(delete val[subkey]),
@@ -85,10 +84,10 @@ const RenderObject = (props) => {
                                 Deleted <code key={1}>{subkey}</code>.
                             </span>
                         ),
-                    });
+                    })
                 }}
             />
-        ));
+        ))
 
     return (
         <Collapsible
@@ -98,7 +97,7 @@ const RenderObject = (props) => {
             {newField}
             {fieldList}
         </Collapsible>
-    );
-};
+    )
+}
 
-export default RenderObject;
+export default RenderObject

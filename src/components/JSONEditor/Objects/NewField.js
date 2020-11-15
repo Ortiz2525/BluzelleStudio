@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import EditableField from "../../EditableField";
+import React, { useState } from "react"
+import EditableField from "../../EditableField"
 
 const NewField = (props) => {
-    const [currentInput, setCurrentInput] = useState("key");
-    const [key, setKey] = useState("key");
+    const [currentInput, setCurrentInput] = useState("key")
+    const [key, setKey] = useState("key")
 
-    const { onChange, onError } = props;
+    const { onChange, onError } = props
 
     const keyField = (
         <EditableField
             active={currentInput === "key"}
             val={key}
             onChange={(key) => {
-                setCurrentInput("val");
-                setKey(key);
+                setCurrentInput("val")
+                setKey(key)
             }}
         />
-    );
+    )
 
     const valField = (
         <EditableField
@@ -25,20 +25,20 @@ const NewField = (props) => {
             validateJSON={true}
             onChange={(val) => {
                 try {
-                    const obj = JSON.parse(val);
-                    onChange(key, obj);
+                    const obj = JSON.parse(val)
+                    onChange(key, obj)
                 } catch (e) {
-                    onError();
+                    onError()
                 }
             }}
         />
-    );
+    )
 
     return (
         <div>
             {keyField}:{valField}
         </div>
-    );
-};
+    )
+}
 
-export default NewField;
+export default NewField

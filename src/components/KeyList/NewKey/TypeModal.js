@@ -1,14 +1,14 @@
-import React from "react";
-import useCRUDService from "../../../services/CRUDService";
+import React from "react"
+import useCRUDService from "../../../services/CRUDService"
 
 const TypeModal = ({ keyField }) => {
-    const { create } = useCRUDService();
+    const { create } = useCRUDService()
     // This will choose text every time.
     // Removing this re-enables the popup dialog where you
     // can choose text/JSON/file.
-    create(keyField, "");
+    create(keyField, "")
 
-    return <div></div>;
+    return <div></div>
     //     <BS.Modal show={true} onHide={this.props.onHide}>
     //         <BS.Modal.Header closeButton>
     //             <BS.Modal.Title>
@@ -32,6 +32,6 @@ const TypeModal = ({ keyField }) => {
     //             </BS.ListGroup>
     //         </BS.Modal.Body>
     //     </BS.Modal>
-};
+}
 
-export default TypeModal;
+export default TypeModal

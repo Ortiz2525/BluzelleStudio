@@ -1,45 +1,45 @@
-import React from "react";
+import React from "react"
 
-import RenderTree from "./Trees/RenderTree";
-import { isPlainObject, mapValues, extend } from "lodash";
+import RenderTree from "./Trees/RenderTree"
+import { isPlainObject, mapValues, extend } from "lodash"
 
-import useCommandQueueService from "../../services/CommandQueueService";
-import useData from "components/DataContext/useData";
+import useCommandQueueService from "../../services/CommandQueueService"
+import useData from "components/DataContext/useData"
 
 export const mapRecursive = (obj) => {
     const omr = isPlainObject(obj)
         ? mapValues(obj, mapRecursive)
         : Array.isArray(obj)
         ? obj.map(mapRecursive)
-        : obj;
+        : obj
 
-    return omr;
-};
+    return omr
+}
 
 const JSONEditor = () => {
-    const { activeValue, setActiveValue, activeMap, setActiveMap } = useData();
-    const { execute } = useCommandQueueService();
+    const { activeValue, setActiveValue, activeMap, setActiveMap } = useData()
+    const { execute } = useCommandQueueService()
 
     useEffect(() => {
         for (let prop in activeValue) {
-            delete activeValue[prop];
+            delete activeValue[prop]
         }
 
-        extend(activeValue, activeMap);
-        setActiveValue(activeValue);
-    }, [activeMap]);
+        extend(activeValue, activeMap)
+        setActiveValue(activeValue)
+    }, [activeMap])
 
     useEffect(() => {
         if (
             typeof activeValue === "object" &&
             !(activeValue instanceof Uint8Array)
         ) {
-            setActiveMap(mapRecursive(activeValue));
+            setActiveMap(mapRecursive(activeValue))
         }
-    }, [activeValue]);
+    }, [activeValue])
 
     if (activeMap === undefined) {
-        return null;
+        return null
     }
 
     return (
@@ -47,12 +47,12 @@ const JSONEditor = () => {
             val={activeMap}
             set={(v) => {
                 if (typeof v !== "object") {
-                    alert("Must be object type.");
-                    return;
+                    alert("Must be object type.")
+                    return
                 }
 
-                const v2 = mapRecursive(v);
-                const old = activeMap;
+                const v2 = mapRecursive(v)
+                const old = activeMap
 
                 execute({
                     doIt: () => Promise.resolve(setActiveMap(v2)),
@@ -63,10 +63,10 @@ const JSONEditor = () => {
                             .
                         </span>
                     ),
-                });
+                })
             }}
         />
-    );
-};
+    )
+}
 
-export default JSONEditor;
+export default JSONEditor
