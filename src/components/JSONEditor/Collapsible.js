@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 
 const Collapsible = (props) => {
-    console.log("~~~~", props)
     const [collapsed, setCollapsed] = useState(props.collapsed || false)
 
     const toggleCollapse = () => {
@@ -19,9 +18,9 @@ const Collapsible = (props) => {
                     <span style={{ marginRight: 5 }}>{props.preamble}:</span>
                 )}
                 <span onClick={toggleCollapse}>
-                    <BS.Glyphicon glyph={collapseTriangle()} /> {props.label}
+                    <i className='fas fa-caret-right'></i> {props.label}
                 </span>
-                {props.buttons}
+                {props.buttons && props.buttons}
             </div>
             <div
                 style={{
