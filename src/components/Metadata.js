@@ -69,6 +69,12 @@ const Metadata = () => {
                             <code>{config.uuid}</code>
                         </td>
                     </tr>
+                    <tr>
+                        <th scope='row'>Endpoint</th>
+                        <td>
+                            <code>{config.endpoint}</code>
+                        </td>
+                    </tr>
                     {isExistingAccount && (
                         <>
                             <tr>

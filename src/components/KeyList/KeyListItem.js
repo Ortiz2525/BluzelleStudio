@@ -39,7 +39,6 @@ const KeyListItem = ({ keyname, style, info }) => {
     }
 
     const curTime = new Date()
-    console.log(info)
     const expiring = info.updatedAt
         ? info.lease - (curTime.getTime() - info.updatedAt.getTime()) / 1000 <
           3600
