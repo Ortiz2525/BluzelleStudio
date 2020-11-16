@@ -163,9 +163,33 @@ const useData = () => {
                 state.client
                     .search(prefix && prefix !== "" ? prefix : state.keyPrefix)
                     .then((k) => {
-                        setKeys(k.map((item) => item.key))
+                        const promises = k.map(
+                            (item) =>
+                                new Promise((resolveLease) => {
+                                    state.client
+                                        .getLease(item.key)
+                                        .then((lease) => {
+                                            resolveLease({
+                                                key: item.key,
+                                                lease,
+                                                updatedAt: new Date(),
+                                            })
+                                        })
+                                        .catch((e) => {
+                                            resolveLease({
+                                                key: item.key,
+                                                lease: 0,
+                                                updatedAt: new Date(),
+                                            })
+                                        })
+                                })
+                        )
 
-                        resolve(k)
+                        Promise.all(promises).then((keys) => {
+                            setKeys(keys)
+
+                            resolve(k)
+                        })
                     })
                     .catch((ex) => {
                         // alert("Failed to fetch keys due to bluzelle network error.")
@@ -176,9 +200,33 @@ const useData = () => {
                 state.client
                     .keys()
                     .then((k) => {
-                        setKeys(k)
+                        const promises = k.map(
+                            (key) =>
+                                new Promise((resolveLease) => {
+                                    state.client
+                                        .getLease(key)
+                                        .then((lease) => {
+                                            resolveLease({
+                                                key,
+                                                lease,
+                                                updatedAt: new Date(),
+                                            })
+                                        })
+                                        .catch((e) => {
+                                            resolveLease({
+                                                key,
+                                                lease: 0,
+                                                updatedAt: new Date(),
+                                            })
+                                        })
+                                })
+                        )
 
-                        resolve(k)
+                        Promise.all(promises).then((keys) => {
+                            setKeys(keys)
+
+                            resolve(k)
+                        })
                     })
                     .catch((ex) => {
                         // alert("Failed to fetch keys due to bluzelle network error.")
@@ -195,7 +243,7 @@ const useData = () => {
 
         if (keys == null) keys = state.keys
 
-        if (keys.includes(sk)) {
+        if (keys.some((item) => item.key == sk)) {
             setSelectedKey(sk)
         }
     }
@@ -267,7 +315,7 @@ const useData = () => {
     const setKeyPrefix = (keyPrefix) => {
         setState((state) => ({ ...state, keyPrefix }))
 
-        refreshKeys(keyPrefix)
+        return refreshKeys(keyPrefix)
     }
 
     const setIsBusy = (isBusy) => {

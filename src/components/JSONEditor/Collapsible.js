@@ -1,3 +1,5 @@
+import KeyListItem from "components/KeyList/KeyListItem"
+import RenameKeyField from "components/KeyList/NewKey/RenameKeyField"
 import React, { useState } from "react"
 
 const Collapsible = (props) => {
@@ -7,18 +9,49 @@ const Collapsible = (props) => {
         setCollapsed(!collapsed)
     }
 
-    const collapseTriangle = () => {
-        return collapsed ? "chevron-right" : "chevron-down"
-    }
+    const collapseTriangle = collapsed
+        ? "fas fa-caret-right"
+        : "fas fa-caret-down"
 
     return (
         <React.Fragment>
-            <div style={{ minHeight: 21 }}>
+            <div style={{ height: 60 }}>
                 {props.preamble && (
                     <span style={{ marginRight: 5 }}>{props.preamble}:</span>
                 )}
-                <span onClick={toggleCollapse}>
-                    <i className='fas fa-caret-right'></i> {props.label}
+                <span
+                    onClick={toggleCollapse}
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        marginTop: 10,
+                        marginBottom: 10,
+                        height: "100%",
+                    }}>
+                    {props.info.keys && (
+                        <i
+                            className={collapseTriangle}
+                            style={{ marginRight: 10 }}></i>
+                    )}
+                    {props.info.lease ? (
+                        props.onChange ? (
+                            <RenameKeyField
+                                key={props.info.key}
+                                keyname={props.info.key}
+                                onChange={props.onChange}
+                            />
+                        ) : (
+                            <KeyListItem
+                                key={props.info.key}
+                                keyname={props.info.key}
+                                style={{ flex: 1 }}
+                            />
+                        )
+                    ) : (
+                        props.label
+                    )}
                 </span>
                 {props.buttons && props.buttons}
             </div>

@@ -133,7 +133,18 @@ const ExpiryBar = () => {
                     )}
                     {!loadingTTL && (
                         <>
-                            <div>
+                            <div
+                                style={
+                                    activeTTL < 3600
+                                        ? {
+                                              animationDuration: "700ms",
+                                              animationName: "blink",
+                                              animationIterationCount:
+                                                  "infinite",
+                                              animationDirection: "alternate",
+                                          }
+                                        : {}
+                                }>
                                 Current expiry: {renderTTL(activeTTL).d} days{" "}
                                 {renderTTL(activeTTL).h} hours{" "}
                                 {renderTTL(activeTTL).m} minutes{" "}
@@ -154,6 +165,7 @@ const ExpiryBar = () => {
                                         disabled={
                                             !isOwner || !isExistingAccount
                                         }
+                                        value={d}
                                         onChange={(e) =>
                                             setD(parseInt(e.target.value))
                                         }
@@ -168,6 +180,7 @@ const ExpiryBar = () => {
                                         onChange={(e) =>
                                             setH(parseInt(e.target.value))
                                         }
+                                        value={h}
                                         style={{ minWidth: "50px" }}
                                     />
                                     <span>{" h  "}</span>
@@ -179,6 +192,7 @@ const ExpiryBar = () => {
                                         onChange={(e) =>
                                             setM(parseInt(e.target.value))
                                         }
+                                        value={m}
                                         style={{ minWidth: "50px" }}
                                     />
                                     <span>{" m  "}</span>
@@ -187,6 +201,7 @@ const ExpiryBar = () => {
                                         disabled={
                                             !isOwner || !isExistingAccount
                                         }
+                                        value={s}
                                         onChange={(e) =>
                                             setS(parseInt(e.target.value))
                                         }

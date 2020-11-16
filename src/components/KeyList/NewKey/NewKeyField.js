@@ -15,7 +15,7 @@ const NewKeyField = ({ onChange }) => {
         if (key !== "") {
             exit()
 
-            if (!keys.includes(key)) create(key, "")
+            if (!keys.some((item) => item.key == key)) create(key, "")
         }
     }
 

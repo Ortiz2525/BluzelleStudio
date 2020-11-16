@@ -37,8 +37,7 @@ const useCRUDService = () => {
                 .then((result) => {
                     setTxInfo(result)
 
-                    newTempKeys.splice(newTempKeys.indexOf(selectedKey), 1)
-                    setTempKeys(newTempKeys)
+                    setTempKeys(newTempKeys.filter((key) => key != selectedKey))
 
                     reload().then(() => {
                         setIsBusy(false)
@@ -87,8 +86,7 @@ const useCRUDService = () => {
                             : "Failed due to bluzelle network error."
                     )
 
-                    newTempKeys.splice(newTempKeys.indexOf(sk), 1)
-                    setTempKeys(newTempKeys)
+                    setTempKeys(newTempKeys.filter((key) => key != sk))
                     setSelectedKey(sk)
 
                     setIsBusy(false)
@@ -102,7 +100,11 @@ const useCRUDService = () => {
 
             const newKeys = [...keys],
                 newTempKeys = [...tempKeys]
-            newKeys.push(key)
+            newKeys.push({
+                key,
+                lease: 864000, // * 10 days in seconds
+                updatedAt: new Date(),
+            })
             newTempKeys.push(key)
 
             setKeys(newKeys)
@@ -113,10 +115,7 @@ const useCRUDService = () => {
                 .then((result) => {
                     setTxInfo(result)
 
-                    while (newTempKeys.includes(key)) {
-                        newTempKeys.splice(newTempKeys.indexOf(key), 1)
-                    }
-                    setTempKeys(newTempKeys)
+                    setTempKeys(newTempKeys.filter((item) => item != key))
 
                     reload().then(() => {
                         setIsBusy(false)
@@ -131,13 +130,8 @@ const useCRUDService = () => {
                             : "Failed due to bluzelle network error."
                     )
 
-                    while (newTempKeys.includes(key)) {
-                        newTempKeys.splice(newTempKeys.indexOf(key), 1)
-                    }
-                    setTempKeys(newTempKeys)
-
-                    newKeys.splice(newKeys.indexOf(key), 1)
-                    setKeys(newKeys)
+                    setTempKeys(newTempKeys.filter((item) => item != key))
+                    setKeys(newKeys.filter((item) => item.key != key))
 
                     setIsBusy(false)
                     resolve()
@@ -173,8 +167,7 @@ const useCRUDService = () => {
                             : "Failed due to bluzelle network error."
                     )
 
-                    newTempKeys.splice(newTempKeys.indexOf(sk), 1)
-                    setTempKeys(newTempKeys)
+                    setTempKeys(newTempKeys.filter((item) => item != sk))
                     setSelectedKey(sk)
 
                     setIsBusy(false)
@@ -211,8 +204,7 @@ const useCRUDService = () => {
                             : "Failed due to bluzelle network error."
                     )
 
-                    newTempKeys.splice(newTempKeys.indexOf(sk), 1)
-                    setTempKeys(newTempKeys)
+                    setTempKeys(newTempKeys.filter((item) => item != sk))
                     setSelectedKey(sk)
 
                     setIsBusy(false)

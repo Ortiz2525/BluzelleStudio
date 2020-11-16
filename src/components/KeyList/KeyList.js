@@ -11,13 +11,13 @@ import useExportCSV from "./exportCSV"
 import loadingBar from "../loadingBar"
 
 import useData from "components/DataContext/useData"
-import RenderObject from "components/JSONEditor/Objects/RenderObject"
 import Collapsible from "components/JSONEditor/Collapsible"
 
 const KeyList = () => {
     const [showNewKey, setShowNewKey] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [filter, setFilter] = useState("")
+    const [keyArray, setKeyArray] = useState({})
     const {
         removePreviousHistory,
         updateHistoryMessage,
@@ -62,6 +62,53 @@ const KeyList = () => {
         }
     }, [commandQueue])
 
+    useEffect(() => {
+        if (keys.length) {
+            let newKeyArray = {}
+
+            const addToArray = (key, info, arr) => {
+                if (!key || key == "") return
+
+                arr.keys = arr.keys ? arr.keys : {}
+
+                if (key.includes(".")) {
+                    const first = key.slice(0, key.indexOf("."))
+
+                    arr.keys[first] = {
+                        ...arr.keys[first],
+                        key: first,
+                    }
+
+                    addToArray(
+                        key.slice(key.indexOf(".") + 1),
+                        info,
+                        arr.keys[first]
+                    )
+                } else {
+                    arr.keys[key] = {
+                        ...arr.keys[key],
+                        ...info,
+                    }
+                }
+            }
+
+            keys.forEach((key) => {
+                addToArray(key.key, key, newKeyArray)
+            })
+
+            console.log(newKeyArray)
+            setKeyArray(newKeyArray)
+        }
+    }, [keys])
+
+    const updateKeyPrefix = (filter) => {
+        setIsLoading(true)
+
+        setKeyPrefix(filter).finally(() => {
+            setIsLoading(false)
+        })
+    }
+
     const doRemoveAll = () => {
         setIsLoading(true)
 
@@ -81,21 +128,41 @@ const KeyList = () => {
         })
     }
 
-    const keyList = keys.sort().map((keyname) => {
-        return keyname !== renameKey ? (
-            <KeyListItem key={keyname} keyname={keyname} />
+    const keyList = keys.sort().map((key) => {
+        return key.key !== renameKey ? (
+            <KeyListItem key={key.key} keyname={key.key} />
         ) : (
             <RenameKeyField
-                key={keyname}
-                keyname={keyname}
+                key={key.key}
+                keyname={key.key}
                 onChange={() => setRenameKey(undefined)}
             />
         )
     })
 
+    const renderKeyList = (keylist) => {
+        if (!keylist) return null
+        return (
+            <Collapsible
+                label={keylist.key}
+                key={keylist.key}
+                info={keylist}
+                onChange={
+                    keylist.key == renameKey
+                        ? () => setRenameKey(undefined)
+                        : undefined
+                }>
+                {keylist.keys &&
+                    Object.keys(keylist.keys).map((k) =>
+                        renderKeyList(keylist.keys[k])
+                    )}
+            </Collapsible>
+        )
+    }
+
     const actualKeysList = (
         <BS.ListGroup>
-            {keyList}
+            {renderKeyList(keyArray)}
 
             {keyList.length === 0 && !showNewKey && (
                 <h5
@@ -115,7 +182,7 @@ const KeyList = () => {
 
     const _handleKeyDown = (e) => {
         if (e.key === "Enter") {
-            setKeyPrefix(filter)
+            updateKeyPrefix(filter)
         }
     }
 
@@ -129,6 +196,7 @@ const KeyList = () => {
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
                         onKeyDown={_handleKeyDown}
+                        disabled={isBusy || isLoading}
                         placeholder='Enter key prefix to filter...'
                     />
                     <BS.InputGroupAddon addonType='append'>
@@ -140,7 +208,7 @@ const KeyList = () => {
                             disabled={filter == ""}
                             onClick={() => {
                                 setFilter("")
-                                setKeyPrefix("")
+                                updateKeyPrefix("")
                             }}>
                             <i className='fa fa-times-circle'></i>
                         </BS.Button>
@@ -153,7 +221,7 @@ const KeyList = () => {
                             disabled={
                                 isBusy || (!keyPrefix && filter === keyPrefix)
                             }
-                            onClick={() => setKeyPrefix(filter)}>
+                            onClick={() => updateKeyPrefix(filter)}>
                             <i className='fa fa-filter'></i>
                         </BS.Button>
 
@@ -270,10 +338,6 @@ const KeyList = () => {
                 </BS.ButtonToolbar>
             </div>
             <hr />
-
-            <Collapsible label='Label'>
-                <div>Values</div>
-            </Collapsible>
 
             <div style={{ padding: 10 }}>
                 {isLoading ? loadingBar : actualKeysList}

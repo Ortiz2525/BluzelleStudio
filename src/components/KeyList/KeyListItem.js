@@ -6,7 +6,7 @@ import useCommandQueueService from "../../services/CommandQueueService"
 import loadingBar from "../loadingBar"
 import useData from "components/DataContext/useData"
 
-const KeyListItem = ({ keyname }) => {
+const KeyListItem = ({ keyname, style }) => {
     const { selectedKey, setSelectedKey, tempKeys } = useData()
     const { execute } = useCommandQueueService()
     const { rename } = useCRUDService()
@@ -40,6 +40,7 @@ const KeyListItem = ({ keyname }) => {
 
     return (
         <BS.ListGroupItem
+            style={style}
             onClick={() => {
                 if (tempKeys.includes(keyname)) return
 
