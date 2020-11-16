@@ -20,7 +20,6 @@ const Collapsible = (props) => {
                     <span style={{ marginRight: 5 }}>{props.preamble}:</span>
                 )}
                 <span
-                    onClick={toggleCollapse}
                     style={{
                         display: "flex",
                         flexDirection: "row",
@@ -32,8 +31,9 @@ const Collapsible = (props) => {
                     }}>
                     {props.info.keys && (
                         <i
+                            onClick={toggleCollapse}
                             className={collapseTriangle}
-                            style={{ marginRight: 10 }}></i>
+                            style={{ paddingRight: 10 }}></i>
                     )}
                     {props.info.lease ? (
                         props.onChange ? (

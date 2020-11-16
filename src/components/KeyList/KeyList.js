@@ -66,23 +66,25 @@ const KeyList = () => {
         if (keys.length) {
             let newKeyArray = {}
 
-            const addToArray = (key, info, arr) => {
+            const addToArray = (key, info, arr, parentKey = null) => {
                 if (!key || key == "") return
 
                 arr.keys = arr.keys ? arr.keys : {}
 
                 if (key.includes(".")) {
                     const first = key.slice(0, key.indexOf("."))
+                    const curKey = parentKey ? parentKey + "." + first : first
 
                     arr.keys[first] = {
                         ...arr.keys[first],
-                        key: first,
+                        key: curKey,
                     }
 
                     addToArray(
                         key.slice(key.indexOf(".") + 1),
                         info,
-                        arr.keys[first]
+                        arr.keys[first],
+                        curKey
                     )
                 } else {
                     arr.keys[key] = {
