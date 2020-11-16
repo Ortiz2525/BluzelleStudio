@@ -46,6 +46,7 @@ const Collapsible = (props) => {
                             <KeyListItem
                                 key={props.info.key}
                                 keyname={props.info.key}
+                                info={props.info}
                                 style={{ flex: 1 }}
                             />
                         )

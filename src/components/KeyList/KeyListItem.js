@@ -6,7 +6,7 @@ import useCommandQueueService from "../../services/CommandQueueService"
 import loadingBar from "../loadingBar"
 import useData from "components/DataContext/useData"
 
-const KeyListItem = ({ keyname, style }) => {
+const KeyListItem = ({ keyname, style, info }) => {
     const { selectedKey, setSelectedKey, tempKeys } = useData()
     const { execute } = useCommandQueueService()
     const { rename } = useCRUDService()
@@ -38,6 +38,13 @@ const KeyListItem = ({ keyname, style }) => {
         })
     }
 
+    const curTime = new Date()
+    console.log(info)
+    const expiring = info.updatedAt
+        ? info.lease - (curTime.getTime() - info.updatedAt.getTime()) / 1000 <
+          3600
+        : false
+
     return (
         <BS.ListGroupItem
             style={style}
@@ -47,7 +54,20 @@ const KeyListItem = ({ keyname, style }) => {
                 selectedKey === keyname ? select(undefined) : select(keyname)
             }}
             active={selectedKey === keyname}>
-            <span style={{ marginLeft: 15 }}>{keyname}</span>
+            <span
+                style={
+                    expiring
+                        ? {
+                              animationDuration: "500ms",
+                              animationName: "blink",
+                              animationIterationCount: "infinite",
+                              animationDirection: "alternate",
+                              marginLeft: 15,
+                          }
+                        : { marginLeft: 15 }
+                }>
+                {keyname}
+            </span>
 
             {tempKeys.includes(keyname) && loadingBar}
 

@@ -137,7 +137,7 @@ const ExpiryBar = () => {
                                 style={
                                     activeTTL < 3600
                                         ? {
-                                              animationDuration: "700ms",
+                                              animationDuration: "500ms",
                                               animationName: "blink",
                                               animationIterationCount:
                                                   "infinite",
