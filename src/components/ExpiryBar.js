@@ -27,6 +27,7 @@ const ExpiryBar = () => {
         isExistingAccount,
         isOwner,
         setTxInfo,
+        refreshKeys,
     } = useData()
 
     const gas_info = {
@@ -52,6 +53,7 @@ const ExpiryBar = () => {
         getClient()
             .renewLease(selectedKey, gas_info, lease_info)
             .then((result) => {
+                refreshKeys()
                 setTxInfo(result)
             })
             .catch((ex) => {

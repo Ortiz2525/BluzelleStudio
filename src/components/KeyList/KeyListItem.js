@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import useCRUDService from "../../services/CRUDService"
 import useCommandQueueService from "../../services/CommandQueueService"
@@ -8,6 +8,7 @@ import useData from "components/DataContext/useData"
 
 const KeyListItem = ({ keyname, style, info }) => {
     const { selectedKey, setSelectedKey, tempKeys } = useData()
+    const [expiring, setExpiring] = useState(false)
     const { execute } = useCommandQueueService()
     const { rename } = useCRUDService()
 
@@ -38,11 +39,25 @@ const KeyListItem = ({ keyname, style, info }) => {
         })
     }
 
-    const curTime = new Date()
-    const expiring = info.updatedAt
-        ? info.lease - (curTime.getTime() - info.updatedAt.getTime()) / 1000 <
-          3600
-        : false
+    useEffect(() => {
+        const curTime = new Date()
+        const leftLease = info.updatedAt
+            ? info.lease - (curTime.getTime() - info.updatedAt.getTime()) / 1000
+            : -1
+
+        console.log(info.key, leftLease)
+        if (leftLease > 0 && leftLease < 3600) {
+            setExpiring(true)
+        } else if (leftLease >= 3600) {
+            setExpiring(false)
+        }
+
+        if (leftLease > 0 && leftLease < 3600 * 24) {
+            setTimeout(() => {
+                setExpiring(true)
+            }, (leftLease - 3600) * 1000)
+        }
+    }, [info.updatedAt, info.lease])
 
     return (
         <BS.ListGroupItem
