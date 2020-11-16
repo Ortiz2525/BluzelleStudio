@@ -1,9 +1,13 @@
 import KeyListItem from "components/KeyList/KeyListItem"
 import RenameKeyField from "components/KeyList/NewKey/RenameKeyField"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 const Collapsible = (props) => {
     const [collapsed, setCollapsed] = useState(props.collapsed || false)
+
+    useEffect(() => {
+        setCollapsed(props.collapsed || false)
+    }, [props.collapsed])
 
     const toggleCollapse = () => {
         setCollapsed(!collapsed)
@@ -15,7 +19,7 @@ const Collapsible = (props) => {
 
     return (
         <React.Fragment>
-            <div style={{ height: 60 }}>
+            <div style={{ height: props.label ? 60 : 40 }}>
                 {props.preamble && (
                     <span style={{ marginRight: 5 }}>{props.preamble}:</span>
                 )}

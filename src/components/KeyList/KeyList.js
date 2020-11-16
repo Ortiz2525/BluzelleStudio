@@ -18,6 +18,7 @@ const KeyList = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [filter, setFilter] = useState("")
     const [keyArray, setKeyArray] = useState({})
+    const [collapsed, setCollapsed] = useState(false)
     const {
         removePreviousHistory,
         updateHistoryMessage,
@@ -142,21 +143,22 @@ const KeyList = () => {
         )
     })
 
-    const renderKeyList = (keylist) => {
-        if (!keylist) return null
+    const renderKeyList = (keyitem) => {
+        if (!keyitem) return null
         return (
             <Collapsible
-                label={keylist.key}
-                key={keylist.key}
-                info={keylist}
+                label={keyitem.key}
+                key={keyitem.key}
+                info={keyitem}
+                collapsed={collapsed}
                 onChange={
-                    keylist.key == renameKey
+                    keyitem.key == renameKey
                         ? () => setRenameKey(undefined)
                         : undefined
                 }>
-                {keylist.keys &&
-                    Object.keys(keylist.keys).map((k) =>
-                        renderKeyList(keylist.keys[k])
+                {keyitem.keys &&
+                    Object.keys(keyitem.keys).map((k) =>
+                        renderKeyList(keyitem.keys[k])
                     )}
             </Collapsible>
         )
@@ -186,6 +188,13 @@ const KeyList = () => {
         if (e.key === "Enter") {
             updateKeyPrefix(filter)
         }
+    }
+
+    const collapseAll = () => {
+        setCollapsed(true)
+    }
+    const expandAll = () => {
+        setCollapsed(false)
     }
 
     return (
@@ -340,6 +349,47 @@ const KeyList = () => {
                 </BS.ButtonToolbar>
             </div>
             <hr />
+            <div style={{ padding: 10 }}>
+                <BS.ButtonToolbar
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "flex-start",
+                    }}>
+                    <BS.ButtonGroup
+                        style={{ paddingRight: 5, paddingBottom: 5 }}>
+                        <BS.Button
+                            outline
+                            color='success'
+                            onClick={collapseAll}
+                            disabled={isBusy || isLoading}
+                            id='collapseAllButton'>
+                            <i className='fas fa-angle-double-up'></i>
+                        </BS.Button>
+
+                        <BS.UncontrolledTooltip
+                            placement='top'
+                            target='collapseAllButton'>
+                            Collapse All
+                        </BS.UncontrolledTooltip>
+
+                        <BS.Button
+                            outline
+                            color='info'
+                            onClick={expandAll}
+                            disabled={isBusy || isLoading}
+                            id='expandAllButton'>
+                            <i className='fas fa-angle-double-down'></i>
+                        </BS.Button>
+
+                        <BS.UncontrolledTooltip
+                            placement='top'
+                            target='expandAllButton'>
+                            Expand All
+                        </BS.UncontrolledTooltip>
+                    </BS.ButtonGroup>
+                </BS.ButtonToolbar>
+            </div>
 
             <div style={{ padding: 10 }}>
                 {isLoading ? loadingBar : actualKeysList}
